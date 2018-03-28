@@ -11,7 +11,7 @@ public class User {
 
     public User(){}
 
-    
+
     public User(String name, String surname, Integer cuil){
         this.name = name;
         this.surname = surname;
