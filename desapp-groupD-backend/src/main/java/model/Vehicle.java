@@ -18,7 +18,7 @@ public class Vehicle {
     }
 
     public Vehicle(VehicleType type, Integer capacity, String location, String retirementAddress,
-                   String returnAddress, String description, String phone){
+                   String returnAddress, String description, String phone, Integer cost){
         this.type = type;
         this.capacity = capacity;
         this.location = location;
@@ -26,6 +26,7 @@ public class Vehicle {
         this.returnAddress = returnAddress;
         this.description = description;
         this.phone = phone;
+        this.cost = cost;
     }
 
 
@@ -36,8 +37,8 @@ public class Vehicle {
     private String returnAddress;   //  MAPA  -  List
     private String description;
     private String phone;
-    private String planilla;  // horario y dias disponibles para alquilar
     private Integer cost;
+    private String planilla;  // horario y dias disponibles para alquilar
     // fotos
 
 

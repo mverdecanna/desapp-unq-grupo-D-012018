@@ -1,4 +1,5 @@
 import model.Vehicle;
+import model.builder.VehicleBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,7 +11,7 @@ public class VehicleTest {
 
     @Test
     public void vehicleIsAVanType(){
-        Vehicle vehicle = new Vehicle(Vehicle.VehicleType.VAN);
+        Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.VAN).build();
         Assert.assertTrue(vehicle.getTypeName().equals("VAN"));
     }
 
