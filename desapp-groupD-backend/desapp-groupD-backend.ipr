@@ -98,8 +98,7 @@ under the License.
   <component name="ProjectModuleManager"> 
     <modules> 
       <!-- module filepath="$$PROJECT_DIR$$/${pom.artifactId}.iml"/ -->  
-      <module filepath="$PROJECT_DIR$/desapp-grupoD-carpnd.iml"/>
-      <module filepath="$PROJECT_DIR$/../desapp-groupD-backend/desapp-groupD-backend.iml"/>
+      <module filepath="$PROJECT_DIR$/desapp-groupD-backend.iml"/>
     </modules> 
   </component>  
   <UsedPathMacros> 
