@@ -9,12 +9,21 @@ import java.util.List;
 public class User {
 
 
-    public User(){
-    }
+    private Integer cuil;
+    private String name;
+    private String surname;
+    private String address;
+    private String email;
+    private CurrentAccount currentAccount;
+    private List<Score> puntuations = new ArrayList<Score>();
+    public List<Vehicle> vehicles = new ArrayList<Vehicle>();
+
+
+    public User(){}
 
 
     public User(Integer cuil, String name, String surname, String address, String email,
-                CurrentAccount currentAccount, List<Double> puntuations, List<Vehicle> vehicles){
+                CurrentAccount currentAccount, List<Score> puntuations, List<Vehicle> vehicles){
         this.cuil = cuil;
         this.name = name;
         this.surname = surname;
@@ -25,17 +34,6 @@ public class User {
         this.vehicles = vehicles;
     }
 
-
-    private Integer cuil;
-    private String name;
-    private String surname;
-    private String address;
-    private String email;
-    private CurrentAccount currentAccount;
-
-    private List<Double> puntuations = new ArrayList<Double>();
-
-    public List<Vehicle> vehicles = new ArrayList<Vehicle>();
 
 
     public Integer getCuil() {
@@ -95,10 +93,16 @@ public class User {
      * recorre las puntuaciones del usuario y retorna el promedio
      * @return
      */
-    public Double evalReputation(){
+    public Integer evalReputation(){
+        /*
         Double result = 0d;
         if(this.puntuations.size() > 0){
             result = this.puntuations.stream().mapToDouble(f -> f.doubleValue()).sum();
+        }
+        */
+        Integer result = 0;
+        if(this.puntuations.size() > 0){
+            result = this.puntuations.stream().filter(o -> o.getValue() != null).mapToInt(Score::getValue).sum();
         }
         return (result / this.puntuations.size());
     }
@@ -139,10 +143,12 @@ public class User {
     }
 
     /**
-     * agrega una puntuacion al usuario
-     * @param score
+     * agrega un Score al usuario, con un valor y un comentario
+     * @param value
+     * @param comment
      */
-    public void scoreUser(Double score){
+    public void scoreUser(Integer value, String comment){
+        Score score = new Score(value, comment);
         this.puntuations.add(score);
     }
 

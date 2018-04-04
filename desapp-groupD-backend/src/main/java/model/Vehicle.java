@@ -11,6 +11,19 @@ public class Vehicle {
     }
 
 
+    private VehicleType type;
+    private Integer capacity;
+    private String location;
+    private String retirementAddress;   //  MAPA
+    private String returnAddress;   //  MAPA  -  List
+    private String description;
+    private String phone;
+    private Integer cost;
+    private String planilla;  // horario y dias disponibles para alquilar
+    // private String fotos   escuche que deberia ser un String que sea el link a la imagen
+
+
+
     public Vehicle(){}
 
     public Vehicle(VehicleType type){
@@ -29,17 +42,6 @@ public class Vehicle {
         this.cost = cost;
     }
 
-
-    private VehicleType type;
-    private Integer capacity;
-    private String location;
-    private String retirementAddress;   //  MAPA
-    private String returnAddress;   //  MAPA  -  List
-    private String description;
-    private String phone;
-    private Integer cost;
-    private String planilla;  // horario y dias disponibles para alquilar
-    // fotos
 
 
     public VehicleType getType() {

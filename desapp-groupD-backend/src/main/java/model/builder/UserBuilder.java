@@ -1,6 +1,7 @@
 package model.builder;
 
 import model.CurrentAccount;
+import model.Score;
 import model.User;
 import model.Vehicle;
 
@@ -19,14 +20,14 @@ public class UserBuilder {
     private String email;
     private CurrentAccount currentAccount;
 
-    private List<Double> puntuations = new ArrayList<Double>();
+    private List<Score> puntuations = new ArrayList<Score>();
 
     private List<Vehicle> vehicles = new ArrayList<Vehicle>();
 
     public UserBuilder(){}
 
     public UserBuilder(Integer cuil, String name, String surname, String address, String email,
-                       CurrentAccount currentAccount, List<Double> puntuations, List<Vehicle> vehicles){
+                       CurrentAccount currentAccount, List<Score> puntuations, List<Vehicle> vehicles){
         this.cuil = cuil;
         this.name = name;
         this.surname = surname;
@@ -71,7 +72,7 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder setPuntuations(List<Double> puntuations){
+    public UserBuilder setPuntuations(List<Score> puntuations){
         this.puntuations = puntuations;
         return this;
     }
