@@ -6,17 +6,25 @@ import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { VehiclesComponent } from './vehicles/vehicles.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { OrchestratorComponent } from './orchestrator/orchestrator.component';
+import { RentalsComponent } from './rentals/rentals.component';
+import { ScoreComponent } from './score/score.component';
 
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
     VehiclesComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    OrchestratorComponent,
+    RentalsComponent,
+    ScoreComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
