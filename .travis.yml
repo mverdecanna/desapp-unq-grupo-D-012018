@@ -18,6 +18,6 @@ test:
 deploy:
 
   - provider: heroku
-
     skip_cleanup: true
-    app: desapp-unq-grupo-d-frontend 
+    api_key: c95463ef-1413-4962-b587-b49bbf25b8d2
+    app: desapp-unq-grupo-d-frontend
