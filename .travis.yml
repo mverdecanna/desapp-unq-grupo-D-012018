@@ -14,4 +14,10 @@ notifications:
     - mverdecanna@gmail.com
 test:
   - mvn test -B
-# before_install: cd project
+
+deploy:
+
+  - provider: heroku
+
+    skip_cleanup: true
+    app:desapp-unq-grupo-d-frontend 
