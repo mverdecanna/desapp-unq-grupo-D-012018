@@ -1,27 +1,14 @@
 {
-
   "root": "desapp-unq-grupo-D-frontend/dist",
-
   "clean_urls": true,
-
-  "proxies": {
-
-    "/api/": {
-
-      "origin": "/api"
-
-    }
-
+  "routes": {
+    "/**": "index.html"
   },
-
-    "headers": {
-
+  "headers": {
     "/**": {
 
       "Access-Control-Allow-Origin": "*"
 
     }
-
   }
-
 }

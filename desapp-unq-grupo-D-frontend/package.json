@@ -2,7 +2,6 @@
   "name": "desapp-unq-grupo-d-frontend",
   "version": "0.0.0",
   "license": "MIT",
-  "main": "start",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -15,9 +14,7 @@
   "dependencies": {
     "@angular/animations": "^5.2.0",
     "@angular/common": "^5.2.0",
-    "@angular/cli": "~1.7.3",
     "@angular/compiler": "^5.2.0",
-    "@angular/compiler-cli": "^5.2.0",
     "@angular/core": "^5.2.0",
     "@angular/forms": "^5.2.0",
     "@angular/http": "^5.2.0",
@@ -34,6 +31,8 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "codelyzer": "^4.0.1",
+    "@angular/cli": "~1.7.3",
+    "@angular/compiler-cli": "^5.2.0",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",
