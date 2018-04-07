@@ -20,4 +20,4 @@ deploy:
   - provider: heroku
 
     skip_cleanup: true
-    app:desapp-unq-grupo-d-frontend 
+    app: desapp-unq-grupo-d-frontend 
