@@ -27,7 +27,8 @@ public class VehicleTest {
 
     @Test
     public void vehicleIsAVanType(){
-        Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.VAN).build();
+        //Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.VAN).build();
+        Vehicle vehicle = new Vehicle(Vehicle.VehicleType.VAN);
         Assert.assertTrue(vehicle.getTypeName().equals("VAN"));
     }
 
