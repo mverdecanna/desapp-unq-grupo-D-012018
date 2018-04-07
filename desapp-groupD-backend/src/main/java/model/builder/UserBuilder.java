@@ -38,7 +38,14 @@ public class UserBuilder {
         this.vehicles = vehicles;
     }
 
-
+    public UserBuilder(Long cuil, String name, String surname, String address, String email){
+        this.cuil = cuil;
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.email = email;
+        this.currentAccount = new CurrentAccount(cuil);
+    }
 
     public UserBuilder setCuil(Long cuil){
         this.cuil = cuil;

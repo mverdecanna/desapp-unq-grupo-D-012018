@@ -7,19 +7,19 @@ import model.CurrentAccount;
  */
 public class CurrentAccountBuilder {
 
-    private Integer id;
+    private Long id;
     private Integer credits = 0;
 
 
     public CurrentAccountBuilder(){}
 
 
-    public CurrentAccountBuilder(Integer id){
+    public CurrentAccountBuilder(Long id){
         this.id = id;
     }
 
 
-    public CurrentAccountBuilder setId(Integer id){
+    public CurrentAccountBuilder setId(Long id){
         this.id = id;
         return this;
     }

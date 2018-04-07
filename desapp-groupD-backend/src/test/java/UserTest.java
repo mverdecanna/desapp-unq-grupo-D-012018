@@ -8,12 +8,45 @@ import model.builder.VehicleBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by mariano on 27/03/18.
  */
 public class UserTest {
 
+    @Test
+    public void  userConstructorTest(){
+        User user = new UserBuilder().setCuil(123456789L).setName("Lalo").setSurname("Landa").setAddress("Avenida SiempreViva 111").setEmail("desapp@unq.com").build();
+        Assert.assertTrue(user.getCuil().equals(123456789L) && user.getName().equals("Lalo") && user.getAddress().equals("Avenida SiempreViva 111")
+                && user.getEmail().equals("desapp@unq.com") && user.getSurname().equals("Landa"));
+    }
+    @Test
+    public void userAddListVehicleTest(){
+        List<Vehicle> vehicles= new ArrayList<Vehicle>();
+        Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.VAN).build();
+        vehicles.add(vehicle);
+        User user = new UserBuilder().setVehicles(vehicles).build();
+        Assert.assertTrue(user.getVehicles().contains(vehicle));
+    }
+    @Test
+    public void changeEmailAccountTest(){
+        User user = new UserBuilder().setEmail("desapp@unq.com.ar").build();
+        Assert.assertEquals(user.getEmail(),"desapp@unq.com.ar");
+        user.setEmail("lulalivre@unq.com.ar");
+        Assert.assertEquals(user.getEmail(),"lulalivre@unq.com.ar");
+    }
+    @Test
+    public void setCurrentAccountAndModifiedTest(){
+        CurrentAccount account = new CurrentAccountBuilder().setId(1L).build();
+        CurrentAccount account1 = new CurrentAccountBuilder().setId(2L).build();
+        User user = new UserBuilder().setCurrentAccount(account).build();
+        Assert.assertEquals(user.getCurrentAccount().getId(),account.getId());
+        user.setCurrentAccount(account1);
+        Assert.assertEquals(user.getCurrentAccount().getId(),account1.getId());
 
+    }
     @Test
     public void userAddOneVehicleTest(){
         User user = new UserBuilder().setCuil(123456789l).setName("Lalo").setSurname("Landa").build();
@@ -37,7 +70,7 @@ public class UserTest {
 
     @Test
     public void userPayCreditsAndSubstractToYourCurrentAccount(){
-        CurrentAccount currentAccount = new CurrentAccountBuilder().setId(11).build();
+        CurrentAccount currentAccount = new CurrentAccountBuilder().setId(11L).build();
         User user = new UserBuilder().setCuil(123456789l).setName("Lalo").setSurname("Landa").setCurrentAccount(currentAccount).build();
         user.addCreditInMyAccount(100);
         user.payCredit(50);
@@ -47,7 +80,7 @@ public class UserTest {
 
     @Test
     public void userReceiveCreditsAndAggregateToYourCurrentAccount() {
-        CurrentAccount currentAccount = new CurrentAccountBuilder().setId(11).build();
+        CurrentAccount currentAccount = new CurrentAccountBuilder().setId(11L).build();
         User user = new UserBuilder().setCuil(123456789l).setName("Lalo").setSurname("Landa").setCurrentAccount(currentAccount).build();
         user.receiveCredit(200);
         Assert.assertTrue(user.getBalance() == 200);
@@ -58,7 +91,7 @@ public class UserTest {
     @Test
     public void userInsufficientCreditsToRentACar(){
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.CAR).setCost(80).build();
-        CurrentAccount currentAccount = new CurrentAccountBuilder().setId(11).build();
+        CurrentAccount currentAccount = new CurrentAccountBuilder().setId(11L).build();
         User user = new UserBuilder().setCuil(123456789l).setName("Lalo").setSurname("Landa").setCurrentAccount(currentAccount).build();
         user.addCreditInMyAccount(50);
         Assert.assertFalse(user.canPayForThis(vehicle));

@@ -113,6 +113,10 @@ public class Vehicle {
         return cost;
     }
 
+    public void revalueateCost(Integer newcost){
+        this.setCost(newcost);
+    }
+
 
 
     public Boolean isValidDescription(String name){
@@ -132,5 +136,10 @@ public class Vehicle {
         return phoneUtil.isValidNumber(phone);
     }
 
+
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
+    }
 
 }

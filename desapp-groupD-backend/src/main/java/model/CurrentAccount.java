@@ -6,20 +6,20 @@ package model;
 public class CurrentAccount {
 
 
-    private Integer id;
+    private Long id;
     private Integer credits = 0;
 
 
     public CurrentAccount(){}
 
 
-    public CurrentAccount(Integer id){
+    public CurrentAccount(Long id){
         this.id = id;
     }
 
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -28,9 +28,6 @@ public class CurrentAccount {
         return credits;
     }
 
-    public void setCredits(Integer credits) {
-        this.credits = credits;
-    }
 
 
     public  void addCredit(Integer credit){
