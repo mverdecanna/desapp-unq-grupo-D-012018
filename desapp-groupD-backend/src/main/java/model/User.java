@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by mariano on 27/03/18.
@@ -9,7 +11,7 @@ import java.util.List;
 public class User {
 
 
-    private Integer cuil;
+    private Long cuil;
     private String name;
     private String surname;
     private String address;
@@ -22,7 +24,7 @@ public class User {
     public User(){}
 
 
-    public User(Integer cuil, String name, String surname, String address, String email,
+    public User(Long cuil, String name, String surname, String address, String email,
                 CurrentAccount currentAccount, List<Score> puntuations, List<Vehicle> vehicles){
         this.cuil = cuil;
         this.name = name;
@@ -36,7 +38,7 @@ public class User {
 
 
 
-    public Integer getCuil() {
+    public Long getCuil() {
         return cuil;
     }
 
@@ -163,6 +165,34 @@ public class User {
     public Boolean canPayForThis(Vehicle vehicle){
         return (this.getBalance() >= vehicle.getCost());
     }
+
+
+
+    public Boolean isValidName(String name){
+        return (name.length() >= 4) && (name.length() <= 50);
+    }
+
+    public Boolean isValidSurname(String surname){
+        return (surname.length() >= 4) && (surname.length() <= 50);
+    }
+
+
+    public Boolean isValidMail(String email){
+        Pattern pattern = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher mather = pattern.matcher(email);
+        return mather.find();
+    }
+
+
+    public Boolean isValidCuil(Long cuil){
+        return (cuil.toString().length() == 11);  // validacion bien basica para arrancar
+    }
+
+
+
+
 
 
 }

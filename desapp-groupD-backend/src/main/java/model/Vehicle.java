@@ -1,5 +1,10 @@
 package model;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+
+
 /**
  * Created by mariano on 27/03/18.
  */
@@ -108,6 +113,24 @@ public class Vehicle {
         return cost;
     }
 
+
+
+    public Boolean isValidDescription(String name){
+        return (name.length() >= 30) && (name.length() <= 200);
+    }
+
+
+    public Boolean isValidPhoneNumber(String phoneNumber){
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        PhoneNumber phone = new PhoneNumber();
+        try {
+            phone = phoneUtil.parse(phoneNumber, "ES");
+        } catch (NumberParseException e) {
+            System.err.println("InvalidPhoneNumberException was thrown: " + e.toString());
+        }
+        //phoneUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
+        return phoneUtil.isValidNumber(phone);
+    }
 
 
 }
