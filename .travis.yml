@@ -8,6 +8,10 @@ build:
 
 script: mvn clean verify
 
+notifications:
+  email:
+    - mvmarkon@gmail.com
+    - mverdecanna@gmail.com
 test:
   - mvn test -B
 # before_install: cd project
