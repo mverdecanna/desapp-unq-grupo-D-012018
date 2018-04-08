@@ -15,6 +15,7 @@ public class Score {
 
     public Score(Integer value, String comment){
         this.value = value;
+        this.setComment(comment);
     }
 
 
