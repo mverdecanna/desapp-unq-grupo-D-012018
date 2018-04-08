@@ -75,6 +75,8 @@ public class VehicleTest {
         vehicle.revalueateCost(4);
         Assert.assertTrue(vehicle.getCost().equals(4));
     }
+
+
     @Test
     public void vehicleChangeLocation(){
         Vehicle vehicle = new VehicleBuilder().setLocation("Bernal").build();
@@ -82,6 +84,57 @@ public class VehicleTest {
         vehicle.setLocation("Quilmes");
         Assert.assertTrue(vehicle.getLocation().equals("Quilmes"));
     }
+    @Test
+    public void vehicleTypeTest(){
+        Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.MOTORCYCLE).build();
+        Assert.assertTrue(vehicle.getType().equals(Vehicle.VehicleType.MOTORCYCLE));
 
+    }
+    @Test
+    public void vehicleChangePhoneTest(){
+        Vehicle vehicle = new VehicleBuilder().setPhone("44444444").build();
+        Assert.assertTrue(vehicle.getPhone().equals("44444444"));
+        vehicle.setPhone("22222222");
+        Assert.assertTrue(vehicle.getPhone().equals("22222222"));
+
+    }
+
+    @Test
+    public void vehicleChangeRetirementAddressTest(){
+        String retirementAdress="Av San Martin 2";
+        String newRetirementAddress= "Av Siempre Viva 1000";
+        Vehicle vehicle = new VehicleBuilder().setRetirementAddress(retirementAdress).build();
+        Assert.assertEquals(vehicle.getRetirementAddress(),retirementAdress);
+        vehicle.setRetirementAddress(newRetirementAddress);
+        Assert.assertEquals(vehicle.getRetirementAddress(),newRetirementAddress);
+
+    }
+    @Test
+    public void vehicleChangeReturnAddressTest(){
+        String returnAddress="Av San Martin 2";
+        String newReturnAddress= "Av Siempre Viva 1000";
+        Vehicle vehicle = new VehicleBuilder().setReturnAddress(returnAddress).build();
+        Assert.assertEquals(vehicle.getReturnAddress(),returnAddress);
+        vehicle.setReturnAddress(newReturnAddress);
+        Assert.assertEquals(vehicle.getReturnAddress(),newReturnAddress);
+
+    }
+    @Test
+    public void vehicleChangeCapacityTest(){
+        Vehicle vehicle = new VehicleBuilder().setCapacity(2).build();
+        Assert.assertTrue(vehicle.getCapacity().equals(2));
+        vehicle.setCapacity(3);
+        Assert.assertTrue(vehicle.getCapacity().equals(3));
+    }
+    @Test
+    public void vehicleChangeDescriptionTest(){
+        String description="Mas que un auto";
+        String newDescription= "Batimovil ";
+        Vehicle vehicle = new VehicleBuilder().setDescription(description).build();
+        Assert.assertEquals(vehicle.getDescription(),description);
+        vehicle.setDescription(newDescription);
+        Assert.assertEquals(vehicle.getDescription(),newDescription);
+
+    }
 
 }
