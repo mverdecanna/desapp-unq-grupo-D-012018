@@ -6,7 +6,8 @@ before_script:
 build:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
-script: mvn clean verify
+script:
+  - mvn clean verify
 
 notifications:
   email:
