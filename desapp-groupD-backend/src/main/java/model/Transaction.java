@@ -52,10 +52,6 @@ public class Transaction {
         this.cost = cost;
     }
 
-    public Date getCreate() {
-        return create;
-    }
-
 
     public StateTransaction getState() {
         return state;

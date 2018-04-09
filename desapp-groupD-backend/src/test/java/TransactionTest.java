@@ -26,7 +26,7 @@ public class TransactionTest {
         Rental rental = new RentalBuilder().setId(2222l).setStartDate(date).setEndDate(date).setOwner(userOwner)
                 .setClient(userClient).setVehicle(vehicle).build();
         Transaction transaction = new Transaction(500, rental);
-        Assert.assertTrue(transaction.getCost().equals(500) && transaction.getRental().equals(rental) && transaction.getCreate().equals(date)
+        Assert.assertTrue(transaction.getCost().equals(500) && transaction.getRental().equals(rental)
                 && transaction.getState().equals(Transaction.StateTransaction.RESERVATION));
     }
 
@@ -40,7 +40,8 @@ public class TransactionTest {
         Rental rental = new RentalBuilder().setId(2222l).setStartDate(date).setEndDate(date).setOwner(userOwner)
                 .setClient(userClient).setVehicle(vehicle).build();
         Transaction transaction = new TransactionBuilder().setId(13l).setCost(500).setRental(rental).build();
-        Assert.assertTrue(transaction.getState().equals(Transaction.StateTransaction.RESERVATION) && transaction.getRental().getState().equals(Rental.RentalState.WAIT_CONFIRM));
+        Assert.assertTrue(transaction.getState().equals(Transaction.StateTransaction.RESERVATION)
+                && transaction.getRental().getState().equals(Rental.RentalState.WAIT_CONFIRM));
         transaction.cancelTransaction();
         Assert.assertTrue(transaction.getState().equals(Transaction.StateTransaction.CANCEL) && transaction.getRental().getState().equals(Rental.RentalState.CANCEL));
     }
