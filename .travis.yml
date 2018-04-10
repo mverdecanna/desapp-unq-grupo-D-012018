@@ -1,7 +1,5 @@
 language: java
 
-before_script:
-  - cd desapp-groupD-backend
 
 build:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
@@ -14,10 +12,3 @@ notifications:
     - mverdecanna@gmail.com
 test:
   - mvn test -B
-
-deploy:
-
-  - provider: heroku
-    skip_cleanup: true
-    api_key: c95463ef-1413-4962-b587-b49bbf25b8d2
-    app: desapp-unq-grupo-d-frontend
