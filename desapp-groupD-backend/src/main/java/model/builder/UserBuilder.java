@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class UserBuilder {
 
-    private Long cuil;
+    private String cuil;
     private String name;
     private String surname;
     private String address;
@@ -26,7 +26,7 @@ public class UserBuilder {
 
     public UserBuilder(){}
 
-    public UserBuilder(Long cuil, String name, String surname, String address, String email,
+    public UserBuilder(String cuil, String name, String surname, String address, String email,
                        CurrentAccount currentAccount, List<Score> puntuations, List<Vehicle> vehicles){
         this.cuil = cuil;
         this.name = name;
@@ -38,7 +38,7 @@ public class UserBuilder {
         this.vehicles = vehicles;
     }
 
-    public UserBuilder(Long cuil, String name, String surname, String address, String email){
+    public UserBuilder(String cuil, String name, String surname, String address, String email){
         this.cuil = cuil;
         this.name = name;
         this.surname = surname;
@@ -47,7 +47,7 @@ public class UserBuilder {
         this.currentAccount = new CurrentAccount(cuil);
     }
 
-    public UserBuilder setCuil(Long cuil){
+    public UserBuilder setCuil(String cuil){
         this.cuil = cuil;
         return this;
     }

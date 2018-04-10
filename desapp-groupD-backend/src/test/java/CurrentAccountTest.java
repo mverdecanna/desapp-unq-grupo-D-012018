@@ -12,12 +12,12 @@ public class CurrentAccountTest {
 
     @Test
     public void currentAccountConstructorTest(){
-        CurrentAccount account = new CurrentAccountBuilder().setId(01L).build();
-        Assert.assertTrue(account.getId().equals(01L) && account.getCredits().equals(0) && account.getClass().equals(CurrentAccount.class));
+        CurrentAccount account = new CurrentAccountBuilder().setId("1").build();
+        Assert.assertTrue(account.getId().equals("1") && account.getCredits().equals(0) && account.getClass().equals(CurrentAccount.class));
     }
     @Test
     public void chargeTenCreditsTest(){
-        CurrentAccount currentAccount = new CurrentAccountBuilder().setId(11L).build();
+        CurrentAccount currentAccount = new CurrentAccountBuilder().setId("11").build();
         Integer tenCredits = 10;
         currentAccount.addCredit(tenCredits);
         Assert.assertTrue(currentAccount.getCredits() == tenCredits);
@@ -26,7 +26,7 @@ public class CurrentAccountTest {
 
     @Test
     public void substractFiveCreditsToTenCreditsTest(){
-        CurrentAccount currentAccount = new CurrentAccountBuilder().setId(11L).build();
+        CurrentAccount currentAccount = new CurrentAccountBuilder().setId("22").build();
         Integer tenCredits = 10;
         Integer fiveCredits = 5;
         currentAccount.addCredit(tenCredits);

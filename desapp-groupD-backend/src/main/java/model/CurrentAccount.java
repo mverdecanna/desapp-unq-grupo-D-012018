@@ -6,20 +6,20 @@ package model;
 public class CurrentAccount {
 
 
-    private Long id;
+    private String id;
     private Integer credits = 0;
 
 
     public CurrentAccount(){}
 
 
-    public CurrentAccount(Long id){
+    public CurrentAccount(String id){
         this.id = id;
     }
 
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class User {
 
 
-    private Long cuil;
+    private String cuil;
     private String name;
     private String surname;
     private String address;
@@ -24,7 +24,7 @@ public class User {
     public User(){}
 
 
-    public User(Long cuil, String name, String surname, String address, String email,
+    public User(String cuil, String name, String surname, String address, String email,
                 CurrentAccount currentAccount, List<Score> puntuations, List<Vehicle> vehicles){
         this.cuil = cuil;
         this.name = name;
@@ -38,7 +38,7 @@ public class User {
 
 
 
-    public Long getCuil() {
+    public String getCuil() {
         return cuil;
     }
 
@@ -185,10 +185,6 @@ public class User {
         return mather.find();
     }
 
-
-    public Boolean isValidCuil(Long cuil){
-        return (cuil.toString().length() == 11);  // validacion bien basica para arrancar
-    }
 
 
 

@@ -5,6 +5,7 @@ import model.Vehicle;
 import model.builder.CurrentAccountBuilder;
 import model.builder.UserBuilder;
 import model.builder.VehicleBuilder;
+import model.util.CuitValidator;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,8 +19,8 @@ public class UserTest {
 
     @Test
     public void  userConstructorTest(){
-        User user = new UserBuilder().setCuil(123456789L).setName("Lalo").setSurname("Landa").setAddress("Avenida SiempreViva 111").setEmail("desapp@unq.com").build();
-        Assert.assertTrue(user.getCuil().equals(123456789L) && user.getName().equals("Lalo") && user.getAddress().equals("Avenida SiempreViva 111")
+        User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").setAddress("Avenida SiempreViva 111").setEmail("desapp@unq.com").build();
+        Assert.assertTrue(user.getCuil().equals("20320231680") && user.getName().equals("Lalo") && user.getAddress().equals("Avenida SiempreViva 111")
                 && user.getEmail().equals("desapp@unq.com") && user.getSurname().equals("Landa"));
     }
     @Test
@@ -39,8 +40,8 @@ public class UserTest {
     }
     @Test
     public void setCurrentAccountAndModifiedTest(){
-        CurrentAccount account = new CurrentAccountBuilder().setId(1L).build();
-        CurrentAccount account1 = new CurrentAccountBuilder().setId(2L).build();
+        CurrentAccount account = new CurrentAccountBuilder().setId("1").build();
+        CurrentAccount account1 = new CurrentAccountBuilder().setId("2").build();
         User user = new UserBuilder().setCurrentAccount(account).build();
         Assert.assertEquals(user.getCurrentAccount().getId(),account.getId());
         user.setCurrentAccount(account1);
@@ -49,7 +50,7 @@ public class UserTest {
     }
     @Test
     public void userAddOneVehicleTest(){
-        User user = new UserBuilder().setCuil(123456789l).setName("Lalo").setSurname("Landa").build();
+        User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").build();
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.VAN).build();
         user.addVehicle(vehicle);
         Assert.assertTrue(user.getVehicles().size() == 1);
@@ -58,7 +59,7 @@ public class UserTest {
 
     @Test
     public void userReputationIsGoodTest(){
-        User user = new UserBuilder().setCuil(123456789l).setName("Lalo").setSurname("Landa").build();
+        User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").build();
         //Score score3 = new Score(3, "3 puntos");
         //Score score5 = new Score(5, "5 puntos");
         user.scoreUser(3, "3 puntos");
@@ -70,8 +71,8 @@ public class UserTest {
 
     @Test
     public void userPayCreditsAndSubstractToYourCurrentAccount(){
-        CurrentAccount currentAccount = new CurrentAccountBuilder().setId(11L).build();
-        User user = new UserBuilder().setCuil(123456789l).setName("Lalo").setSurname("Landa").setCurrentAccount(currentAccount).build();
+        CurrentAccount currentAccount = new CurrentAccountBuilder().setId("11").build();
+        User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").setCurrentAccount(currentAccount).build();
         user.addCreditInMyAccount(100);
         user.payCredit(50);
         Assert.assertTrue(user.getBalance() == 50);
@@ -80,8 +81,8 @@ public class UserTest {
 
     @Test
     public void userReceiveCreditsAndAggregateToYourCurrentAccount() {
-        CurrentAccount currentAccount = new CurrentAccountBuilder().setId(11L).build();
-        User user = new UserBuilder().setCuil(123456789l).setName("Lalo").setSurname("Landa").setCurrentAccount(currentAccount).build();
+        CurrentAccount currentAccount = new CurrentAccountBuilder().setId("11").build();
+        User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").setCurrentAccount(currentAccount).build();
         user.receiveCredit(200);
         Assert.assertTrue(user.getBalance() == 200);
     }
@@ -91,8 +92,8 @@ public class UserTest {
     @Test
     public void userInsufficientCreditsToRentACar(){
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.CAR).setCost(80).build();
-        CurrentAccount currentAccount = new CurrentAccountBuilder().setId(11L).build();
-        User user = new UserBuilder().setCuil(123456789l).setName("Lalo").setSurname("Landa").setCurrentAccount(currentAccount).build();
+        CurrentAccount currentAccount = new CurrentAccountBuilder().setId("11").build();
+        User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").setCurrentAccount(currentAccount).build();
         user.addCreditInMyAccount(50);
         Assert.assertFalse(user.canPayForThis(vehicle));
     }
@@ -101,31 +102,29 @@ public class UserTest {
     @Test
     public void userNameIsValidForANormalNames(){
         String name = "Mariano Carlos";
-        User user = new UserBuilder().setCuil(123456789l).build();
+        User user = new UserBuilder().setCuil("20320231680").build();
         Assert.assertTrue(user.isValidName(name));
     }
 
     @Test
     public void userSurnameIsNotValidBecauseIsVeryShort(){
         String name = "Cuo";
-        User user = new UserBuilder().setCuil(123456789l).build();
+        User user = new UserBuilder().setCuil("20320231680").build();
         Assert.assertFalse(user.isValidSurname(name));
     }
 
 
     @Test
     public void userCuilIsValidWithACorrectLength(){
-        Long cuil = 99123456780l;
-        User user = new UserBuilder().build();
-        Assert.assertTrue(user.isValidCuil(cuil));
+        String cuil = "20320231680";
+        Assert.assertTrue(CuitValidator.isValid(cuil));
     }
 
 
     @Test
     public void userCuilIsNotValidWithAIncorrectLength(){
-        Long cuil = 123456780l;
-        User user = new UserBuilder().build();
-        Assert.assertFalse(user.isValidCuil(cuil));
+        String cuil = "123456780";
+        Assert.assertFalse(CuitValidator.isValid(cuil));
     }
 
 
