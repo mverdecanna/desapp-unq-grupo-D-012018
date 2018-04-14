@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.*;
+
 /**
  * Created by mariano on 27/03/18.
  */
+@Entity
 public class User {
 
 
