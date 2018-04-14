@@ -20,6 +20,11 @@
       <version>4.3</version>
     </dependency>
     <dependency>
+      <groupId>com.codacy</groupId>
+      <artifactId>codacy-coverage-reporter</artifactId>
+      <version>4.0.0</version>
+    </dependency>
+    <dependency>
       <groupId>com.googlecode.libphonenumber</groupId>
       <artifactId>geocoder</artifactId>
       <version>1.7</version>
@@ -72,7 +77,7 @@
                               <limit implementation="org.jacoco.report.check.Limit">
                                   <counter>INSTRUCTION</counter>
                                   <value>COVEREDRATIO</value>
-                                  <minimum>0.30</minimum>
+                                  <minimum>0.70</minimum>
                               </limit>
                           </limits>
                       </rule>
