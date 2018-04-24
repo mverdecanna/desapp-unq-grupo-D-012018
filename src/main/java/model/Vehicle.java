@@ -4,10 +4,15 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 
 /**
  * Created by mariano on 27/03/18.
  */
+@Entity
+@Table
 public class Vehicle {
 
 

@@ -10,9 +10,7 @@ import javax.persistence.*;
 /**
  * Created by mariano on 27/03/18.
  */
-@Entity
-public class User {
-
+public class User extends Entity {
 
     private String cuil;
     private String name;
@@ -24,7 +22,9 @@ public class User {
     public List<Vehicle> vehicles = new ArrayList<Vehicle>();
 
 
-    public User(){}
+    public User(){
+        super();
+    }
 
 
     public User(String cuil, String name, String surname, String address, String email,
