@@ -7,6 +7,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import service.UserService;
 
+import java.util.List;
+
 /**
  * Created by mariano on 17/04/18.
  */
@@ -21,8 +23,10 @@ public class HibernateTest {
 
     @Test
     public void testSave() {
+        User user = new User();
         userService.save(new User());
-        Assert.assertEquals(1, userService.retriveAll().size());
+        List<User> users = this.userService.retriveAll();
+        Assert.assertEquals(1, users.size());
     }
 
 }
