@@ -6,24 +6,56 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.*;
+
 
 /**
  * Created by mariano on 27/03/18.
  */
-public class User extends Entity {
+@Entity
+@Table(name="users", schema = "carpnd")
+public class User {
 
+    @Id
+    @Column(name="cuil")
     private String cuil;
+
+    @Column(name="name")
     private String name;
+
+    @Column(name="surname")
     private String surname;
+
+    @Column(name="address")
     private String address;
+
+    @Column(name="email")
     private String email;
+
+    @Transient
     private CurrentAccount currentAccount;
+
+    @Transient
     private List<Score> puntuations = new ArrayList<Score>();
+
+    @Transient
     public List<Vehicle> vehicles = new ArrayList<Vehicle>();
 
 
     public User(){
         super();
+    }
+
+
+    public User(String cuil, String name, String surname, String address, String email){
+        this.cuil = cuil;
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.email = email;
     }
 
 

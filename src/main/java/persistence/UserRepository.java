@@ -17,7 +17,9 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
 
     @Override
     public void save(User entity) {
-
+        //super.save(entity);
+        this.getHibernateTemplate().save(entity);
+        this.getHibernateTemplate().flush();
     }
 
     @Override
@@ -37,7 +39,7 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
 
     @Override
     public List<User> findAll() {
-        return null;
+        return (List<User>) super.findAll();
     }
 
 
