@@ -17,13 +17,32 @@ public abstract class HibernateGenericDAO<T>  extends HibernateDaoSupport implem
 
     protected Class<T> persistentClass = this.getDomainClass();
 
-    @SuppressWarnings("unchecked")
+    public T findById(Serializable id){
+        Object aux = this.getHibernateTemplate().get(this.persistentClass.getName(), id);
+        return (T)aux;
+    }
     public int count() {
         List<Long> list = (List<Long>) this.getHibernateTemplate()
                 .find("select count(*) from " + this.persistentClass.getName() + " o");
         Long count = list.get(0);
         return count.intValue();
 
+    }
+
+    public void save(T entity) {
+        this.getHibernateTemplate().save(entity);
+        this.getHibernateTemplate().flush();
+    }
+    
+    public void delete(T entity) {
+        this.getHibernateTemplate().delete(entity);
+        this.getHibernateTemplate().flush();
+    }
+
+
+    public void update(T entity) {
+        this.getHibernateTemplate().update(entity);
+        this.getHibernateTemplate().flush();
     }
 
 

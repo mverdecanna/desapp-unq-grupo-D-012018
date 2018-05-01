@@ -15,31 +15,16 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
     private static final long serialVersionUID = -4036535812105672110L;
 
 
-    @Override
-    public void save(User entity) {
-        //super.save(entity);
-        this.getHibernateTemplate().save(entity);
-        this.getHibernateTemplate().flush();
-    }
-
-    @Override
-    public void delete(User entity) {
-
-    }
-
-    @Override
-    public void update(User entity) {
-
-    }
 
     @Override
     public User findById(Serializable id) {
-        return null;
+        return super.findById(id);
     }
 
     @Override
     public List<User> findAll() {
-        return (List<User>) super.findAll();
+
+        return super.findAll();
     }
 
 
