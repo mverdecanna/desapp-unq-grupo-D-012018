@@ -13,8 +13,6 @@ before_install:
                  email VARCHAR(50),
                  PRIMARY KEY (cuil)
               );'
-  - mysql show databases;
-  - mysql show tables;
 build:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
