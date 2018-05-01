@@ -3,6 +3,9 @@ language: java
 services:
   - mysql
 
+before_install:
+  - mysql -e 'CREATE DATABASE carpnd;'
+
 build:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
