@@ -14,7 +14,6 @@ before_install:
                  PRIMARY KEY (cuil)
               );'
   - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('admin') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-  - sudo mysql_upgrade
   - sudo service mysql restart
 build:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
