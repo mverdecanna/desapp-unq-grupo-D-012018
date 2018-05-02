@@ -1,12 +1,18 @@
 language: java
 
-
 build:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
+services:
+  - mysql
+
 script: mvn clean verify
 
-
+before_install:
+  - mysql -e 'CREATE DATABASE carpnd;',
+  - mysql -e 'CREATE TABLE carpnd.users(
+      cuil VARCHAR(11) NOT NULL UNIQUE, name VARCHAR(30), surname VARCHAR(30), address VARCHAR(50), email VARCHAR(50),
+      PRIMARY KEY (cuil) );'
 notifications:
   email:
     - mvmarkon@gmail.com
