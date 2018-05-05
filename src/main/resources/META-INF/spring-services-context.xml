@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+
 
     <!-- beans de spring -->
     <bean id="service.general" class="service.GeneralService">
@@ -13,6 +21,13 @@
 
     <bean id="service.user" class="service.UserService">
         <property name="repository" ref="persistence.userrepository" />
+    </bean>
+
+    <!-- ======== User Services ========= -->
+
+
+    <bean id="userRest" class="webservice.UserRest">
+        <property name="service" ref="service.user" />
     </bean>
 
 

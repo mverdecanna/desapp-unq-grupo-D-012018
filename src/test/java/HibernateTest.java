@@ -23,7 +23,6 @@ public class HibernateTest {
 
 
     @Test
-    @Transactional
     public void testSave() {
         Assert.assertEquals(0,this.userService.count());
         User user = new User("20320231680", "Lalo", "Landa", "cuco 234", "bla@yahoo.com");
