@@ -15,6 +15,8 @@
     <!-- <hibernate.version>3.6.0.Final</hibernate.version> -->
     <hibernate.version>4.3.6.Final</hibernate.version>
     <!-- hibernate.version>5.2.2.Final</hibernate.version -->
+    <cxf.version>2.7.18</cxf.version>
+    <jackson.version>1.8.2</jackson.version>
   </properties>
 
 
@@ -270,6 +272,45 @@
         </exclusion>
       </exclusions>
     </dependency>
+
+
+
+    <!-- CXF -->
+
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxws</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+
+    <!-- Jetty is needed if you're are not using the CXFServlet -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http-jetty</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-bundle-jaxrs</artifactId>
+      <!-- 2.3.5 or 2.4.1 -->
+      <version>${cxf.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-server</artifactId>
+        </exclusion>
+      </exclusions>
+
+    </dependency>
+
+    <!-- /CXF -->
 
 
 

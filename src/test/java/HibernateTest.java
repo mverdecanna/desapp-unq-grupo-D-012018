@@ -62,8 +62,9 @@ public class HibernateTest {
         Assert.assertEquals(marco,dbMarco);
         Assert.assertNotEquals(lalo,dbMarco);
     }
-    @Test
+
     @Transactional
+    @Test
     public void testCount(){
         User lalo = new User("20320231680", "Lalo", "Landa", "cuco 234", "bla@yahoo.com");
         User marco = new User("20320231682", "Marco", "Landa", "cuco 234", "ha@yahoo.com");
