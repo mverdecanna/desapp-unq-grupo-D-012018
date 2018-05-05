@@ -4,13 +4,15 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
 
-  <display-name>Spring Hibernate</display-name>
+  <display-name>Web Spring Hibernate</display-name>
+  <description>Web Spring Hibernate</description>
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
       classpath*:/META-INF/spring-persistence-context.xml,
-      classpath*:/META-INF/spring-services-context.xml
+      classpath*:/META-INF/spring-services-context.xml,
+      classpath*:/WEB-INF/applicationContext*.xml
     </param-value>
   </context-param>
 
@@ -27,5 +29,20 @@
   <session-config>
     <session-timeout>7200</session-timeout>
   </session-config>
+
+
+  <servlet>
+    <servlet-name>CXFServlet</servlet-name>
+    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+
+
+  <servlet-mapping>
+    <servlet-name>CXFServlet</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+
 
 </web-app>

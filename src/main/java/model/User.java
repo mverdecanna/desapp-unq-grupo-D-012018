@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.*;
 
@@ -17,6 +18,7 @@ import org.hibernate.annotations.*;
  */
 @Entity
 @Table(name="users", schema = "carpnd")
+@XmlRootElement(name="User")
 public class User {
 
     @Id

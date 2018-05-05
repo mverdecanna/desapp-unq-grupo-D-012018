@@ -12,8 +12,8 @@ import java.util.List;
 public class UserRepository extends HibernateGenericDAO<User> implements GenericRepository<User> {
 
     public static Logger log = Logger.getLogger(UserRepository.class);
-    private static final long serialVersionUID = -4036535812105672110L;
 
+    private static final long serialVersionUID = -4036535812105672110L;
 
 
     @Override
@@ -21,10 +21,15 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
         return super.findById(id);
     }
 
+
     @Override
     public List<User> findAll() {
-
         return super.findAll();
+    }
+
+
+    public int countUser(){
+        return super.count();
     }
 
 
