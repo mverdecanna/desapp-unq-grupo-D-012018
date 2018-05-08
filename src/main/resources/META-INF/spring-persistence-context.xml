@@ -10,14 +10,7 @@
 
     <tx:annotation-driven transaction-manager="persistence.transactionManager"	proxy-target-class="true" />
 
-    <!--
-            ========================= GENERAL DEFINITIONS
-            =========================
-        -->
-    <!--
-        Configurer that replaces ${...} placeholders with values from
-        properties files
-    -->
+    <!--  ========================= GENERAL DEFINITIONS ========================= -->
     <!-- (in this case, mail and JDBC related properties) -->
     <bean id="persistence.propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -25,7 +18,7 @@
             <list>
                 <value>classpath*:META-INF/hibernate.properties</value>
                 <value>classpath*:META-INF/jdbc.properties</value>
-                <!-- <value>classpath*:META-INF/jdbc.MYSQL.properties</value> -->
+                 <value>classpath*:META-INF/jdbc.MYSQL.properties</value>
             </list>
         </property>
     </bean>

@@ -1,15 +1,11 @@
 package webservice;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import model.User;
 import service.UserService;
 
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-
-
+import javax.ws.rs.*;
 
 
 /**
@@ -37,6 +33,15 @@ public class UserRest {
         User user = service.findById(idUser);
         return user;
     }
+
+    @POST
+    @Path("/save")
+    @Consumes("application/json")
+    public void saveUser(User usr) {
+        System.out.println(usr);
+//        service.save(usr);
+    }
+
 
 //    @GET
 //    @Path("/byAuthor/{id}")
