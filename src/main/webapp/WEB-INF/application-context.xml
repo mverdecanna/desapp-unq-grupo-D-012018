@@ -25,24 +25,12 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 <!-- =========Servicios  ========= -->
 
 
-
-
-	<bean id="service.user" class="service.UserService">
-		<property name="repository" ref="persistence.userrepository" />
-	</bean>
-	<bean id="userRest" class="webservice.UserRest">
-		<property name="service" ref="service.user" />
-	</bean>
-
-
-
-	<jaxrs:server id="user" address="/user"  >
+	<jaxrs:server id="carpnd" address="/"  >
 		<jaxrs:serviceBeans>
 			<ref bean="userRest" />
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="json" value="application/json" />
-			<entry key="xml" value="application/xml" />
 		</jaxrs:extensionMappings>
 		<jaxrs:providers>
 			<ref bean="jaxbProvider" />
@@ -54,12 +42,11 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 	</jaxrs:server>
 
 
-<!--
-    <bean id="dao.post" class="persistence.UserRepository" />
-	
 	<bean id="userRest" class="webservice.UserRest">
-		<property name="genericRepository" ref="dao.post" />
+		<property name="userService" ref="service.user" />
 	</bean>
--->
+
+
+
 
 </beans>

@@ -1,6 +1,7 @@
 package webservice;
 
 import persistence.UserRepository;
+import service.UserService;
 
 import javax.ws.rs.*;
 import java.util.List;
@@ -15,16 +16,25 @@ public class UserRest {
     public static final int NUMBER_OF_POST = 10;
 
 
-    private UserRepository userRepository;
+    private UserService userService;
 
+
+    public void setUserService(final UserService service) {
+        this.userService = service;
+    }
+
+
+    public UserService getUserService() {
+        return userService;
+    }
 
     @GET
     @Path("/count")
     @Produces("application/json")
     public Integer countUsers() {
-        return this.userRepository.countUser();
+        //return this.userService.nUsuers();
+        return 111111;
     }
-
 
 
 }

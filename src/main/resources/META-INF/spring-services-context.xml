@@ -16,35 +16,5 @@
         <property name="repository" ref="persistence.userrepository" />
     </bean>
 
-    <bean id="userRest" class="webservice.UserRest">
-     <!--   <property name="service" ref="service.user" />  -->
-    </bean>
-
-    <import resource="classpath:META-INF/cxf/cxf.xml" />
-    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
-
-
-<!--
-    <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />
-
-    <bean id='jacksonProvider' class='org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider' />
-
-
-    <bean id="userService" class="services.UserService">
-        <property name="repository" ref="userRepository"/>
-    </bean>
-
-    <bean id="userRest" class="webservice.UserRest">
-        <property name="service" ref="userService"/>
-    </bean>
-    <bean id="initialize" class="services.initialization.ServiceInitializer">
-        <constructor-arg>
-            <list>
-                <ref bean="userService"></ref>
-            </list>
-        </constructor-arg>
-    </bean>
--->
-
 
 </beans>
