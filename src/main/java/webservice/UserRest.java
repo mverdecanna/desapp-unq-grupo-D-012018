@@ -8,8 +8,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-
-
+import javax.ws.rs.core.Response;
 
 
 /**
@@ -33,28 +32,28 @@ public class UserRest {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public User findUser(@PathParam("id") final String idUser) {
+    public Response findUser(@PathParam("id") final String idUser) {
         User user = service.findById(idUser);
-        return user;
+        return Response.ok().build();
     }
-
-//    @GET
-//    @Path("/byAuthor/{id}")
-//    @Produces("application/json")
-//    public Response findPostsPublishedByAuthorId(@PathParam("id") final String id) {
-//        List<Post> posts = postRepository.getPosts(id);
-//        if (posts.isEmpty()) {
-//            return Response.status(Response.Status.NOT_FOUND).build();
-//        }
-//        return Response.ok(posts).build();
-//    }
 //
-//    @GET
-//    @Path("/count")
-//    @Produces("application/json")
-//    public Integer countPostsPublishedByBlogId(@DefaultValue(StringUtils.EMPTY) @QueryParam("tag") final String tag) {
-//        return postRepository.getcount(tag);
-//    }
-
-
+////    @GET
+////    @Path("/byAuthor/{id}")
+////    @Produces("application/json")
+////    public Response findPostsPublishedByAuthorId(@PathParam("id") final String id) {
+////        List<Post> posts = postRepository.getPosts(id);
+////        if (posts.isEmpty()) {
+////            return Response.status(Response.Status.NOT_FOUND).build();
+////        }
+////        return Response.ok(posts).build();
+////    }
+////
+////    @GET
+////    @Path("/count")
+////    @Produces("application/json")
+////    public Integer countPostsPublishedByBlogId(@DefaultValue(StringUtils.EMPTY) @QueryParam("tag") final String tag) {
+////        return postRepository.getcount(tag);
+////    }
+//
+//
 }
