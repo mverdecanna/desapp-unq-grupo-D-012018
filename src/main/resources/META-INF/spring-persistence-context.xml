@@ -57,6 +57,7 @@
         <property name="annotatedClasses">
             <list>
                 <value>model.User</value>
+                <value>model.CurrentAccount</value>
             </list>
         </property>
 

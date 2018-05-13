@@ -1,12 +1,25 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by mariano on 29/03/18.
  */
+@Entity
+@Table(name="current_acounts", schema = "carpnd")
+@XmlRootElement(name="CurrentAccount")
 public class CurrentAccount {
 
 
-    private String id;
+    @Id
+    @Column(name="cuil")
+    private String cuil;
+
+    @Column(name="credits")
     private Integer credits = 0;
 
 
@@ -14,13 +27,13 @@ public class CurrentAccount {
 
 
     public CurrentAccount(String id){
-        this.id = id;
+        this.cuil = id;
     }
 
 
 
     public String getId() {
-        return id;
+        return cuil;
     }
 
 

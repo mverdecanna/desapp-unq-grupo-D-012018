@@ -13,6 +13,9 @@ before_install:
   - mysql -e 'CREATE TABLE carpnd.users(
       cuil VARCHAR(11) NOT NULL UNIQUE, name VARCHAR(30), surname VARCHAR(30), address VARCHAR(50), email VARCHAR(50),
       PRIMARY KEY (cuil) );'
+  - mysql -e 'CREATE TABLE carpnd.current_acounts(
+        cuil VARCHAR(11) NOT NULL UNIQUE, credits INTEGER(8),
+        PRIMARY KEY (cuil) );'
 notifications:
   email:
     - mvmarkon@gmail.com

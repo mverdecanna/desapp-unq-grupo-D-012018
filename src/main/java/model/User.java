@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -19,7 +21,7 @@ import org.hibernate.annotations.*;
 @Entity
 @Table(name="users", schema = "carpnd")
 @XmlRootElement(name="User")
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name="cuil")
@@ -37,7 +39,10 @@ public class User {
     @Column(name="email")
     private String email;
 
-    @Transient
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinTable(name="current_acounts",
+            joinColumns={@JoinColumn(name="cuil", referencedColumnName="cuil")},
+            inverseJoinColumns={@JoinColumn(name="cuil", referencedColumnName="cuil")})
     private CurrentAccount currentAccount;
 
     @Transient
@@ -109,8 +114,6 @@ public class User {
     public List<Vehicle> getVehicles() {
         return vehicles;
     }
-
-
 
 
     public CurrentAccount getCurrentAccount() {
