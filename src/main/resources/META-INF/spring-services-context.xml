@@ -10,11 +10,15 @@
     <!-- beans de spring -->
     <bean id="service.general" class="service.GeneralService">
         <property name="userService" ref="service.user" />
+        <property name="vehicleService" ref="service.vehicle" />
     </bean>
 
     <bean id="service.user" class="service.UserService">
-        <property name="repository" ref="persistence.userrepository" />
+        <property name="repository" ref="persistence.userRepository" />
     </bean>
 
+    <bean id="service.vehicle" class="service.VehicleService">
+        <property name="repository" ref="persistence.vehicleRepository" />
+    </bean>
 
 </beans>

@@ -33,6 +33,7 @@ public class UserRest {
         return userService;
     }
 
+
     @GET
     @Path("/count")
     @Produces("application/json")
@@ -68,6 +69,32 @@ public class UserRest {
         }
         return Response.ok(users).build();
     }
+
+
+
+    @GET
+    @Path("/test")
+    @Produces("application/json")
+    public Long testUser() {
+        Long resp = this.userService.testService();
+        if(resp == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return resp;
+    }
+
+
+
+    @POST
+    @Path("/save")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public void saveUser(User user) {
+        this.userService.save(user);
+    }
+
+
+
 
 
 

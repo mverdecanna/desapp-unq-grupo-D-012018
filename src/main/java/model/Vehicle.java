@@ -4,31 +4,63 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 
 /**
  * Created by mariano on 27/03/18.
  */
 @Entity
-@Table
-public class Vehicle {
+@Table(name="vehicles", schema = "carpnd")
+@XmlRootElement(name="Vehicle")
+public class Vehicle implements Serializable {
 
 
     public enum VehicleType{
         MOTORCYCLE, CAR, VAN, TRUCK
     }
 
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Id
+    @Column(name="type")
     private VehicleType type;
+
+    @Id
+    @Column(name="capacity")
     private Integer capacity;
+
+    @Id
+    @Column(name="location")
     private String location;
+
+    @Id
+    @Column(name="retirementAddress")
     private String retirementAddress;   //  MAPA
+
+    @Id
+    @Column(name="returnAddress")
     private String returnAddress;   //  MAPA  -  List
+
+    @Id
+    @Column(name="description")
     private String description;
+
+    @Id
+    @Column(name="phone")
     private String phone;
+
+    @Id
+    @Column(name="cost")
     private Integer cost;
+
+    @Transient
     private String planilla;  // horario y dias disponibles para alquilar
     // private String fotos   escuche que deberia ser un String que sea el link a la imagen
 
@@ -123,6 +155,13 @@ public class Vehicle {
     }
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Boolean isValidDescription(String name){
         return (name.length() >= 30) && (name.length() <= 200);

@@ -58,6 +58,7 @@
             <list>
                 <value>model.User</value>
                 <value>model.CurrentAccount</value>
+                <value>model.Vehicle</value>
             </list>
         </property>
 
@@ -107,9 +108,14 @@
     <!-- ___________ Beans  de negocio___________ -->
     <!-- ________________________________________ -->
     <!-- ________________________________________ -->
-        <bean id="persistence.userrepository" class="persistence.UserRepository" >
-            <property name="sessionFactory" ref="persistence.sessionFactory" />
-        </bean>
+    <bean id="persistence.userRepository" class="persistence.UserRepository" >
+        <property name="sessionFactory" ref="persistence.sessionFactory" />
+    </bean>
+
+    <bean id="persistence.vehicleRepository" class="persistence.VehicleRepository" >
+        <property name="sessionFactory" ref="persistence.sessionFactory" />
+    </bean>
+
 
 
     </beans>

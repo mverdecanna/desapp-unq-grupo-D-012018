@@ -16,6 +16,14 @@ before_install:
   - mysql -e 'CREATE TABLE carpnd.current_account(
         cuil VARCHAR(11) NOT NULL UNIQUE, credits INTEGER(8),
         PRIMARY KEY (cuil) );'
+  - mysql -e 'CREATE TABLE carpnd.vehicles(
+        id INTEGER(8) NOT NULL UNIQUE, type VARCHAR(10) NOT NULL, capacity INTEGER(2), location VARCHAR(50), retirementAddress VARCHAR(50),
+        returnAddress VARCHAR(50), description VARCHAR(50), phone VARCHAR(50), cost INTEGER(4), PRIMARY KEY (id) );'
+  - mysql -e 'CREATE TABLE carpnd.users_vehicles(
+        cuil VARCHAR(11) not null, vehicle_id INTEGER(8) not null, PRIMARY KEY (cuil, vehicle_id), INDEX (cuil), INDEX (vehicle_id),
+        FOREIGN KEY (cuil) REFERENCES carpnd.users (cuil) on delete cascade,
+        FOREIGN KEY (vehicle_id) REFERENCES carpnd.vehicles (id) on delete cascade);'
+
 notifications:
   email:
     - mvmarkon@gmail.com

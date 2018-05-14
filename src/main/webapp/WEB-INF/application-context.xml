@@ -28,6 +28,7 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 	<jaxrs:server id="carpnd" address="/"  >
 		<jaxrs:serviceBeans>
 			<ref bean="userRest" />
+			<ref bean="vehicleRest" />
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="json" value="application/json" />
@@ -44,6 +45,11 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 
 	<bean id="userRest" class="webservice.UserRest">
 		<property name="userService" ref="service.user" />
+	</bean>
+
+
+	<bean id="vehicleRest" class="webservice.VehicleRest">
+		<property name="vehicleService" ref="service.vehicle" />
 	</bean>
 
 

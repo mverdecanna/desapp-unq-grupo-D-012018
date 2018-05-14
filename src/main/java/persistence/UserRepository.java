@@ -17,6 +17,12 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
 
 
     @Override
+    protected Class<User> getDomainClass() {
+        return User.class;
+    }
+
+
+    @Override
     public User findById(Serializable id) {
         return super.findById(id);
     }
@@ -34,9 +40,14 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
     }
 
 
-    @Override
-    protected Class<User> getDomainClass() {
-        return User.class;
+    public Long test(){
+        return 11111111111111111l;
     }
+
+    @Override
+    public void save(User user){
+        super.save(user);
+    }
+
 
 }

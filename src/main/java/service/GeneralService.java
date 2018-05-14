@@ -5,8 +5,10 @@ package service;
  */
 public class GeneralService {
 
-    private UserService userService;
 
+
+    //  UserService
+    private UserService userService;
 
     public UserService getUserService() {
         return userService;
@@ -15,4 +17,21 @@ public class GeneralService {
     public void setUserService(final UserService userService) {
         this.userService = userService;
     }
+    //  UserService
+
+
+    //  VehicleService
+    private VehicleService vehicleService;
+
+    public VehicleService getVehicleService() {
+        return vehicleService;
+    }
+
+    public void setVehicleService(VehicleService vehicleService) {
+        this.vehicleService = vehicleService;
+    }
+    //  VehicleService
+
+
+
 }

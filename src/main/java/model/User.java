@@ -39,10 +39,12 @@ public class User implements Serializable {
     @Column(name="email")
     private String email;
 
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinTable(name="current_acounts",
+
+/*    @OneToOne(cascade=CascadeType.ALL)
+    @JoinTable(name="current_account",
             joinColumns={@JoinColumn(name="cuil", referencedColumnName="cuil")},
-            inverseJoinColumns={@JoinColumn(name="cuil", referencedColumnName="cuil")})
+            inverseJoinColumns={@JoinColumn(name="cuil", referencedColumnName="cuil")})   */
+@Transient
     private CurrentAccount currentAccount;
 
     @Transient
@@ -79,9 +81,12 @@ public class User implements Serializable {
     }
 
 
-
     public String getCuil() {
         return cuil;
+    }
+
+    public void setCuil(String cuil) {
+        this.cuil = cuil;
     }
 
 
@@ -89,11 +94,17 @@ public class User implements Serializable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getSurname() {
         return surname;
     }
 
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 
     public String getAddress() {
         return address;
@@ -114,6 +125,8 @@ public class User implements Serializable {
     public List<Vehicle> getVehicles() {
         return vehicles;
     }
+
+
 
 
     public CurrentAccount getCurrentAccount() {
