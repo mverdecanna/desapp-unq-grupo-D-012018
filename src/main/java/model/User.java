@@ -126,7 +126,7 @@ public class User implements Serializable {
     }
 
 
-    public Integer getBalance(){
+    public Integer balance(){
         return this.currentAccount.getCredits();
     }
 
@@ -203,7 +203,7 @@ public class User implements Serializable {
      *    el metodo va a cambiar si el costo es un valor calculado
      */
     public Boolean canPayForThis(Vehicle vehicle){
-        return (this.getBalance() >= vehicle.getCost());
+        return (this.balance() >= vehicle.getCost());
     }
 
 

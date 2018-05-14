@@ -27,11 +27,13 @@ public class HibernateTest {
     @Test
  //@Transactional
     public void testSave() {
-        Assert.assertEquals(0,this.userService.count());
+        Integer cero = 0;
+        Integer uno = 1;
+        Assert.assertEquals(cero, this.userService.count());
         User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").setAddress("Avenida SiempreViva 111").setEmail("desapp@unq.com")
                 .setCurrentAccount(new CurrentAccount("20320231680")).build();
         this.userService.save(user);
-        Assert.assertEquals(1, this.userService.count());
+        Assert.assertEquals(uno, this.userService.count());
     }
 //    @Test
 //    @Transactional

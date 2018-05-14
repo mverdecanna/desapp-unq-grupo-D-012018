@@ -19,6 +19,6 @@ public interface GenericRepository<T> {
 
     List<T> findAll();
 
-    int count();
+    Integer count();
 
 }

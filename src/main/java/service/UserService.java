@@ -14,8 +14,10 @@ public class UserService extends GenericService<User> {
     private UserRepository userRepository;
 
 
+    // no esta bien mapeado en userRepository, por eso rompe...
+
     public Integer nUsuers(){
-        return this.userRepository.countUser();
+        return this.userRepository.count();
     }
 
 

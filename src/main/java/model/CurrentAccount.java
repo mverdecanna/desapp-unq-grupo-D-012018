@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Created by mariano on 29/03/18.
  */
 @Entity
-@Table(name="current_acounts", schema = "carpnd")
+@Table(name="current_account", schema="carpnd")
 @XmlRootElement(name="CurrentAccount")
 public class CurrentAccount {
 

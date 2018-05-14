@@ -75,7 +75,7 @@ public class UserTest {
         User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").setCurrentAccount(currentAccount).build();
         user.addCreditInMyAccount(100);
         user.payCredit(50);
-        Assert.assertTrue(user.getBalance() == 50);
+        Assert.assertTrue(user.balance() == 50);
     }
 
 
@@ -84,7 +84,7 @@ public class UserTest {
         CurrentAccount currentAccount = new CurrentAccountBuilder().setId("11").build();
         User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").setCurrentAccount(currentAccount).build();
         user.receiveCredit(200);
-        Assert.assertTrue(user.getBalance() == 200);
+        Assert.assertTrue(user.balance() == 200);
     }
 
 

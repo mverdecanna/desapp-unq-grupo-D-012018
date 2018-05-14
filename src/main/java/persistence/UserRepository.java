@@ -28,7 +28,8 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
     }
 
 
-    public int countUser(){
+    @Override
+    public Integer count(){
         return super.count();
     }
 

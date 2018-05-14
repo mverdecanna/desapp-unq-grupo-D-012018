@@ -2,6 +2,7 @@ package persistence;
 
 
 import org.apache.log4j.Logger;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import java.io.Serializable;
@@ -17,17 +18,20 @@ public abstract class HibernateGenericDAO<T>  extends HibernateDaoSupport implem
 
     protected Class<T> persistentClass = this.getDomainClass();
 
+
     public T findById(Serializable id){
         Object aux = this.getHibernateTemplate().get(this.persistentClass.getName(), id);
         return (T)aux;
     }
-    public int count() {
-        List<Long> list = (List<Long>) this.getHibernateTemplate()
-                .find("select count(*) from " + this.persistentClass.getName() + " o");
-        Long count = list.get(0);
-        return count.intValue();
 
+
+    public Integer count() {
+        //List<Integer> list = this.getHibernateTemplate().find("select count(*) from " + this.persistentClass.getName() + " o");
+          //      .find("select count(*) from " + this.persistentClass.getName() + " o");
+        Integer count = DataAccessUtils.intResult(this.getHibernateTemplate().find("select count(*) from " + this.persistentClass.getName() + " o"));  //list.get(0);
+        return count;
     }
+
 
     public void save(T entity) {
         this.getHibernateTemplate().save(entity);

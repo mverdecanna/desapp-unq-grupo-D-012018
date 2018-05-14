@@ -37,9 +37,14 @@ public class UserRest {
     @Path("/count")
     @Produces("application/json")
     public Integer countUsers() {
-        //return this.userService.nUsuers();
-        return 111111;
+        Integer resp = this.userService.count();
+        if(resp == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return resp;
     }
+
+
     @GET
     @Path("/{id}")
     @Produces("application/json")
@@ -50,5 +55,20 @@ public class UserRest {
         }
         return Response.ok(user).build();
     }
+
+
+
+    @GET
+    @Path("/all")
+    @Produces("application/json")
+    public Response findAllUsers() {
+        List<User> users = userService.retriveAll();
+        if (users == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return Response.ok(users).build();
+    }
+
+
 
 }
