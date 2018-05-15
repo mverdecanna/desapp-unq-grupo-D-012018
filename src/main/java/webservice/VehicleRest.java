@@ -2,6 +2,7 @@ package webservice;
 
 import model.User;
 import model.Vehicle;
+import org.apache.cxf.jaxrs.ext.PATCH;
 import service.VehicleService;
 
 import javax.ws.rs.*;
@@ -69,4 +70,37 @@ public class VehicleRest {
     }
 
 
+
+    @POST
+    @Path("/save")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response saveVehicles(Vehicle car) {
+        if(car == null){
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
+        }
+        this.vehicleService.save(car);
+        return Response.ok(car).build();
+    }
+
+    @DELETE
+    @Path("/{id}/delete")
+    @Produces("application/json")
+    public Response deleteVehicles(@PathParam("id") final String idVehicle){
+        Vehicle vehicle = vehicleService.findById(idVehicle);
+        if(vehicle == null){
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        this.vehicleService.delete(vehicle);
+        return Response.ok().build();
+    }
+
+    @PATCH
+    @Path("/{id}/update")
+    @Produces("application/json")
+    public Response updateVehicles(@PathParam("id") final Long idVehicle,Vehicle vehicle){
+        vehicle.setId(idVehicle);
+        this.vehicleService.update(vehicle);
+        return Response.ok().build();
+    }
 }

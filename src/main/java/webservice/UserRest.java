@@ -1,6 +1,9 @@
 package webservice;
 
 import model.User;
+import model.Vehicle;
+import model.builder.UserBuilder;
+import org.apache.cxf.jaxrs.ext.PATCH;
 import persistence.UserRepository;
 import service.UserService;
 
@@ -89,12 +92,21 @@ public class UserRest {
     @Path("/save")
     @Produces("application/json")
     @Consumes("application/json")
-    public void saveUser(User user) {
+    public Response saveUser(User user) {
+        if(user == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
         this.userService.save(user);
+        return Response.ok(user).build();
     }
-
-
-
+    @PATCH
+    @Path("/{id}/update")
+    @Produces("application/json")
+    public Response updateUser(@PathParam("id") final String idUser, User user){
+        user.setCuil(idUser);
+        this.userService.update(user);
+        return Response.ok(user).build();
+    }
 
 
 
