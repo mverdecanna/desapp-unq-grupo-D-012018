@@ -99,14 +99,16 @@ public class UserRest {
         this.userService.save(user);
         return Response.ok(user).build();
     }
-    @PATCH
-    @Path("/{id}/update")
+
+
+    @PUT
+    @Path("/update")
     @Produces("application/json")
-    public Response updateUser(@PathParam("id") final String idUser, User user){
-        user.setCuil(idUser);
+    public Response updateUser(User user){
         this.userService.update(user);
         return Response.ok(user).build();
     }
+
 
 
 

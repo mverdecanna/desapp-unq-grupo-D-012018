@@ -83,8 +83,9 @@ public class VehicleRest {
         return Response.ok(car).build();
     }
 
+
     @DELETE
-    @Path("/{id}/delete")
+    @Path("/delete/{id}")
     @Produces("application/json")
     public Response deleteVehicles(@PathParam("id") final String idVehicle){
         Vehicle vehicle = vehicleService.findById(idVehicle);
@@ -95,12 +96,13 @@ public class VehicleRest {
         return Response.ok().build();
     }
 
-    @PATCH
-    @Path("/{id}/update")
+
+    @PUT
+    @Path("/update")
     @Produces("application/json")
-    public Response updateVehicles(@PathParam("id") final Long idVehicle,Vehicle vehicle){
-        vehicle.setId(idVehicle);
+    public Response updateVehicles(Vehicle vehicle){
         this.vehicleService.update(vehicle);
         return Response.ok().build();
     }
+
 }
