@@ -14,11 +14,11 @@
     </bean>
 
     <bean id="service.user" class="service.UserService">
-        <property name="repository" ref="persistence.userRepository" />
+        <property name="repository" ref="persistence.userrepository" />
     </bean>
 
     <bean id="service.vehicle" class="service.VehicleService">
-        <property name="repository" ref="persistence.vehicleRepository" />
+        <property name="repository" ref="persistence.vehiclerepository" />
     </bean>
 
 </beans>

@@ -4,6 +4,7 @@ package persistence;
 import org.apache.log4j.Logger;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import persistence.GenericRepository;
 
 import java.io.Serializable;
 import java.util.List;

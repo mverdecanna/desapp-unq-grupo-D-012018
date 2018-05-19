@@ -50,7 +50,10 @@ public class User implements Serializable {
     @Transient
     private List<Score> puntuations = new ArrayList<Score>();
 
-    @Transient
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_vehicles", joinColumns = {
+            @JoinColumn(name = "cuil") }, inverseJoinColumns = { @JoinColumn(name = "vehicle_id") })
     public List<Vehicle> vehicles = new ArrayList<Vehicle>();
 
 

@@ -1,5 +1,6 @@
 package service;
 
+import model.Vehicle;
 import org.springframework.transaction.annotation.Transactional;
 import persistence.GenericRepository;
 
@@ -18,10 +19,10 @@ public class GenericService<T> implements Serializable {
 
 
     public GenericRepository<T> getRepository() {
-        return repository;
+        return this.repository;
     }
 
-    public void setRepository(GenericRepository<T> repository) {
+    public void setRepository(final GenericRepository<T> repository) {
         this.repository = repository;
     }
 
@@ -52,6 +53,7 @@ public class GenericService<T> implements Serializable {
 
     @Transactional
     public T findById(Serializable id){return this.getRepository().findById(id);}
+
 
 
 }

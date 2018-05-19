@@ -74,7 +74,7 @@ public class UserRest {
     }
 
 
-
+/*
     @GET
     @Path("/test")
     @Produces("application/json")
@@ -85,7 +85,7 @@ public class UserRest {
         }
         return resp;
     }
-
+*/
 
 
     @POST

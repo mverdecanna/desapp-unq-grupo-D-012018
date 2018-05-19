@@ -40,10 +40,6 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
     }
 
 
-    public Long test(){
-        return 11111111111111111l;
-    }
-
     @Override
     public void save(User user){
         super.save(user);

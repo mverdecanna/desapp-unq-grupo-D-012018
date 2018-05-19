@@ -28,40 +28,41 @@ public class Vehicle implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Id
-    @Column(name="type")
+
+    @Column(name="type", length = 10)
+    @Enumerated(EnumType.STRING)
     private VehicleType type;
 
-    @Id
+
     @Column(name="capacity")
     private Integer capacity;
 
-    @Id
+
     @Column(name="location")
     private String location;
 
-    @Id
+
     @Column(name="retirementAddress")
     private String retirementAddress;   //  MAPA
 
-    @Id
+
     @Column(name="returnAddress")
     private String returnAddress;   //  MAPA  -  List
 
-    @Id
+
     @Column(name="description")
     private String description;
 
-    @Id
+
     @Column(name="phone")
     private String phone;
 
-    @Id
+
     @Column(name="cost")
     private Integer cost;
 
-    @Transient
-    private String planilla;  // horario y dias disponibles para alquilar
+  //  @Transient
+//    private String planilla;  // horario y dias disponibles para alquilar
     // private String fotos   escuche que deberia ser un String que sea el link a la imagen
 
 
@@ -74,6 +75,7 @@ public class Vehicle implements Serializable {
 
     public Vehicle(VehicleType type, Integer capacity, String location, String retirementAddress,
                    String returnAddress, String description, String phone, Integer cost){
+        //this.id = id;
         this.type = type;
         this.capacity = capacity;
         this.location = location;
@@ -141,13 +143,22 @@ public class Vehicle implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
+/*
     public String getPlanilla() {
         return planilla;
     }
 
+    public void setPlanilla(String planilla) {
+        this.planilla = planilla;
+    }
+*/
     public Integer getCost() {
         return cost;
+    }
+
+
+    public void setType(VehicleType type) {
+        this.type = type;
     }
 
     public void revalueateCost(Integer newcost){

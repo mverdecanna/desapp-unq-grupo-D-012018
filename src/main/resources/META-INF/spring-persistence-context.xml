@@ -108,11 +108,11 @@
     <!-- ___________ Beans  de negocio___________ -->
     <!-- ________________________________________ -->
     <!-- ________________________________________ -->
-    <bean id="persistence.userRepository" class="persistence.UserRepository" >
+    <bean id="persistence.userrepository" class="persistence.UserRepository" >
         <property name="sessionFactory" ref="persistence.sessionFactory" />
     </bean>
 
-    <bean id="persistence.vehicleRepository" class="persistence.VehicleRepository" >
+    <bean id="persistence.vehiclerepository" class="persistence.VehicleRepository" >
         <property name="sessionFactory" ref="persistence.sessionFactory" />
     </bean>
 

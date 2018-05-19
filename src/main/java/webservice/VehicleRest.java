@@ -105,4 +105,18 @@ public class VehicleRest {
         return Response.ok().build();
     }
 
+/*
+    @GET
+    @Path("/user/{id}")
+    @Produces("application/json")
+    public Response vehiclesByUser(@PathParam("id") final String idUser) {
+        List<Vehicle> vehicles = vehicleService.xxx(idUser);
+        if (vehicles == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return Response.ok(vehicles).build();
+    }
+*/
+
+
 }
