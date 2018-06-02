@@ -51,7 +51,7 @@ public class User implements Serializable {
     private List<Score> puntuations = new ArrayList<Score>();
 
 
-    @OneToMany(fetch = FetchType.EAGER)
+        @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_vehicles", joinColumns = {
             @JoinColumn(name = "cuil") }, inverseJoinColumns = { @JoinColumn(name = "vehicle_id") })
     public List<Vehicle> vehicles = new ArrayList<Vehicle>();

@@ -1,5 +1,6 @@
 package service;
 
+import model.CurrentAccount;
 import model.User;
 import persistence.UserRepository;
 
@@ -10,17 +11,7 @@ public class UserService extends GenericService<User> {
 
     private static final long serialVersionUID = 2131359482422367092L;
 
-/*
-    private UserRepository userRepository;
 
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
-
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-*/
 
     // no esta bien mapeado en userRepository, por eso rompe...
 
@@ -28,11 +19,13 @@ public class UserService extends GenericService<User> {
         return getRepository().count();
     }
 
-/*
-    public Long testService(){
-        return super.getRepository().
+
+
+    public CurrentAccount findCurrentAccount(String cuil){
+        UserRepository userRepository = (UserRepository) getRepository();
+        CurrentAccount currentAccount = userRepository.findCurrentAccountByCuil(cuil);
+        return currentAccount;
     }
-*/
 
 
 }

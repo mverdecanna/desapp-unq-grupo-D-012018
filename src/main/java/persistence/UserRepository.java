@@ -1,10 +1,13 @@
 package persistence;
 
+import model.CurrentAccount;
 import model.User;
 import org.apache.log4j.Logger;
 
 import java.io.Serializable;
 import java.util.List;
+
+import static model.util.Constants.TABLE_CURRENT_ACCOUNT;
 
 /**
  * Created by mariano on 23/04/18.
@@ -43,6 +46,12 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
     @Override
     public void save(User user){
         super.save(user);
+    }
+
+
+    public CurrentAccount findCurrentAccountByCuil(String cuil){
+        CurrentAccount currentAccount = (CurrentAccount) this.getHibernateTemplate().get(CurrentAccount.class, cuil);
+        return currentAccount;
     }
 
 

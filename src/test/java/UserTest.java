@@ -43,9 +43,9 @@ public class UserTest {
         CurrentAccount account = new CurrentAccountBuilder().setId("1").build();
         CurrentAccount account1 = new CurrentAccountBuilder().setId("2").build();
         User user = new UserBuilder().setCurrentAccount(account).build();
-        Assert.assertEquals(user.getCurrentAccount().getId(),account.getId());
+        Assert.assertEquals(user.getCurrentAccount().getCuil(),account.getCuil());
         user.setCurrentAccount(account1);
-        Assert.assertEquals(user.getCurrentAccount().getId(),account1.getId());
+        Assert.assertEquals(user.getCurrentAccount().getCuil(),account1.getCuil());
 
     }
     @Test

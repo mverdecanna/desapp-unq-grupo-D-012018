@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  * Created by mariano on 29/03/18.
@@ -12,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name="current_account", schema="carpnd")
 @XmlRootElement(name="CurrentAccount")
-public class CurrentAccount {
+public class CurrentAccount implements Serializable {
 
 
     @Id
@@ -31,17 +32,21 @@ public class CurrentAccount {
     }
 
 
-
-    public String getId() {
+    public String getCuil() {
         return cuil;
     }
 
+    public void setCuil(String cuil) {
+        this.cuil = cuil;
+    }
 
     public Integer getCredits() {
         return credits;
     }
 
-
+    public void setCredits(Integer credits) {
+        this.credits = credits;
+    }
 
     public  void addCredit(Integer credit){
         this.credits += credit;

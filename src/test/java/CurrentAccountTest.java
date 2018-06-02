@@ -13,7 +13,7 @@ public class CurrentAccountTest {
     @Test
     public void currentAccountConstructorTest(){
         CurrentAccount account = new CurrentAccountBuilder().setId("1").build();
-        Assert.assertTrue(account.getId().equals("1") && account.getCredits().equals(0) && account.getClass().equals(CurrentAccount.class));
+        Assert.assertTrue(account.getCuil().equals("1") && account.getCredits().equals(0) && account.getClass().equals(CurrentAccount.class));
     }
     @Test
     public void chargeTenCreditsTest(){

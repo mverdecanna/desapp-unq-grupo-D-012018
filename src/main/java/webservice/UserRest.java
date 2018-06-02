@@ -1,5 +1,6 @@
 package webservice;
 
+import model.CurrentAccount;
 import model.User;
 import model.Vehicle;
 import model.builder.UserBuilder;
@@ -109,6 +110,17 @@ public class UserRest {
         return Response.ok(user).build();
     }
 
+
+    @GET
+    @Path("/currentAccount/{cuil}")
+    @Produces("application/json")
+    public Response findCurrentAccount(@PathParam("cuil") final String cuil) {
+        CurrentAccount currentAccount = this.userService.findCurrentAccount(cuil);
+        if (currentAccount == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return Response.ok(currentAccount).build();
+    }
 
 
 

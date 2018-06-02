@@ -20,7 +20,7 @@ public class VehicleTest {
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.VAN).setCost(1).setCapacity(4).setDescription("Lula livre").setPhone("44444444")
                 .setLocation("Bernal").setRetirementAddress("Av San Martin 3").setReturnAddress("Av San Martin 212").build();
 
-        Assert.assertTrue(vehicle.getTypeName().equals("VAN") && vehicle.getCost().equals(1) && vehicle.getCapacity().equals(4) &&
+        Assert.assertTrue(vehicle.typeName().equals("VAN") && vehicle.getCost().equals(1) && vehicle.getCapacity().equals(4) &&
         vehicle.getDescription().equals("Lula livre") && vehicle.getRetirementAddress().equals("Av San Martin 3")
                 && vehicle.getReturnAddress().equals("Av San Martin 212"));
     }
@@ -29,7 +29,7 @@ public class VehicleTest {
     public void vehicleIsAVanType(){
         //Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.VAN).build();
         Vehicle vehicle = new Vehicle(Vehicle.VehicleType.VAN);
-        Assert.assertTrue(vehicle.getTypeName().equals("VAN"));
+        Assert.assertTrue(vehicle.typeName().equals("VAN"));
     }
 
 

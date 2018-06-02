@@ -26,7 +26,7 @@ public class Vehicle implements Serializable {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
 
     @Column(name="type", length = 10)
@@ -92,7 +92,7 @@ public class Vehicle implements Serializable {
         return type;
     }
 
-    public String getTypeName(){
+    public String typeName(){
         return type.name();
     }
 
@@ -166,11 +166,11 @@ public class Vehicle implements Serializable {
     }
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
