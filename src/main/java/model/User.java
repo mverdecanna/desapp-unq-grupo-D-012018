@@ -40,18 +40,17 @@ public class User implements Serializable {
     private String email;
 
 
-/*    @OneToOne(cascade=CascadeType.ALL)
-    @JoinTable(name="current_account",
-            joinColumns={@JoinColumn(name="cuil", referencedColumnName="cuil")},
-            inverseJoinColumns={@JoinColumn(name="cuil", referencedColumnName="cuil")})   */
-@Transient
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinTable(name = "current_account", joinColumns = {
+            @JoinColumn(name = "cuil") }, inverseJoinColumns = { @JoinColumn(name = "cuil") })
     private CurrentAccount currentAccount;
+
 
     @Transient
     private List<Score> puntuations = new ArrayList<Score>();
 
 
-        @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_vehicles", joinColumns = {
             @JoinColumn(name = "cuil") }, inverseJoinColumns = { @JoinColumn(name = "vehicle_id") })
     public List<Vehicle> vehicles = new ArrayList<Vehicle>();
