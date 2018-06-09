@@ -31,7 +31,15 @@ public class UserService extends GenericService<User> {
     public void addCreditToCurrentAccount(CurrentAccount currentAccount, Integer credit) {
         UserRepository userRepository = (UserRepository) getRepository();
         currentAccount.addCredit(credit);
-        userRepository.addCreditToCurrentAccount(currentAccount);
+        userRepository.updateCurrentAccount(currentAccount);
+    }
+
+
+    @Transactional
+    public void subtractCreditToCurrentAccount(CurrentAccount currentAccount, Integer credit) {
+        UserRepository userRepository = (UserRepository) getRepository();
+        currentAccount.subtractCredit(credit);
+        userRepository.updateCurrentAccount(currentAccount);
     }
 
 

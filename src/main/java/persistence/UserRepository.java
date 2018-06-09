@@ -54,10 +54,12 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
         return currentAccount;
     }
 
-    public void addCreditToCurrentAccount(CurrentAccount currentAccount){
+    public void updateCurrentAccount(CurrentAccount currentAccount){
         this.getHibernateTemplate().update(currentAccount);
         this.getHibernateTemplate().flush();
     }
+
+
 
 
 }

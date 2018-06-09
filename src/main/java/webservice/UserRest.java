@@ -124,11 +124,22 @@ public class UserRest {
 
 
     @PUT
-    @Path("/charge/{credit}")
+    @Path("/currentAccount/charge/{credit}")
     @Produces("application/json")
     public Response chargeCredit(CurrentAccount currentAccount, @PathParam("credit") final Integer credit){
         this.userService.addCreditToCurrentAccount(currentAccount, credit);
         return Response.ok(currentAccount).build();
     }
+
+
+    @PUT
+    @Path("/currentAccount/pay/{credit}")
+    @Produces("application/json")
+    public Response payCredit(CurrentAccount currentAccount, @PathParam("credit") final Integer credit){
+        this.userService.subtractCreditToCurrentAccount(currentAccount, credit);
+        return Response.ok(currentAccount).build();
+    }
+
+
 
 }
