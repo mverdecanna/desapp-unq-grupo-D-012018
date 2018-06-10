@@ -6,6 +6,7 @@ import model.builder.RentalBuilder;
 import model.builder.TransactionBuilder;
 import model.builder.UserBuilder;
 import model.builder.VehicleBuilder;
+import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,12 +20,12 @@ public class TransactionTest {
 
     @Test
     public void  transactionConstructorTest(){
-        Date date = new Date();
+        DateTime date = new DateTime();
         User userOwner = new UserBuilder().setName("Vladimir").build();
         User userClient = new UserBuilder().setName("Charlie").build();
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.CAR).build();
-        Rental rental = new RentalBuilder().setId(2222l).setStartDate(date).setEndDate(date).setOwner(userOwner)
-                .setClient(userClient).setVehicle(vehicle).build();
+        Rental rental = new RentalBuilder().setId("2222").setStartDate(date).setEndDate(date).setOwner(userOwner.getCuil())
+                .setClient(userClient.getCuil()).setVehicle(vehicle.getId()).build();
         Transaction transaction = new Transaction(500, rental);
         Assert.assertTrue(transaction.getCost().equals(500) && transaction.getRental().equals(rental)
                 && transaction.getState().equals(Transaction.StateTransaction.RESERVATION));
@@ -33,12 +34,12 @@ public class TransactionTest {
 
     @Test
     public void cancelTransactionChangeStateToCancelAndRentalStateInCancel(){
-        Date date = new Date();
+        DateTime date = new DateTime();
         User userOwner = new UserBuilder().setName("Vladimir").build();
         User userClient = new UserBuilder().setName("Charlie").build();
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.CAR).build();
-        Rental rental = new RentalBuilder().setId(2222l).setStartDate(date).setEndDate(date).setOwner(userOwner)
-                .setClient(userClient).setVehicle(vehicle).build();
+        Rental rental = new RentalBuilder().setId("2222").setStartDate(date).setEndDate(date).setOwner(userOwner.getCuil())
+                .setClient(userClient.getCuil()).setVehicle(vehicle.getId()).build();
         Transaction transaction = new TransactionBuilder().setId(13l).setCost(500).setRental(rental).build();
         Assert.assertTrue(transaction.getState().equals(Transaction.StateTransaction.RESERVATION)
                 && transaction.getRental().getState().equals(Rental.RentalState.WAIT_CONFIRM));
@@ -50,12 +51,12 @@ public class TransactionTest {
 
     @Test
     public void confirmTransactionChangeStateToConfirmAndRentalStateToInProgressTest(){
-        Date date = new Date();
+        DateTime date = new DateTime();
         User userOwner = new UserBuilder().setName("Vladimir").build();
         User userClient = new UserBuilder().setName("Charlie").build();
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.MOTORCYCLE).build();
-        Rental rental = new RentalBuilder().setId(455l).setStartDate(date).setEndDate(date).setOwner(userOwner)
-                .setClient(userClient).setVehicle(vehicle).build();
+        Rental rental = new RentalBuilder().setId("455").setStartDate(date).setEndDate(date).setOwner(userOwner.getCuil())
+                .setClient(userClient.getCuil()).setVehicle(vehicle.getId()).build();
         Transaction transaction = new TransactionBuilder().setId(13l).setRental(rental).build();
         transaction.setCost(700);
         Assert.assertTrue(transaction.getState().equals(Transaction.StateTransaction.RESERVATION) && transaction.getRental().getState().equals(Rental.RentalState.WAIT_CONFIRM));

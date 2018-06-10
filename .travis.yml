@@ -24,6 +24,12 @@ before_install:
         FOREIGN KEY (cuil) REFERENCES carpnd.users (cuil) on delete cascade,
         FOREIGN KEY (vehicle_id) REFERENCES carpnd.vehicles (id) on delete cascade);'
 
+  - mysql -e 'CREATE TABLE carpnd.rental(
+        id INTEGER(8) NOT NULL UNIQUE, state VARCHAR(12) NOT NULL, startDate DATETIME, endDate DATETIME,
+        ownerCuil VARCHAR(11), clientCuil VARCHAR(11), vehicle_id INTEGER(8),
+        PRIMARY KEY (id) );'
+
+
 notifications:
   email:
     - mvmarkon@gmail.com

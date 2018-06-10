@@ -11,6 +11,7 @@
     <bean id="service.general" class="service.GeneralService">
         <property name="userService" ref="service.user" />
         <property name="vehicleService" ref="service.vehicle" />
+        <property name="rentalService" ref="service.rental" />
     </bean>
 
     <bean id="service.user" class="service.UserService">
@@ -20,5 +21,12 @@
     <bean id="service.vehicle" class="service.VehicleService">
         <property name="repository" ref="persistence.vehiclerepository" />
     </bean>
+
+
+    <bean id="service.rental" class="service.RentalService">
+        <property name="repository" ref="persistence.rentalrepository" />
+    </bean>
+
+
 
 </beans>

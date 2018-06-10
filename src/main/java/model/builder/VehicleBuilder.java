@@ -7,6 +7,7 @@ import model.Vehicle;
  */
 public class VehicleBuilder {
 
+    private String id;
     private Vehicle.VehicleType type;
     private Integer capacity;
     private String location;
@@ -35,6 +36,11 @@ public VehicleBuilder(){}
         this.cost = cost;
     }
 
+
+    public VehicleBuilder setId(String id){
+        this.id = id;
+        return this;
+    }
 
     public VehicleBuilder setVehicleType(Vehicle.VehicleType type){
         this.type = type;

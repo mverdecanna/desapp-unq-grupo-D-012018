@@ -1,88 +1,146 @@
 package model;
 
+import org.joda.time.DateTime;
+
+import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by mariano on 03/04/18.
  */
-public class Rental {
+
+@Entity
+@Table(name="rental", schema = "carpnd")
+@XmlRootElement(name="Rental")
+public class Rental implements Serializable {
 
     public enum RentalState{
         IN_PROGRESS, WAIT_CONFIRM, DONE, CANCEL
     }
 
-    private Long id;
-    private Date startDate;
-    private Date endDate;
-    private User owner;
-    private User client;
-    private Vehicle vehicle;
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+
+    @Column(name="startDate")
+    private DateTime startDate;
+
+    @Column(name="endDate")
+    private DateTime endDate;
+
+    @Column(name="ownerCuil")
+    private String ownerCuil;
+
+    @Column(name="clientCuil")
+    private String clientCuil;
+
+    @Column(name="vehicle_id")
+    private String vehicleID;
+
+    @Column(name="state", length = 12)
+    @Enumerated(EnumType.STRING)
     private RentalState state;
 
 
     public Rental(){}
 
 
-    public Rental(Long id, Date startDate, Date endDate, User owner, User client, Vehicle vehicle){
+    public Rental(String id, DateTime startDate, DateTime endDate, String ownerCuil, String clientCuil, String vehicleID){
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.state = RentalState.WAIT_CONFIRM;
-        this.owner = owner;
-        this.client = client;
-        this.vehicle = vehicle;
+        this.ownerCuil = ownerCuil;
+        this.clientCuil = clientCuil;
+        this.vehicleID = vehicleID;
     }
 
 
-    public Rental(User owner, User client, Vehicle vehicle){
+    public Rental(String ownerCuil, String clientCuil, String vehicleID){
         this.state = RentalState.WAIT_CONFIRM;
-        this.owner = owner;
-        this.client = client;
-        this.vehicle = vehicle;
+        this.ownerCuil = ownerCuil;
+        this.clientCuil = clientCuil;
+        this.vehicleID = vehicleID;
     }
+
+    public Rental(DateTime startDate, DateTime endDate, String ownerCuil, String clientCuil, String vehicleID){
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.state = RentalState.WAIT_CONFIRM;
+        this.ownerCuil = ownerCuil;
+        this.clientCuil = clientCuil;
+        this.vehicleID = vehicleID;
+    }
+
 
 
 ///  init  getters and setters
 
-    public Date getStartDate() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public DateTime getStartDate() {
         return startDate;
     }
 
+    public void setStartDate(DateTime startDate) {
+        this.startDate = startDate;
+    }
 
-
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(DateTime endDate) {
         this.endDate = endDate;
     }
 
-    public User getOwner() {
-        return owner;
+    public String getOwnerCuil() {
+        return ownerCuil;
     }
 
-
-
-    public User getClient() {
-        return client;
+    public void setOwnerCuil(String ownerCuil) {
+        this.ownerCuil = ownerCuil;
     }
 
-
-
-    public Vehicle getVehicle() {
-        return vehicle;
+    public String getClientCuil() {
+        return clientCuil;
     }
 
+    public void setClientCuil(String clientCuil) {
+        this.clientCuil = clientCuil;
+    }
 
+    public String getVehicleID() {
+        return vehicleID;
+    }
+
+    public void setVehicleID(String vehicleID) {
+        this.vehicleID = vehicleID;
+    }
 
     public RentalState getState() {
         return state;
     }
 
+    public String getStateName() {
+        return state.name();
+    }
+
     public void setState(RentalState state) {
         this.state = state;
     }
+
 
     ///  end  getters and setters
 

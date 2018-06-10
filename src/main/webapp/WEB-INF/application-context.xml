@@ -29,6 +29,7 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 		<jaxrs:serviceBeans>
 			<ref bean="userRest" />
 			<ref bean="vehicleRest" />
+			<ref bean="rentalRest" />
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="json" value="application/json" />
@@ -53,6 +54,9 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 	</bean>
 
 
+	<bean id="rentalRest" class="webservice.RentalRest">
+		<property name="rentalService" ref="service.rental" />
+	</bean>
 
 
 </beans>

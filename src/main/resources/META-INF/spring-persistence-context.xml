@@ -59,6 +59,7 @@
                 <value>model.User</value>
                 <value>model.CurrentAccount</value>
                 <value>model.Vehicle</value>
+                <value>model.Rental</value>
             </list>
         </property>
 
@@ -117,5 +118,10 @@
     </bean>
 
 
+    <bean id="persistence.rentalrepository" class="persistence.RentalRepository" >
+        <property name="sessionFactory" ref="persistence.sessionFactory" />
+    </bean>
 
-    </beans>
+
+
+</beans>

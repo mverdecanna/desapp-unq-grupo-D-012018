@@ -33,5 +33,18 @@ public class GeneralService {
     //  VehicleService
 
 
+    //  RentalService
+    private RentalService rentalService;
+
+    public RentalService getRentalService() {
+        return rentalService;
+    }
+
+    public void setRentalService(RentalService rentalService) {
+        this.rentalService = rentalService;
+    }
+
+//  RentalService
+
 
 }

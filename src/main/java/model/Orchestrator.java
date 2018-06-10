@@ -73,9 +73,9 @@ public class Orchestrator {
         User owner = this.getUser(ownerCuil);
 
 
-        this.rentalSystem.put(id,new RentalBuilder().setId(id).setVehicle(vehicle)
-                                                    .setClient(client)
-                                                    .setOwner(owner).build()
+        this.rentalSystem.put(id,new RentalBuilder().setId(id.toString()).setVehicle(vehicle.getId())
+                                                    .setClient(client.getCuil())
+                                                    .setOwner(owner.getCuil()).build()
                                                     );
 
 

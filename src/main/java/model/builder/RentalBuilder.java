@@ -3,6 +3,7 @@ package model.builder;
 import model.Rental;
 import model.User;
 import model.Vehicle;
+import org.joda.time.DateTime;
 
 import java.util.Date;
 
@@ -15,12 +16,12 @@ public class RentalBuilder {
         IN_PROGRESS, WAIT_CONFIRM, DONE, CANCEL
     }
 
-    private Long id;
-    private Date startDate;
-    private Date endDate;
-    private User owner;
-    private User client;
-    private Vehicle vehicle;
+    private String id;
+    private DateTime startDate;
+    private DateTime endDate;
+    private String ownerCuil;
+    private String clientCuil;
+    private String vehicleID;
     private Rental.RentalState state;
 
 
@@ -28,64 +29,80 @@ public class RentalBuilder {
     public RentalBuilder(){}
 
 
-    public RentalBuilder(User owner, User client, Vehicle vehicle){
+    public RentalBuilder(String ownerCuil, String clientCuil, String vehicleID){
         this.state = Rental.RentalState.WAIT_CONFIRM;
-        this.owner = owner;
-        this.client = client;
-        this.vehicle = vehicle;
+        this.ownerCuil = ownerCuil;
+        this.clientCuil = clientCuil;
+        this.vehicleID = vehicleID;
     }
 
 
 
-    public RentalBuilder(Long id, Date startDate, Date endDate, User owner, User client, Vehicle vehicle){
+    public RentalBuilder(String id, DateTime startDate, DateTime endDate, String ownerCuil, String clientCuil, String vehicleID){
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.owner = owner;
-        this.client = client;
-        this.vehicle = vehicle;
+        this.ownerCuil = ownerCuil;
+        this.clientCuil = clientCuil;
+        this.vehicleID = vehicleID;
         this.state = Rental.RentalState.WAIT_CONFIRM;
     }
 
 
 
-    public RentalBuilder setId(Long id){
+    public RentalBuilder(DateTime startDate, DateTime endDate, String ownerCuil, String clientCuil, String vehicleID){
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.ownerCuil = ownerCuil;
+        this.clientCuil = clientCuil;
+        this.vehicleID = vehicleID;
+        this.state = Rental.RentalState.WAIT_CONFIRM;
+    }
+
+
+    public RentalBuilder setId(String id){
         this.id = id;
         return this;
     }
 
 
-    public RentalBuilder setStartDate(Date startDate){
+    public RentalBuilder setState(Rental.RentalState state){
+        this.state = state;
+        return this;
+    }
+
+
+    public RentalBuilder setStartDate(DateTime startDate){
         this.startDate = startDate;
         return this;
     }
 
 
-    public RentalBuilder setEndDate(Date endDate){
+    public RentalBuilder setEndDate(DateTime endDate){
         this.endDate = endDate;
         return this;
     }
 
-    public RentalBuilder setOwner(User owner){
-        this.owner = owner;
+    public RentalBuilder setOwner(String ownerCuil){
+        this.ownerCuil = ownerCuil;
         return this;
     }
 
 
-    public RentalBuilder setClient(User client){
-        this.client = client;
+    public RentalBuilder setClient(String clientCuil){
+        this.clientCuil = clientCuil;
         return this;
     }
 
-    public RentalBuilder setVehicle(Vehicle vehicle){
-        this.vehicle = vehicle;
+    public RentalBuilder setVehicle(String vehicleID){
+        this.vehicleID = vehicleID;
         return this;
     }
 
 
 
     public Rental build(){
-        return new Rental(this.id, this.startDate, this.endDate, this.owner, this.client, this.vehicle);
+        return new Rental(this.id, this.startDate, this.endDate, this.ownerCuil, this.clientCuil, this.vehicleID);
     }
 
 

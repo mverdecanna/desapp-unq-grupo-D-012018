@@ -75,20 +75,6 @@ public class UserRest {
     }
 
 
-/*
-    @GET
-    @Path("/test")
-    @Produces("application/json")
-    public Long testUser() {
-        Long resp = this.userService.testService();
-        if(resp == null){
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-        return resp;
-    }
-*/
-
-
     @POST
     @Path("/save")
     @Produces("application/json")
