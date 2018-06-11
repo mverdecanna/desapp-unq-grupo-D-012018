@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Rental;
+import model.Transaction;
 import org.apache.log4j.Logger;
 
 import java.io.Serializable;
@@ -33,5 +34,25 @@ public class RentalRepository extends HibernateGenericDAO<Rental> implements Gen
     public void save(Rental rental){
         super.save(rental);
     }
+
+
+
+    public Transaction findTransactionById(String id){
+        Transaction transaction = (Transaction) this.getHibernateTemplate().get(Transaction.class, id);
+        return transaction;
+    }
+
+
+    public void saveTransaction(Transaction transaction){
+        this.getHibernateTemplate().save(transaction);
+        this.getHibernateTemplate().flush();
+    }
+
+
+    public void updateTransaction(Transaction transaction){
+        this.getHibernateTemplate().update(transaction);
+        this.getHibernateTemplate().flush();
+    }
+
 
 }

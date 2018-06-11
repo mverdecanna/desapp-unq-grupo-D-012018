@@ -1,6 +1,7 @@
 package webservice;
 
 import model.Rental;
+import model.Transaction;
 import org.joda.time.DateTime;
 import service.RentalService;
 
@@ -52,6 +53,78 @@ public class RentalRest {
         this.rentalService.save(rental);
         return Response.ok(rental).build();
     }
+
+
+
+    @PUT
+    @Path("/rental/collect")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response collectVehicle(Rental rental) {
+        if(rental == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        this.rentalService.payAndAdvance(rental);
+        return Response.ok(rental).build();
+    }
+
+
+
+    @PUT
+    @Path("/rental/pay")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response payRental(Rental rental) {
+        if(rental == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        this.rentalService.collectVehicleAndAdvance(rental);
+        return Response.ok(rental).build();
+    }
+
+
+
+    @PUT
+    @Path("/rental/returned")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response returnedVehicle(Rental rental) {
+        if(rental == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        this.rentalService.returnedVehicleAndAdvance(rental);
+        return Response.ok(rental).build();
+    }
+
+
+
+    @GET
+    @Path("/transaction/{id}")
+    @Produces("application/json")
+    public Response findTransaction(@PathParam("id") final String id) {
+        Transaction transaction = rentalService.findTransaction(id);
+        if (transaction == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return Response.ok(transaction).build();
+    }
+
+
+
+    @POST
+    @Path("/transaction/create")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response createTransaction(Transaction transaction) {
+        if(transaction == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        this.rentalService.createTransaction(transaction);
+        return Response.ok(transaction).build();
+    }
+
+
+
 
 
 

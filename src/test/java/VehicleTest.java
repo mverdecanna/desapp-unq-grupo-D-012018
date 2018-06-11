@@ -11,7 +11,7 @@ public class VehicleTest {
     @Test
     public void vehicleBuilderTest(){
       Vehicle vehicle=  new VehicleBuilder(Vehicle.VehicleType.VAN,4,"Bernal","Av San Martin 3","Av San Martin 212",
-                "Lula Livre","4444444",1).build();
+                "Lula Livre","4444444",1, "20320231680").build();
 
       Assert.assertEquals(vehicle.getClass(),Vehicle.class);
     }

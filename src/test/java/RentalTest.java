@@ -39,7 +39,7 @@ public class RentalTest {
         Rental rental = new Rental(userOwner.getCuil(), userClient.getCuil(), vehicle.getId());
         Assert.assertTrue(rental.getState().equals(Rental.RentalState.WAIT_CONFIRM));
         rental.initRental();
-        Assert.assertTrue(rental.getState().equals(Rental.RentalState.IN_PROGRESS));
+        Assert.assertTrue(rental.getState().equals(Rental.RentalState.CONFIRM));
     }
 
 

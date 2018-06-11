@@ -61,6 +61,11 @@ public class Vehicle implements Serializable {
     @Column(name="cost")
     private Integer cost;
 
+
+    @Column(name="ownerCuil")
+    private String ownerCuil;
+
+
   //  @Transient
 //    private String planilla;  // horario y dias disponibles para alquilar
     // private String fotos   escuche que deberia ser un String que sea el link a la imagen
@@ -74,7 +79,7 @@ public class Vehicle implements Serializable {
     }
 
     public Vehicle(VehicleType type, Integer capacity, String location, String retirementAddress,
-                   String returnAddress, String description, String phone, Integer cost){
+                   String returnAddress, String description, String phone, Integer cost, String ownerCuil){
         //this.id = id;
         this.type = type;
         this.capacity = capacity;
@@ -84,6 +89,7 @@ public class Vehicle implements Serializable {
         this.description = description;
         this.phone = phone;
         this.cost = cost;
+        this.ownerCuil = ownerCuil;
     }
 
 
@@ -172,6 +178,15 @@ public class Vehicle implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+
+    public String getOwnerCuil() {
+        return ownerCuil;
+    }
+
+    public void setOwnerCuil(String ownerCuil) {
+        this.ownerCuil = ownerCuil;
     }
 
     public Boolean isValidDescription(String name){

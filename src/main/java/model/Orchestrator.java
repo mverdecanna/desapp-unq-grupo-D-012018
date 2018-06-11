@@ -64,8 +64,8 @@ public class Orchestrator {
       userSystem.put(cuil,new UserBuilder(cuil,name,surname,address,email).build());
 
     }
-    protected void addVehicle(String userCuil, Vehicle.VehicleType type, Integer capacity, String location, String retirementAddress, String returnAddress, String description, String phone, Integer cost){
-        userSystem.get(userCuil).addVehicle(new VehicleBuilder(type,capacity,location,retirementAddress,returnAddress,description,phone,cost).build());
+    protected void addVehicle(String userCuil, Vehicle.VehicleType type, Integer capacity, String location, String retirementAddress, String returnAddress, String description, String phone, Integer cost, String ownerCuil){
+        userSystem.get(userCuil).addVehicle(new VehicleBuilder(type,capacity,location,retirementAddress,returnAddress,description,phone,cost, ownerCuil).build());
 
     }
     protected void generateRental(String ownerCuil, String clientCuil,Vehicle vehicle,Long id ){

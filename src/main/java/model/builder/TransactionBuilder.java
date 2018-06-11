@@ -2,6 +2,7 @@ package model.builder;
 
 import model.Rental;
 import model.Transaction;
+import org.joda.time.DateTime;
 
 import java.util.Date;
 
@@ -14,10 +15,10 @@ public class TransactionBuilder {
         RESERVATION, REJECTED, CONFIRM, RETIRED, IN_USE, CANCEL, FINALIZED
     }
 
-    private Long id;
+    private String id;
     private Integer cost;
-    private Date create;
-    private Date lastUpdate;
+    private DateTime create;
+    private DateTime lastUpdate;
     private Transaction.StateTransaction state;
     private Rental rental;
 
@@ -25,7 +26,7 @@ public class TransactionBuilder {
     public TransactionBuilder(){}
 
 
-    public TransactionBuilder(Long id, Integer cost, Date create, Date lastUpdate, Rental rental){
+    public TransactionBuilder(String id, Integer cost, DateTime create, DateTime lastUpdate, Rental rental){
         this.id = id;
         this.cost = cost;
         this.create = create;
@@ -39,24 +40,24 @@ public class TransactionBuilder {
         this.state = Transaction.StateTransaction.RESERVATION;
         this.cost = cost;
         this.rental = rental;
-        this.create = new Date();
-        this.lastUpdate = new Date();
+        this.create = new DateTime();
+        this.lastUpdate = new DateTime();
     }
 
 
-    public TransactionBuilder setId(Long id){
+    public TransactionBuilder setId(String id){
         this.id = id;
         return this;
     }
 
 
-    public TransactionBuilder setCreate(Date create){
+    public TransactionBuilder setCreate(DateTime create){
         this.create = create;
         return this;
     }
 
 
-    public TransactionBuilder setLastUpdate(Date lastUpdate){
+    public TransactionBuilder setLastUpdate(DateTime lastUpdate){
         this.lastUpdate = lastUpdate;
         return this;
     }

@@ -40,7 +40,7 @@ public class TransactionTest {
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.CAR).build();
         Rental rental = new RentalBuilder().setId("2222").setStartDate(date).setEndDate(date).setOwner(userOwner.getCuil())
                 .setClient(userClient.getCuil()).setVehicle(vehicle.getId()).build();
-        Transaction transaction = new TransactionBuilder().setId(13l).setCost(500).setRental(rental).build();
+        Transaction transaction = new TransactionBuilder().setId("13").setCost(500).setRental(rental).build();
         Assert.assertTrue(transaction.getState().equals(Transaction.StateTransaction.RESERVATION)
                 && transaction.getRental().getState().equals(Rental.RentalState.WAIT_CONFIRM));
         transaction.cancelTransaction();
@@ -57,11 +57,11 @@ public class TransactionTest {
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.MOTORCYCLE).build();
         Rental rental = new RentalBuilder().setId("455").setStartDate(date).setEndDate(date).setOwner(userOwner.getCuil())
                 .setClient(userClient.getCuil()).setVehicle(vehicle.getId()).build();
-        Transaction transaction = new TransactionBuilder().setId(13l).setRental(rental).build();
+        Transaction transaction = new TransactionBuilder().setId("13").setRental(rental).build();
         transaction.setCost(700);
         Assert.assertTrue(transaction.getState().equals(Transaction.StateTransaction.RESERVATION) && transaction.getRental().getState().equals(Rental.RentalState.WAIT_CONFIRM));
-        transaction.confirmTransaction();
-        Assert.assertTrue(transaction.getState().equals(Transaction.StateTransaction.CONFIRM) && transaction.getRental().getState().equals(Rental.RentalState.IN_PROGRESS));
+        transaction.initializeTransaction();
+        Assert.assertTrue( transaction.getRental().getState().equals(Rental.RentalState.CONFIRM));
     }
 
 

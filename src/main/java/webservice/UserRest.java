@@ -97,6 +97,7 @@ public class UserRest {
     }
 
 
+
     @GET
     @Path("/currentAccount/{cuil}")
     @Produces("application/json")
