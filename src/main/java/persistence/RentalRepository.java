@@ -5,6 +5,7 @@ import model.Transaction;
 import org.apache.log4j.Logger;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by mariano on 10/06/18.
@@ -53,6 +54,15 @@ public class RentalRepository extends HibernateGenericDAO<Rental> implements Gen
         this.getHibernateTemplate().update(transaction);
         this.getHibernateTemplate().flush();
     }
+
+
+    public List<Rental> rentalsByCuil(String cuil){
+        List<Rental> rentals = (List<Rental>) this.getHibernateTemplate().
+                find("select r from " + this.persistentClass.getName() + " r"
+                          + " where r.ownerCuil = " + cuil);
+        return rentals;
+    }
+
 
 
 }

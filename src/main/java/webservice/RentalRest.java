@@ -8,6 +8,7 @@ import service.RentalService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mariano on 10/06/18.
@@ -25,6 +26,19 @@ public class RentalRest {
 
     public void setRentalService(RentalService rentalService) {
         this.rentalService = rentalService;
+    }
+
+
+
+    @GET
+    @Path("/all/{cuil}")
+    @Produces("application/json")
+    public Response findAll(@PathParam("cuil") final String cuil) {
+        List<Rental> rentals = rentalService.findRentalsByCuil(cuil);
+        if (rentals == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return Response.ok(rentals).build();
     }
 
 

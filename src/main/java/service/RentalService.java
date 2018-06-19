@@ -6,6 +6,8 @@ import persistence.RentalRepository;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by mariano on 10/06/18.
  */
@@ -58,6 +60,14 @@ public class RentalService extends GenericService<Rental> {
         transaction.setRental(rental);
         transaction.completeTransaction();
         rentalRepository.updateTransaction(transaction);
+    }
+
+
+
+    public List<Rental> findRentalsByCuil(String cuil){
+        RentalRepository rentalRepository = (RentalRepository) getRepository();
+        List<Rental> rentals = rentalRepository.rentalsByCuil(cuil);
+        return rentals;
     }
 
 
