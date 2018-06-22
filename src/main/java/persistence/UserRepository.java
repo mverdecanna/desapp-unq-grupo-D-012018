@@ -3,6 +3,10 @@ package persistence;
 import model.CurrentAccount;
 import model.User;
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.springframework.dao.support.DataAccessUtils;
+import org.hibernate.Session;
+
 
 import java.io.Serializable;
 import java.util.List;
@@ -60,6 +64,15 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
     }
 
 
+    public User findUserByMail(String mail){
+        User user = null;
+        String selectQuery = "FROM User as user WHERE user.email = :email";
+        List<User> users = (List<User>) this.getHibernateTemplate().findByNamedParam(selectQuery, "email", mail);
+        if(users != null && !users.isEmpty()){
+            user = users.get(0);
+        }
+        return user;
+    }
 
 
 }

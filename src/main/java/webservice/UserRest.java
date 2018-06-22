@@ -4,6 +4,7 @@ import model.CurrentAccount;
 import model.User;
 import model.Vehicle;
 import model.builder.UserBuilder;
+import model.dto.UserDto;
 import org.apache.cxf.jaxrs.ext.PATCH;
 import persistence.UserRepository;
 import service.UserService;
@@ -48,6 +49,20 @@ public class UserRest {
         }
         return resp;
     }
+
+
+
+    @GET
+    @Path("/mail/{mail}")
+    @Produces("application/json")
+    public Response findCuilByMail(@PathParam("mail") final String mail) {
+        UserDto userDto = userService.findByMail(mail);
+        if (userDto == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return Response.ok(userDto).build();
+    }
+
 
 
     @GET

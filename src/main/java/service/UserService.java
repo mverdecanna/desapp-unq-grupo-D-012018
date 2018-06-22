@@ -2,6 +2,7 @@ package service;
 
 import model.CurrentAccount;
 import model.User;
+import model.dto.UserDto;
 import org.springframework.transaction.annotation.Transactional;
 import persistence.UserRepository;
 
@@ -41,6 +42,26 @@ public class UserService extends GenericService<User> {
         currentAccount.subtractCredit(credit);
         userRepository.updateCurrentAccount(currentAccount);
     }
+
+
+    public UserDto findByMail(String mail){
+        UserRepository userRepository = (UserRepository) getRepository();
+        User user = userRepository.findUserByMail(mail);
+        return this.makeUserDto(user);
+    }
+
+
+
+    private UserDto makeUserDto(User user){
+        UserDto userDto = new UserDto();
+        userDto.setAddress(user.getAddress());
+        userDto.setCuil(user.getCuil());
+        userDto.setEmail(user.getEmail());
+        userDto.setName(user.getName());
+        userDto.setSurname(user.getSurname());
+        return userDto;
+    }
+
 
 
 }
