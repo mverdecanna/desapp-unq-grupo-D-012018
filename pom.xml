@@ -17,6 +17,7 @@
     <!-- hibernate.version>5.2.2.Final</hibernate.version -->
     <cxf.version>2.7.18</cxf.version>
     <jackson.version>1.8.2</jackson.version>
+    <aspectj.version>1.8.10</aspectj.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
@@ -343,7 +344,19 @@
     </dependency>
 
     <!-- /Jackson -->
+    <!-- AspectJ -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>${aspectj.version}</version>
+    </dependency>
 
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>${aspectj.version}</version>
+    </dependency>
+    <!-- /AspectJ -->
 
 
 
