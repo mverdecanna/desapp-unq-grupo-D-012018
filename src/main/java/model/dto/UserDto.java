@@ -21,6 +21,8 @@ public class UserDto implements Serializable {
 
     private String email;
 
+    private Boolean register;
+
 
     public String getCuil() {
         return cuil;
@@ -60,5 +62,13 @@ public class UserDto implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean getRegister() {
+        return register;
+    }
+
+    public void setRegister(Boolean register) {
+        this.register = register;
     }
 }

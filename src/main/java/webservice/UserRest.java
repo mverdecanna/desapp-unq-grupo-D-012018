@@ -52,6 +52,7 @@ public class UserRest {
 
 
 
+
     @GET
     @Path("/mail/{mail}")
     @Produces("application/json")

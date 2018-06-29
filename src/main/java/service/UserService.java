@@ -54,11 +54,15 @@ public class UserService extends GenericService<User> {
 
     private UserDto makeUserDto(User user){
         UserDto userDto = new UserDto();
-        userDto.setAddress(user.getAddress());
-        userDto.setCuil(user.getCuil());
-        userDto.setEmail(user.getEmail());
-        userDto.setName(user.getName());
-        userDto.setSurname(user.getSurname());
+        userDto.setRegister(Boolean.FALSE);
+        if(user != null){
+            userDto.setAddress(user.getAddress());
+            userDto.setCuil(user.getCuil());
+            userDto.setEmail(user.getEmail());
+            userDto.setName(user.getName());
+            userDto.setSurname(user.getSurname());
+            userDto.setRegister(Boolean.TRUE);
+        }
         return userDto;
     }
 
