@@ -43,7 +43,13 @@ public class VehicleRepository extends HibernateGenericDAO<Vehicle> implements G
     }
 
 
-    //public void addRelationship()
+
+    public List<Vehicle> notUserVehicles(String userId){
+        List<Vehicle> vehicles = (List<Vehicle>) this.getHibernateTemplate().
+                find("select v from " + this.persistentClass.getName() + " v"
+                        + " where v.ownerCuil <> " + userId);
+        return vehicles;
+    }
 
 
 

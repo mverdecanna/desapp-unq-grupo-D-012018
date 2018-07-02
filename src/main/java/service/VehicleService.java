@@ -58,5 +58,11 @@ public class VehicleService extends GenericService<Vehicle> {
 
 
 
+    public List<Vehicle> othersVehicles(String userId){
+        VehicleRepository vehicleRepository = (VehicleRepository) getRepository();
+        return vehicleRepository.notUserVehicles(userId);
+    }
+
+
 
 }

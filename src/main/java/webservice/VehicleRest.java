@@ -119,4 +119,17 @@ public class VehicleRest {
 
 
 
+    @GET
+    @Path("/notUser/{id}")
+    @Produces("application/json")
+    public Response vehiclesOfOthers(@PathParam("id") final String idUser) {
+        List<Vehicle> vehicles = vehicleService.othersVehicles(idUser);
+        if (vehicles == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return Response.ok(vehicles).build();
+    }
+
+
+
 }
