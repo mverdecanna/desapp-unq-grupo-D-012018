@@ -24,7 +24,7 @@ public class VehicleRepository extends HibernateGenericDAO<Vehicle> implements G
         return super.count();
     }
 
-
+/*
     public List<Vehicle> userVehicles(String userId){
         List<Vehicle> vehicles = (List<Vehicle>) this.getHibernateTemplate().
                 find("select v from " + this.persistentClass.getName() + " v"
@@ -32,6 +32,18 @@ public class VehicleRepository extends HibernateGenericDAO<Vehicle> implements G
                                  + "where uv.cuil = " + userId);
         return vehicles;
     }
+*/
+
+
+    public List<Vehicle> userVehicles(String userId){
+        List<Vehicle> vehicles = (List<Vehicle>) this.getHibernateTemplate().
+                find("select v from " + this.persistentClass.getName() + " v"
+                        + " where v.ownerCuil = " + userId);
+        return vehicles;
+    }
+
+
+    //public void addRelationship()
 
 
 

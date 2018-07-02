@@ -75,12 +75,12 @@ public class VehicleRest {
     @Path("/save")
     @Produces("application/json")
     @Consumes("application/json")
-    public Response saveVehicles(Vehicle car) {
-        if(car == null){
+    public Response saveVehicles(Vehicle vehicle) {
+        if(vehicle == null){
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
-        this.vehicleService.save(car);
-        return Response.ok(car).build();
+        Vehicle newVehicle = this.vehicleService.saveVehicle(vehicle);
+        return Response.ok(newVehicle).build();
     }
 
 
@@ -105,18 +105,18 @@ public class VehicleRest {
         return Response.ok().build();
     }
 
-/*
+
     @GET
     @Path("/user/{id}")
     @Produces("application/json")
     public Response vehiclesByUser(@PathParam("id") final String idUser) {
-        List<Vehicle> vehicles = vehicleService.xxx(idUser);
+        List<Vehicle> vehicles = vehicleService.vehicleList(idUser);
         if (vehicles == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         return Response.ok(vehicles).build();
     }
-*/
+
 
 
 }

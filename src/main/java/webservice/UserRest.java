@@ -56,7 +56,7 @@ public class UserRest {
     @GET
     @Path("/mail/{mail}")
     @Produces("application/json")
-    public Response findCuilByMail(@PathParam("mail") final String mail) {
+    public Response findUserDTOByMail(@PathParam("mail") final String mail) {
         UserDto userDto = userService.findByMail(mail);
         if (userDto == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);

@@ -30,6 +30,7 @@ public class Transaction {
 
     @Id
     @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Column(name="cost")

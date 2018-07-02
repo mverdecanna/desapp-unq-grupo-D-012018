@@ -1,6 +1,8 @@
 package service;
 
 import model.Vehicle;
+import model.builder.VehicleBuilder;
+import org.springframework.transaction.annotation.Transactional;
 import persistence.VehicleRepository;
 
 import java.util.List;
@@ -30,10 +32,31 @@ public class VehicleService extends GenericService<Vehicle> {
         return super.count();
     }
 
-/*
+
+
     public List<Vehicle> vehicleList(String userId){
-        return this.getRepository().
+        VehicleRepository vehicleRepository = (VehicleRepository) getRepository();
+        return vehicleRepository.userVehicles(userId);
     }
-*/
+
+
+    @Transactional
+    public Vehicle saveVehicle(Vehicle vehicle){
+        VehicleRepository vehicleRepository = (VehicleRepository) getRepository();
+        Vehicle newVehicle = this.makeNewVehicle(vehicle);
+        vehicleRepository.save(newVehicle);
+        return newVehicle;
+    }
+
+
+    private Vehicle makeNewVehicle(Vehicle vehicle){
+        Vehicle newVehicle = new VehicleBuilder().setVehicleType(vehicle.getType()).setCapacity(vehicle.getCapacity()).setLocation(vehicle.getLocation())
+                .setRetirementAddress(vehicle.getRetirementAddress()).setReturnAddress(vehicle.getReturnAddress()).setDescription(vehicle.getDescription()).
+                        setPhone(vehicle.getPhone()).setCost(vehicle.getCost()).setOwnerCuil(vehicle.getOwnerCuil()).build();
+        return newVehicle;
+    }
+
+
+
 
 }

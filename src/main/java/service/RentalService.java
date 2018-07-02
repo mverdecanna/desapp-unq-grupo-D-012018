@@ -17,18 +17,32 @@ public class RentalService extends GenericService<Rental> {
     private static final long serialVersionUID = 2131482422367092L;
 
 
+    @Transactional
+    public Rental createRental(Rental rental){
+        RentalRepository rentalRepository = (RentalRepository) getRepository();
+        Rental newRental = new Rental(rental.getOwnerCuil(), rental.getClientCuil(), rental.getVehicleID());
+        newRental.setStartDate(rental.getStartDate());
+        newRental.setEndDate(rental.getEndDate());
+        rentalRepository.save(newRental);
+        return newRental;
+    }
+
+
+
+    @Transactional
+    public Transaction createTransaction(Transaction transaction){
+        RentalRepository rentalRepository = (RentalRepository) getRepository();
+        Transaction newTransaction = new Transaction(transaction.getCost(), transaction.getRental());
+        rentalRepository.saveTransaction(transaction);
+        return newTransaction;
+    }
+
+
 
     public Transaction findTransaction(String id) {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         Transaction transaction = rentalRepository.findTransactionById(id);
         return transaction;
-    }
-
-
-    @Transactional
-    public void createTransaction(Transaction transaction){
-        RentalRepository rentalRepository = (RentalRepository) getRepository();
-        rentalRepository.saveTransaction(transaction);
     }
 
 

@@ -50,9 +50,10 @@ public class User implements Serializable {
     private List<Score> puntuations = new ArrayList<Score>();
 
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_vehicles", joinColumns = {
-            @JoinColumn(name = "cuil") }, inverseJoinColumns = { @JoinColumn(name = "vehicle_id") })
+
+//    @JoinTable(name = "vehicles", joinColumns = {
+//            @JoinColumn(name = "cuil") }, inverseJoinColumns = { @JoinColumn(name = "ownerCuil") })
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ownerCuil", cascade = CascadeType.ALL)
     public List<Vehicle> vehicles = new ArrayList<Vehicle>();
 
 

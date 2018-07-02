@@ -64,8 +64,8 @@ public class RentalRest {
         if(rental == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        this.rentalService.save(rental);
-        return Response.ok(rental).build();
+        Rental newRental = this.rentalService.createRental(rental);
+        return Response.ok(newRental).build();
     }
 
 
@@ -133,8 +133,8 @@ public class RentalRest {
         if(transaction == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        this.rentalService.createTransaction(transaction);
-        return Response.ok(transaction).build();
+        Transaction newTransaction = this.rentalService.createTransaction(transaction);
+        return Response.ok(newTransaction).build();
     }
 
 
