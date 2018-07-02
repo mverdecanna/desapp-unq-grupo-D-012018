@@ -60,6 +60,7 @@
                 <value>model.CurrentAccount</value>
                 <value>model.Vehicle</value>
                 <value>model.Rental</value>
+                <value>model.Transaction</value>
             </list>
         </property>
 

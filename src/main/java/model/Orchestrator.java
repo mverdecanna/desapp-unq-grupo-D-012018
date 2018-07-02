@@ -13,7 +13,7 @@ public class Orchestrator {
 
     Map<String,User> userSystem;
     Map<Integer,Transaction> transactionsSystem;
-    MailSender sendMail;
+    AppMail sendMail;
     Map<Long,Rental> rentalSystem;
 
 
@@ -21,7 +21,7 @@ public class Orchestrator {
     public Orchestrator(){
         this.userSystem=new HashMap<String, User>();
         this.transactionsSystem= new HashMap<Integer,Transaction>();
-        this.sendMail= new MailSender();
+        this.sendMail= new AppMail();
         this.rentalSystem=new HashMap<Long,Rental>();
     }
 
@@ -41,11 +41,11 @@ public class Orchestrator {
         this.transactionsSystem = transactionsSystem;
     }
 
-    public MailSender getSendMail() {
+    public AppMail getSendMail() {
         return sendMail;
     }
 
-    public void setSendMail(MailSender sendMail) {
+    public void setSendMail(AppMail sendMail) {
         this.sendMail = sendMail;
     }
 

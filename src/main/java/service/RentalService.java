@@ -2,10 +2,16 @@ package service;
 
 import model.Rental;
 import model.Transaction;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import persistence.RentalRepository;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,9 +26,7 @@ public class RentalService extends GenericService<Rental> {
     @Transactional
     public Rental createRental(Rental rental){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
-        Rental newRental = new Rental(rental.getOwnerCuil(), rental.getClientCuil(), rental.getVehicleID());
-        newRental.setStartDate(rental.getStartDate());
-        newRental.setEndDate(rental.getEndDate());
+        Rental newRental = this.makeNewReantal(rental);
         rentalRepository.save(newRental);
         return newRental;
     }
@@ -82,6 +86,35 @@ public class RentalService extends GenericService<Rental> {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         List<Rental> rentals = rentalRepository.rentalsByCuil(cuil);
         return rentals;
+    }
+
+
+
+    private Rental makeNewReantal(Rental rental){
+        Rental newRental = new Rental(rental.getOwnerCuil(), rental.getClientCuil(), rental.getVehicleID());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        //DateTime date = new DateTime();
+
+        //DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+        String start_string = rental.getStartDate().toString().substring(0, 19);
+        String end_string = rental.getEndDate().toString().substring(0, 19);
+
+        String fecha = formatter.parseDateTime(start_string).toDate().toString();
+
+
+        try {
+            Date date = sdf.parse(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        DateTime start = formatter.parseDateTime(start_string);
+        DateTime end = formatter.parseDateTime(end_string);
+        newRental.setStartDate(start);
+        newRental.setEndDate(end);
+        return newRental;
     }
 
 

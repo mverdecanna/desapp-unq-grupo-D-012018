@@ -1,4 +1,4 @@
-import model.MailSender;
+import model.AppMail;
 import model.Orchestrator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,7 +13,7 @@ public class OrchestratorTest {
     public void orchestratorConstructorTest(){
         Orchestrator aux = new Orchestrator();
 
-        Assert.assertTrue(aux.getUserSystem().isEmpty() && aux.getRentalSystem().isEmpty() && aux.getTransactionsSystem().isEmpty() && aux.getSendMail().getClass().equals(MailSender.class));
+        Assert.assertTrue(aux.getUserSystem().isEmpty() && aux.getRentalSystem().isEmpty() && aux.getTransactionsSystem().isEmpty() && aux.getSendMail().getClass().equals(AppMail.class));
 
     }
 }
