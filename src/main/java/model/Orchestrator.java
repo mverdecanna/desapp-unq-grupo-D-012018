@@ -60,14 +60,20 @@ public class Orchestrator {
     protected User getUser(String cuil){
         return userSystem.get(cuil);
     }
+
+
     protected void addUser(String cuil, String name, String surname, String address, String email){
       userSystem.put(cuil,new UserBuilder(cuil,name,surname,address,email).build());
 
     }
+
+
     protected void addVehicle(String userCuil, Vehicle.VehicleType type, Integer capacity, String location, String retirementAddress, String returnAddress, String description, String phone, Integer cost, String ownerCuil){
         userSystem.get(userCuil).addVehicle(new VehicleBuilder(type,capacity,location,retirementAddress,returnAddress,description,phone,cost, ownerCuil).build());
 
     }
+
+
     protected void generateRental(String ownerCuil, String clientCuil,Vehicle vehicle,Long id ){
         User client = this.getUser(clientCuil);
         User owner = this.getUser(ownerCuil);
@@ -80,5 +86,25 @@ public class Orchestrator {
 
 
     }
+
+
+
+
+    //  probando el envio de mail
+    public static void main(String [] args) {
+
+        String mail = "mverdecanna@gmail.com";
+        String sub = "prueba";
+        String text = "Probando el envio de mail...";
+
+
+        AppMail.sendMail(mail, sub, text);
+
+
+    }
+
+
+
+
 
 }
