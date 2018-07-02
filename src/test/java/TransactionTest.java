@@ -20,7 +20,8 @@ public class TransactionTest {
 
     @Test
     public void  transactionConstructorTest(){
-        DateTime date = new DateTime();
+        //DateTime date = new DateTime();
+        Date date = new Date();
         User userOwner = new UserBuilder().setName("Vladimir").build();
         User userClient = new UserBuilder().setName("Charlie").build();
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.CAR).build();
@@ -34,7 +35,8 @@ public class TransactionTest {
 
     @Test
     public void cancelTransactionChangeStateToCancelAndRentalStateInCancel(){
-        DateTime date = new DateTime();
+        //DateTime date = new DateTime();
+        Date date = new Date();
         User userOwner = new UserBuilder().setName("Vladimir").build();
         User userClient = new UserBuilder().setName("Charlie").build();
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.CAR).build();
@@ -51,7 +53,8 @@ public class TransactionTest {
 
     @Test
     public void confirmTransactionChangeStateToConfirmAndRentalStateToInProgressTest(){
-        DateTime date = new DateTime();
+        //DateTime date = new DateTime();
+        Date date = new Date();
         User userOwner = new UserBuilder().setName("Vladimir").build();
         User userClient = new UserBuilder().setName("Charlie").build();
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.MOTORCYCLE).build();

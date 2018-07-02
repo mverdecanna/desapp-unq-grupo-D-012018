@@ -92,28 +92,27 @@ public class RentalService extends GenericService<Rental> {
 
     private Rental makeNewReantal(Rental rental){
         Rental newRental = new Rental(rental.getOwnerCuil(), rental.getClientCuil(), rental.getVehicleID());
+/*
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        //DateTime date = new DateTime();
+//        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-        //DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
+        String start_string = rental.getStartDate().toString();
+        String end_string = rental.getEndDate().toString();
 
-        String start_string = rental.getStartDate().toString().substring(0, 19);
-        String end_string = rental.getEndDate().toString().substring(0, 19);
+  //      String fecha = formatter.parseDateTime(start_string).toDate().toString();
 
-        String fecha = formatter.parseDateTime(start_string).toDate().toString();
-
-
+        Date date = new Date();
         try {
-            Date date = sdf.parse(fecha);
+            date = sdf.parse(start_string);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        DateTime start = formatter.parseDateTime(start_string);
-        DateTime end = formatter.parseDateTime(end_string);
-        newRental.setStartDate(start);
-        newRental.setEndDate(end);
+        //DateTime start = formatter.parseDateTime(start_string);
+        //DateTime end = formatter.parseDateTime(end_string);
+*/
+        newRental.setStartDate(rental.getStartDate());
+        newRental.setEndDate(rental.getEndDate());
         return newRental;
     }
 

@@ -17,8 +17,8 @@ public class RentalBuilder {
     }
 
     private String id;
-    private DateTime startDate;
-    private DateTime endDate;
+    private Date startDate;
+    private Date endDate;
     private String ownerCuil;
     private String clientCuil;
     private String vehicleID;
@@ -38,7 +38,7 @@ public class RentalBuilder {
 
 
 
-    public RentalBuilder(String id, DateTime startDate, DateTime endDate, String ownerCuil, String clientCuil, String vehicleID){
+    public RentalBuilder(String id, Date startDate, Date endDate, String ownerCuil, String clientCuil, String vehicleID){
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -50,7 +50,7 @@ public class RentalBuilder {
 
 
 
-    public RentalBuilder(DateTime startDate, DateTime endDate, String ownerCuil, String clientCuil, String vehicleID){
+    public RentalBuilder(Date startDate, Date endDate, String ownerCuil, String clientCuil, String vehicleID){
         this.startDate = startDate;
         this.endDate = endDate;
         this.ownerCuil = ownerCuil;
@@ -72,13 +72,13 @@ public class RentalBuilder {
     }
 
 
-    public RentalBuilder setStartDate(DateTime startDate){
+    public RentalBuilder setStartDate(Date startDate){
         this.startDate = startDate;
         return this;
     }
 
 
-    public RentalBuilder setEndDate(DateTime endDate){
+    public RentalBuilder setEndDate(Date endDate){
         this.endDate = endDate;
         return this;
     }

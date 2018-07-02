@@ -35,10 +35,10 @@ public class Rental implements Serializable {
     private String id;
 
     @Column(name="startDate")
-    private DateTime startDate;
+    private Date startDate;
 
     @Column(name="endDate")
-    private DateTime endDate;
+    private Date endDate;
 
     @Column(name="ownerCuil")
     private String ownerCuil;
@@ -57,7 +57,7 @@ public class Rental implements Serializable {
     public Rental(){}
 
 
-    public Rental(String id, DateTime startDate, DateTime endDate, String ownerCuil, String clientCuil, String vehicleID){
+    public Rental(String id, Date startDate, Date endDate, String ownerCuil, String clientCuil, String vehicleID){
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -75,7 +75,7 @@ public class Rental implements Serializable {
         this.vehicleID = vehicleID;
     }
 
-    public Rental(DateTime startDate, DateTime endDate, String ownerCuil, String clientCuil, String vehicleID){
+    public Rental(Date startDate, Date endDate, String ownerCuil, String clientCuil, String vehicleID){
         this.startDate = startDate;
         this.endDate = endDate;
         this.state = RentalState.WAIT_CONFIRM;
@@ -96,19 +96,19 @@ public class Rental implements Serializable {
         this.id = id;
     }
 
-    public DateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public DateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

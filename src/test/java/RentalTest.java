@@ -18,7 +18,8 @@ public class RentalTest {
 
     @Test
     public void  rentalConstructorTest(){
-        DateTime date = new DateTime();
+        //DateTime date = new DateTime();
+        Date date = new Date();
         User userOwner = new UserBuilder().setName("Pepe").setCuil("22334455").build();
         User userClient = new UserBuilder().setName("Lolo").setCuil("22334455").build();
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.TRUCK).build();
