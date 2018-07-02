@@ -17,11 +17,11 @@ public class GenericService<T> implements Serializable {
 
     private GenericRepository<T> repository;
 
-
+    @Transactional
     public GenericRepository<T> getRepository() {
         return this.repository;
     }
-
+    @Transactional
     public void setRepository(final GenericRepository<T> repository) {
         this.repository = repository;
     }
