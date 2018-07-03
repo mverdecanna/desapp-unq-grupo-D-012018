@@ -42,8 +42,11 @@ public class Transaction {
     @Column(name="lastUpdated")
     private Date lastUpdate;
 
-    @Column(name="state")
+
+    @Column(name="state", length = 12)
+    @Enumerated(EnumType.STRING)
     private StateTransaction state;
+
 
     @OneToOne(cascade=CascadeType.ALL)
     @JoinTable(name = "rental", joinColumns = {
@@ -141,6 +144,13 @@ public class Transaction {
     public void cancelTransaction(){
         this.setState(StateTransaction.CANCEL);
         this.rental.cancelRental();
+        this.lastUpdate = new Date();
+    }
+
+
+    public void rejectTransaction(){
+        this.setState(StateTransaction.REJECTED);
+        this.rental.rejectRental();
         this.lastUpdate = new Date();
     }
 

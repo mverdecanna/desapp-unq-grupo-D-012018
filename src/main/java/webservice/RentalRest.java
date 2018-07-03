@@ -149,6 +149,18 @@ public class RentalRest {
 
 
 
+    @POST
+    @Path("/transaction/reject")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response rejectTransaction(Transaction transaction) {
+        if(transaction == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        Transaction newTransaction = this.rentalService.createTransaction(transaction);
+        return Response.ok(newTransaction).build();
+    }
+
 
 
 

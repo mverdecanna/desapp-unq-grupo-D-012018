@@ -54,7 +54,21 @@ public class RentalService extends GenericService<Rental> {
         rental.initRental();
         Transaction newTransaction = new Transaction(transaction.getCost(), rental);
         rentalRepository.saveTransaction(newTransaction);
+        this.notificateUsers(rental.getOwnerCuil(), rental.getClientCuil(), SUBJECT_CONFIRM_RENTAL_OWNER, SUBJECT_CONFIRM_RENTAL_CLIENT,
+                BODY_CONFIRM_RENTAL_OWNER, BODY_CONFIRM_RENTAL_CLIENT);
         return newTransaction;
+    }
+
+
+    @Transactional
+    public Transaction rejectTransaction(Transaction transaction){
+        RentalRepository rentalRepository = (RentalRepository) getRepository();
+        Rental rental = transaction.getRental();
+        transaction.rejectTransaction();
+        rentalRepository.updateTransaction(transaction);
+        this.notificateUsers(rental.getOwnerCuil(), rental.getClientCuil(), SUBJECT_REJECTED_RENTAL_OWNER, SUBJECT_REJECTED_RENTAL_CLIENT,
+                BODY_REJECTED_RENTAL_OWNER, BODY_REJECTED_RENTAL_CLIENT);
+        return transaction;
     }
 
 
