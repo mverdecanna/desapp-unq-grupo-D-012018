@@ -1,5 +1,6 @@
 package service;
 
+import model.AppMail;
 import model.Rental;
 import model.Transaction;
 import org.joda.time.DateTime;
@@ -14,6 +15,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static model.util.Constants.*;
+
+
 /**
  * Created by mariano on 10/06/18.
  */
@@ -23,14 +27,24 @@ public class RentalService extends GenericService<Rental> {
     private static final long serialVersionUID = 2131482422367092L;
 
 
+
     @Transactional
     public Rental createRental(Rental rental){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         Rental newRental = this.makeNewReantal(rental);
         rentalRepository.save(newRental);
+        this.notificateUsers(newRental.getOwnerCuil(), newRental.getClientCuil(), SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
+                BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
         return newRental;
     }
 
+
+    private void notificateUsers(String ownerCuil, String clientCuil, String ownerSubject, String clientSubject, String ownerBody, String clientBody){
+        String ownerMail = this.mailByCuil(ownerCuil);
+        String clientMail = this.mailByCuil(clientCuil);
+        AppMail.sendMail(ownerMail, ownerSubject, ownerBody);
+        AppMail.sendMail(clientMail, clientSubject, clientBody);
+    }
 
 
     @Transactional
@@ -116,6 +130,13 @@ public class RentalService extends GenericService<Rental> {
         return newRental;
     }
 
+
+
+    public String mailByCuil(String cuil){
+        RentalRepository rentalRepository = (RentalRepository) getRepository();
+        String mail = rentalRepository.findMailByCuil(cuil);
+        return mail;
+    }
 
 
 }

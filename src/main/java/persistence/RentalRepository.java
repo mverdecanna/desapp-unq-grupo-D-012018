@@ -3,6 +3,7 @@ package persistence;
 import model.Rental;
 import model.Transaction;
 import org.apache.log4j.Logger;
+import org.springframework.dao.support.DataAccessUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -64,5 +65,11 @@ public class RentalRepository extends HibernateGenericDAO<Rental> implements Gen
     }
 
 
+
+    public String findMailByCuil(String cuil){
+        String mail = (String) DataAccessUtils.singleResult((this.getHibernateTemplate().find("select email from User u" +
+                " where u.cuil =" +cuil)));
+        return mail;
+    }
 
 }

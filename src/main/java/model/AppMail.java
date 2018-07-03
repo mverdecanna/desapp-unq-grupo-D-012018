@@ -14,6 +14,8 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import javax.activation.*;
 
+import static model.util.Constants.CARPND_MAIL;
+import static model.util.Constants.CARPND_PASSWORD;
 
 
 /**
@@ -39,8 +41,8 @@ public class AppMail {
         props.put("mail.store.protocol", "pop3");
         props.put("mail.transport.protocol", "smtp");
 
-        final String username = "carpnd.2018.grupo.d@gmail.com";
-        final String password = "traemelacopamessi";
+        final String username = CARPND_MAIL;
+        final String password = CARPND_PASSWORD;
 
 
         try{
@@ -84,9 +86,8 @@ public class AppMail {
      props.put("mail.store.protocol", "pop3");
      props.put("mail.transport.protocol", "smtp");
 
-     final String username = "carpnd.2018.grupo.d@gmail.com";
-     final String password = "traemelacopamessi";
-
+    final String username = CARPND_MAIL;
+    final String password = CARPND_PASSWORD;
 
         try{
      Session session = Session.getDefaultInstance(props,
