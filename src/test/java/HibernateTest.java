@@ -30,7 +30,7 @@ public class HibernateTest {
         Integer cero = 0;
         Integer uno = 1;
         Assert.assertEquals(cero, this.userService.count());
-        User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").setAddress("Avenida SiempreViva 111").setEmail("mverdecanna@gmail.com")
+        User user = new UserBuilder().setCuil("20320231680").setName("Mariano").setSurname("Verdecanna").setAddress("Avenida SiempreViva 111").setEmail("mverdecanna@gmail.com")
                 .setCurrentAccount(new CurrentAccount("20320231680")).build();
         this.userService.save(user);
         Assert.assertEquals(uno, this.userService.count());

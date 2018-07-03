@@ -157,7 +157,7 @@ public class RentalRest {
         if(transaction == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        Transaction newTransaction = this.rentalService.createTransaction(transaction);
+        Transaction newTransaction = this.rentalService.rejectTransaction(transaction);
         return Response.ok(newTransaction).build();
     }
 
