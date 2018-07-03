@@ -37,10 +37,10 @@ public class Transaction {
     private Integer cost;
 
     @Column(name="created")
-    private DateTime create;
+    private Date create;
 
     @Column(name="lastUpdated")
-    private DateTime lastUpdate;
+    private Date lastUpdate;
 
     @Column(name="state")
     private StateTransaction state;
@@ -54,7 +54,7 @@ public class Transaction {
     public Transaction(){}
 
 
-    public Transaction(String id, Integer cost, DateTime create, DateTime lastUpdate, Rental rental){
+    public Transaction(String id, Integer cost, Date create, Date lastUpdate, Rental rental){
         this.id = id;
         this.cost = cost;
         this.create = create;
@@ -66,8 +66,8 @@ public class Transaction {
 
     public Transaction(Integer cost, Rental rental){
         this.state = StateTransaction.RESERVATION;
-        this.create = new DateTime();
-        this.lastUpdate = new DateTime();
+        this.create = new Date();
+        this.lastUpdate = new Date();
         this.cost = cost;
         this.rental = rental;
     }
@@ -91,19 +91,19 @@ public class Transaction {
         this.cost = cost;
     }
 
-    public DateTime getCreate() {
+    public Date getCreate() {
         return create;
     }
 
-    public void setCreate(DateTime create) {
+    public void setCreate(Date create) {
         this.create = create;
     }
 
-    public DateTime getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(DateTime lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
@@ -134,40 +134,40 @@ public class Transaction {
     public void payTransaction(){
         this.setState(StateTransaction.PAID);
         this.rental.isDone();
-        this.lastUpdate = new DateTime();
+        this.lastUpdate = new Date();
     }
 
 
     public void cancelTransaction(){
         this.setState(StateTransaction.CANCEL);
         this.rental.cancelRental();
-        this.lastUpdate = new DateTime();
+        this.lastUpdate = new Date();
     }
 
 
     public void completeTransaction(){
         this.setState(StateTransaction.COMPLETE);
         this.rental.returnedVehicle();
-        this.lastUpdate = new DateTime();
+        this.lastUpdate = new Date();
     }
 
 
     public void finalizeTransaction(){
         this.setState(StateTransaction.FINALIZED);
-        this.lastUpdate = new DateTime();
+        this.lastUpdate = new Date();
     }
 
 
     public void initializeTransaction(){
         this.setState(StateTransaction.RESERVATION);
         this.rental.initRental();
-        this.lastUpdate = new DateTime();
+        this.lastUpdate = new Date();
     }
 
 
     public void markCollectVehicle(){
         this.rental.catchTheVehicle();
-        this.lastUpdate = new DateTime();
+        this.lastUpdate = new Date();
     }
 
 

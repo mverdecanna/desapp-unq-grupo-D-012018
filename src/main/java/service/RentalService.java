@@ -50,8 +50,10 @@ public class RentalService extends GenericService<Rental> {
     @Transactional
     public Transaction createTransaction(Transaction transaction){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
-        Transaction newTransaction = new Transaction(transaction.getCost(), transaction.getRental());
-        rentalRepository.saveTransaction(transaction);
+        Rental rental = transaction.getRental();
+        rental.initRental();
+        Transaction newTransaction = new Transaction(transaction.getCost(), rental);
+        rentalRepository.saveTransaction(newTransaction);
         return newTransaction;
     }
 

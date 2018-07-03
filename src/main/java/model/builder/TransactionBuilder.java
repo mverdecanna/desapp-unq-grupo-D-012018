@@ -17,8 +17,8 @@ public class TransactionBuilder {
 
     private String id;
     private Integer cost;
-    private DateTime create;
-    private DateTime lastUpdate;
+    private Date create;
+    private Date lastUpdate;
     private Transaction.StateTransaction state;
     private Rental rental;
 
@@ -26,7 +26,7 @@ public class TransactionBuilder {
     public TransactionBuilder(){}
 
 
-    public TransactionBuilder(String id, Integer cost, DateTime create, DateTime lastUpdate, Rental rental){
+    public TransactionBuilder(String id, Integer cost, Date create, Date lastUpdate, Rental rental){
         this.id = id;
         this.cost = cost;
         this.create = create;
@@ -40,8 +40,8 @@ public class TransactionBuilder {
         this.state = Transaction.StateTransaction.RESERVATION;
         this.cost = cost;
         this.rental = rental;
-        this.create = new DateTime();
-        this.lastUpdate = new DateTime();
+        this.create = new Date();
+        this.lastUpdate = new Date();
     }
 
 
@@ -51,13 +51,13 @@ public class TransactionBuilder {
     }
 
 
-    public TransactionBuilder setCreate(DateTime create){
+    public TransactionBuilder setCreate(Date create){
         this.create = create;
         return this;
     }
 
 
-    public TransactionBuilder setLastUpdate(DateTime lastUpdate){
+    public TransactionBuilder setLastUpdate(Date lastUpdate){
         this.lastUpdate = lastUpdate;
         return this;
     }
