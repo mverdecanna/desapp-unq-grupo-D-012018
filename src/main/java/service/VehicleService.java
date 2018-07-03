@@ -52,7 +52,7 @@ public class VehicleService extends GenericService<Vehicle> {
     private Vehicle makeNewVehicle(Vehicle vehicle){
         Vehicle newVehicle = new VehicleBuilder().setVehicleType(vehicle.getType()).setCapacity(vehicle.getCapacity()).setLocation(vehicle.getLocation())
                 .setRetirementAddress(vehicle.getRetirementAddress()).setReturnAddress(vehicle.getReturnAddress()).setDescription(vehicle.getDescription()).
-                        setPhone(vehicle.getPhone()).setCost(vehicle.getCost()).setOwnerCuil(vehicle.getOwnerCuil()).build();
+                        setPhone(vehicle.getPhone()).setCost(vehicle.getCost()).setOwnerCuil(vehicle.getOwnerCuil()).setPhoto(vehicle.getPhoto()).build();
         return newVehicle;
     }
 

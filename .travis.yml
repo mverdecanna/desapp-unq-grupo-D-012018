@@ -18,7 +18,7 @@ before_install:
         PRIMARY KEY (cuil) );'
   - mysql -e 'CREATE TABLE carpnd.vehicles(
         id INTEGER(8) NOT NULL AUTO_INCREMENT, type VARCHAR(10) NOT NULL, capacity INTEGER(2), location VARCHAR(50), retirementAddress VARCHAR(50),
-        returnAddress VARCHAR(50), description VARCHAR(50), phone VARCHAR(50), cost INTEGER(4), ownerCuil VARCHAR(11), PRIMARY KEY (id) );'
+        returnAddress VARCHAR(50), description VARCHAR(50), phone VARCHAR(50), cost INTEGER(4), ownerCuil VARCHAR(11), photo VARCHAR(255), PRIMARY KEY (id) );'
   - mysql -e 'CREATE TABLE carpnd.rental(
         id INTEGER(8) NOT NULL AUTO_INCREMENT, state VARCHAR(12) NOT NULL, startDate DATETIME, endDate DATETIME,
         ownerCuil VARCHAR(11), clientCuil VARCHAR(11), vehicle_id INTEGER(8),

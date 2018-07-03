@@ -17,6 +17,7 @@ public class VehicleBuilder {
     private String phone;
     private Integer cost;
     private String ownerCuil;
+    private String photo;
 
 
 public VehicleBuilder(){}
@@ -26,7 +27,7 @@ public VehicleBuilder(){}
     }
 
     public VehicleBuilder(Vehicle.VehicleType type, Integer capacity, String location, String retirementAddress,
-                   String returnAddress, String description, String phone, Integer cost, String ownerCuil){
+                   String returnAddress, String description, String phone, Integer cost, String ownerCuil, String photo){
         this.type = type;
         this.capacity = capacity;
         this.location = location;
@@ -36,6 +37,7 @@ public VehicleBuilder(){}
         this.phone = phone;
         this.cost = cost;
         this.ownerCuil = ownerCuil;
+        this.photo = photo;
     }
 
 
@@ -97,8 +99,14 @@ public VehicleBuilder(){}
     }
 
 
+    public VehicleBuilder setPhoto(String photo){
+        this.photo = photo;
+        return this;
+    }
+
+
     public Vehicle build(){
-        return new Vehicle(this.type, this.capacity, this.location, this.retirementAddress, this.returnAddress, this.description, this.phone, this.cost, this.ownerCuil);
+        return new Vehicle(this.type, this.capacity, this.location, this.retirementAddress, this.returnAddress, this.description, this.phone, this.cost, this.ownerCuil, this.photo);
     }
 
 
