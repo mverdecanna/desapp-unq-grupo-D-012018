@@ -101,6 +101,11 @@ public class RentalService extends GenericService<Rental> {
         List<Rental> rentals = rentalRepository.rentalsByCuil(cuil);
         return rentals;
     }
+    public List<Rental> findRentalsByClientCuil(String cuil){
+        RentalRepository rentalRepository = (RentalRepository) getRepository();
+        List<Rental> rentals = rentalRepository.rentalsByClientCuil(cuil);
+        return rentals;
+    }
 
 
 

@@ -64,7 +64,12 @@ public class RentalRepository extends HibernateGenericDAO<Rental> implements Gen
         return rentals;
     }
 
-
+    public List<Rental> rentalsByClientCuil(String cuil){
+        List<Rental> rentals = (List<Rental>) this.getHibernateTemplate().
+                find("select r from " + this.persistentClass.getName() + " r"
+                        + " where r.clientCuil = " + cuil);
+        return rentals;
+    }
 
     public String findMailByCuil(String cuil){
         String mail = (String) DataAccessUtils.singleResult((this.getHibernateTemplate().find("select email from User u" +

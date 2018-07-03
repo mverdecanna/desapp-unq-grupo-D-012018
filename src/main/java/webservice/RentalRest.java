@@ -41,6 +41,16 @@ public class RentalRest {
         return Response.ok(rentals).build();
     }
 
+    @GET
+    @Path("/allclient/{cuil}")
+    @Produces("application/json")
+    public Response findAllClient(@PathParam("cuil") final String cuil) {
+        List<Rental> rentals = rentalService.findRentalsByClientCuil(cuil);
+        if (rentals == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return Response.ok(rentals).build();
+    }
 
 
     @GET
