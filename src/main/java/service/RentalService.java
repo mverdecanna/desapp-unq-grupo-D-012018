@@ -1,5 +1,6 @@
 package service;
 
+import model.AppMail;
 import model.Rental;
 import model.Transaction;
 import org.joda.time.DateTime;
@@ -25,6 +26,7 @@ public class RentalService extends GenericService<Rental> {
 
     @Transactional
     public Rental createRental(Rental rental){
+        AppMail.sendMail("mverdecanna@gmail.com", "Rental", "User id created a rental");
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         Rental newRental = this.makeNewReantal(rental);
         rentalRepository.save(newRental);

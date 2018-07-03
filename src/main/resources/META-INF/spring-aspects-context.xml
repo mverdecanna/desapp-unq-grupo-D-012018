@@ -8,8 +8,10 @@
    http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
 	<bean id="loggerSystem" class="aspects.Logging"></bean>
+	<bean id="mailer" class="aspects.Mailer"></bean>
 
 	<aop:aspectj-autoproxy>
 		<aop:include name="loggerSystem"/>
+		<aop:include name="mailer"/>
 	</aop:aspectj-autoproxy>
 </beans>
