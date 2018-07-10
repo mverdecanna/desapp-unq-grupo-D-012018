@@ -1,11 +1,10 @@
-
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
-
 import java.util.List;
 
 
@@ -17,18 +16,29 @@ public class ArchitectureTest {
 
     
     @Test
-    public void testArchiteture1() {
+    public void testArchitectureGenericService() {
         boolean result = true;
 
         try {
+            Method[] methodsVehicleService = Class.forName("service.VehicleService").getMethods();
+            Method[] methodsRentalService = Class.forName("service.RentalService").getMethods();
+            Method[] methodsUserService = Class.forName("service.GenericService").getMethods();
 
-            Method[] methods = Class.forName("service.GenericService").getMethods();
-            Method[] superMethods = Class.forName("service.GenericService").getSuperclass().getMethods();
+            Method[] superMethodsVehicle = Class.forName("service.VehicleService").getSuperclass().getMethods();
+            Method[] superMethodsRental = Class.forName("service.RentalService").getSuperclass().getMethods();
+            Method[] superMethodsUser = Class.forName("service.UserService").getSuperclass().getMethods();
 
-            List<Method> methodsClass = Arrays.asList(methods);
-            List<Method> superClassMethods = Arrays.asList(superMethods);
 
-            for (Method method : methodsClass) {
+            List<Method> allMethodsService = new ArrayList<>(Arrays.asList(methodsVehicleService));
+            allMethodsService.addAll(new ArrayList<>(Arrays.asList(methodsRentalService)));
+            allMethodsService.addAll(new ArrayList<>(Arrays.asList(methodsUserService)));
+
+
+            List<Method> superClassMethods = new ArrayList<>(Arrays.asList(superMethodsVehicle));
+            superClassMethods.addAll(new ArrayList<>(Arrays.asList(superMethodsRental)));
+            superClassMethods.addAll(new ArrayList<>(Arrays.asList(superMethodsUser)));
+
+            for (Method method : allMethodsService) {
                 if ( !(method.getName().contains("Service") || superClassMethods.contains(method)) ) {
                     Annotation[] annotations = method.getAnnotations();
                     if (annotations.length == 0) {
