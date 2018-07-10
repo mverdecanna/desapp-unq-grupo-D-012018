@@ -28,12 +28,12 @@ public class VehicleService extends GenericService<Vehicle> {
     }
 */
 
-    public Integer nVehicles(){
+    private Integer nVehicles(){
         return super.count();
     }
 
 
-
+    @Transactional
     public List<Vehicle> vehicleList(String userId){
         VehicleRepository vehicleRepository = (VehicleRepository) getRepository();
         return vehicleRepository.userVehicles(userId);
@@ -57,7 +57,7 @@ public class VehicleService extends GenericService<Vehicle> {
     }
 
 
-
+    @Transactional
     public List<Vehicle> othersVehicles(String userId){
         VehicleRepository vehicleRepository = (VehicleRepository) getRepository();
         return vehicleRepository.notUserVehicles(userId);

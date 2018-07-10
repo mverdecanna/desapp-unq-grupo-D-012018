@@ -73,7 +73,7 @@ public class RentalService extends GenericService<Rental> {
     }
 
 
-
+    @Transactional
     public Transaction findTransaction(String id) {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         Transaction transaction = rentalRepository.findTransactionById(id);
@@ -112,12 +112,14 @@ public class RentalService extends GenericService<Rental> {
     }
 
 
-
+    @Transactional
     public List<Rental> findRentalsByCuil(String cuil){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         List<Rental> rentals = rentalRepository.rentalsByCuil(cuil);
         return rentals;
     }
+
+    @Transactional
     public List<Rental> findRentalsByClientCuil(String cuil){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         List<Rental> rentals = rentalRepository.rentalsByClientCuil(cuil);
@@ -153,7 +155,7 @@ public class RentalService extends GenericService<Rental> {
     }
 
 
-
+    @Transactional
     public String mailByCuil(String cuil){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         String mail = rentalRepository.findMailByCuil(cuil);

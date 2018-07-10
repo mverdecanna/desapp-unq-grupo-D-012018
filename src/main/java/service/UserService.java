@@ -16,11 +16,11 @@ public class UserService extends GenericService<User> {
 
     // no esta bien mapeado en userRepository, por eso rompe...
 
-    public Integer nUsuers() {
+    private Integer nUsuers() {
         return getRepository().count();
     }
 
-
+    @Transactional
     public CurrentAccount findCurrentAccount(String cuil) {
         UserRepository userRepository = (UserRepository) getRepository();
         CurrentAccount currentAccount = userRepository.findCurrentAccountByCuil(cuil);
@@ -43,7 +43,7 @@ public class UserService extends GenericService<User> {
         userRepository.updateCurrentAccount(currentAccount);
     }
 
-
+    @Transactional
     public UserDto findByMail(String mail){
         UserRepository userRepository = (UserRepository) getRepository();
         User user = userRepository.findUserByMail(mail);
