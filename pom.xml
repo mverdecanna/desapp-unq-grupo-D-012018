@@ -45,6 +45,13 @@
     </dependency>
 
     <dependency>
+      <groupId>com.tngtech.archunit</groupId>
+      <artifactId>archunit-junit</artifactId>
+      <version>0.8.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>com.googlecode.libphonenumber</groupId>
       <artifactId>libphonenumber</artifactId>
       <version>4.3</version>
