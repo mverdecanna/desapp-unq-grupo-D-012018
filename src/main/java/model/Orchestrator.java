@@ -98,7 +98,7 @@ public class Orchestrator {
         String text = "Probando el envio de mail...";
 
 
-        AppMail.sendMail(mail, sub, text);
+        //AppMail.sendMail(mail, sub, text);
 
 
     }

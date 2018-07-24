@@ -3,12 +3,22 @@ package webservice;
 import model.Rental;
 import model.Transaction;
 import org.joda.time.DateTime;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
+import service.MailSenderService;
 import service.RentalService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import static model.util.Constants.*;
 
 /**
  * Created by mariano on 10/06/18.
@@ -19,6 +29,8 @@ public class RentalRest {
 
     private RentalService rentalService;
 
+    private MailSenderService mailSenderService;
+
 
     public RentalService getRentalService() {
         return rentalService;
@@ -27,6 +39,16 @@ public class RentalRest {
     public void setRentalService(RentalService rentalService) {
         this.rentalService = rentalService;
     }
+
+
+    public MailSenderService getMailSenderService() {
+        return mailSenderService;
+    }
+
+    public void setMailSenderService(MailSenderService mailSenderService) {
+        this.mailSenderService = mailSenderService;
+    }
+
 
 
 
@@ -75,6 +97,10 @@ public class RentalRest {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         Rental newRental = this.rentalService.createRental(rental);
+        String ownerMail = this.rentalService.mailByCuil(newRental.getOwnerCuil());
+        String clientMail = this.rentalService.mailByCuil(newRental.getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
+                BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
         return Response.ok(newRental).build();
     }
 
@@ -139,12 +165,18 @@ public class RentalRest {
     @Path("/transaction/create")
     @Produces("application/json")
     @Consumes("application/json")
-    public Response createTransaction(Transaction transaction) {
+    public Response createTransaction(Transaction transaction) throws Exception {
         if(transaction == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         Transaction newTransaction = this.rentalService.createTransaction(transaction);
+        Rental rental = newTransaction.getRental();
+        String ownerMail = this.rentalService.mailByCuil(rental.getOwnerCuil());
+        String clientMail = this.rentalService.mailByCuil(rental.getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_CONFIRM_RENTAL_OWNER,
+                SUBJECT_CONFIRM_RENTAL_CLIENT, BODY_CONFIRM_RENTAL_OWNER, BODY_CONFIRM_RENTAL_CLIENT);
         return Response.ok(newTransaction).build();
+
     }
 
 
@@ -158,8 +190,42 @@ public class RentalRest {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         Transaction newTransaction = this.rentalService.rejectTransaction(transaction);
+        Rental rental = newTransaction.getRental();
+        String ownerMail = this.rentalService.mailByCuil(rental.getOwnerCuil());
+        String clientMail = this.rentalService.mailByCuil(rental.getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_REJECTED_RENTAL_OWNER, SUBJECT_REJECTED_RENTAL_CLIENT,
+                BODY_REJECTED_RENTAL_OWNER, BODY_REJECTED_RENTAL_CLIENT);
         return Response.ok(newTransaction).build();
     }
+
+
+
+
+/*
+    @GET
+    @Async
+    @Path("/send")
+    @Produces("application/json")
+    public void sendMail() throws Exception {
+        Thread t = new Thread(){
+
+            public void run(MailSenderService mailSenderService){
+                try{
+                    //Response jaxrs = Response.ok("basic").type(MediaType.TEXT_PLAIN).build();
+                    //asyncResponse.setResponse(jaxrs);
+                    //asyncResponse.resume(jaxrs);
+                    mailSenderService.sendMail("mverdecanna@gmail.com", SUBJECT_CONFIRM_RENTAL_OWNER, BODY_CONFIRM_RENTAL_OWNER);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };
+        t.start();
+
+        this.mailSenderService.sendMail("mverdecanna@gmail.com", SUBJECT_CONFIRM_RENTAL_OWNER, BODY_CONFIRM_RENTAL_OWNER);
+    }
+*/
 
 
 

@@ -6,6 +6,7 @@ import model.Transaction;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 import persistence.RentalRepository;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -27,23 +28,12 @@ public class RentalService extends GenericService<Rental> {
     private static final long serialVersionUID = 2131482422367092L;
 
 
-
     @Transactional
     public Rental createRental(Rental rental){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         Rental newRental = this.makeNewReantal(rental);
         rentalRepository.save(newRental);
-        this.notificateUsers(newRental.getOwnerCuil(), newRental.getClientCuil(), SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
-                BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
         return newRental;
-    }
-
-
-    private void notificateUsers(String ownerCuil, String clientCuil, String ownerSubject, String clientSubject, String ownerBody, String clientBody){
-        String ownerMail = this.mailByCuil(ownerCuil);
-        String clientMail = this.mailByCuil(clientCuil);
-        AppMail.sendMail(ownerMail, ownerSubject, ownerBody);
-        AppMail.sendMail(clientMail, clientSubject, clientBody);
     }
 
 
@@ -54,8 +44,6 @@ public class RentalService extends GenericService<Rental> {
         rental.initRental();
         Transaction newTransaction = new Transaction(transaction.getCost(), rental);
         rentalRepository.saveTransaction(newTransaction);
-        this.notificateUsers(rental.getOwnerCuil(), rental.getClientCuil(), SUBJECT_CONFIRM_RENTAL_OWNER, SUBJECT_CONFIRM_RENTAL_CLIENT,
-                BODY_CONFIRM_RENTAL_OWNER, BODY_CONFIRM_RENTAL_CLIENT);
         return newTransaction;
     }
 
@@ -67,8 +55,6 @@ public class RentalService extends GenericService<Rental> {
         Transaction newTransaction = new Transaction(transaction.getCost(), rental);
         newTransaction.rejectTransaction();
         rentalRepository.saveTransaction(newTransaction);
-        this.notificateUsers(rental.getOwnerCuil(), rental.getClientCuil(), SUBJECT_REJECTED_RENTAL_OWNER, SUBJECT_REJECTED_RENTAL_CLIENT,
-                BODY_REJECTED_RENTAL_OWNER, BODY_REJECTED_RENTAL_CLIENT);
         return transaction;
     }
 

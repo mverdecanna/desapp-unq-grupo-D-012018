@@ -56,6 +56,7 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 
 	<bean id="rentalRest" class="webservice.RentalRest">
 		<property name="rentalService" ref="service.rental" />
+		<property name="mailSenderService" ref="service.mail" />
 	</bean>
 
 

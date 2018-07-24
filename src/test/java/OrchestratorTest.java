@@ -13,7 +13,8 @@ public class OrchestratorTest {
     public void orchestratorConstructorTest(){
         Orchestrator aux = new Orchestrator();
 
-        Assert.assertTrue(aux.getUserSystem().isEmpty() && aux.getRentalSystem().isEmpty() && aux.getTransactionsSystem().isEmpty() && aux.getSendMail().getClass().equals(AppMail.class));
+        //Assert.assertTrue(aux.getUserSystem().isEmpty() && aux.getRentalSystem().isEmpty() && aux.getTransactionsSystem().isEmpty() && aux.getSendMail().getClass().equals(AppMail.class));
+        Assert.assertTrue(aux.getUserSystem().isEmpty() && aux.getRentalSystem().isEmpty() && aux.getTransactionsSystem().isEmpty() );
 
     }
 }

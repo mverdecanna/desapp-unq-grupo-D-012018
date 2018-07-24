@@ -6,6 +6,7 @@ import persistence.GenericRepository;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by mariano on 14/04/18.
@@ -21,6 +22,7 @@ public class GenericService<T> implements Serializable {
     public GenericRepository<T> getRepository() {
         return this.repository;
     }
+
     @Transactional
     public void setRepository(final GenericRepository<T> repository) {
         this.repository = repository;
@@ -53,7 +55,6 @@ public class GenericService<T> implements Serializable {
 
     @Transactional
     public T findById(Serializable id){return this.getRepository().findById(id);}
-
 
 
 }

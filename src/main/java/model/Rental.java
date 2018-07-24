@@ -53,6 +53,10 @@ public class Rental implements Serializable {
     @Enumerated(EnumType.STRING)
     private RentalState state;
 
+    @Transient
+    private AppMail appMail;
+
+
 
     public Rental(){}
 

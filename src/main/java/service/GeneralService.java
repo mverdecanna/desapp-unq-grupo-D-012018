@@ -47,4 +47,18 @@ public class GeneralService {
 //  RentalService
 
 
+    // MailSenderService
+    private MailSenderService mailSenderService;
+
+    public MailSenderService getMailSenderService() {
+        return mailSenderService;
+    }
+
+    public void setMailSenderService(MailSenderService mailSenderService) {
+        this.mailSenderService = mailSenderService;
+    }
+// MailSenderService
+
+
+
 }

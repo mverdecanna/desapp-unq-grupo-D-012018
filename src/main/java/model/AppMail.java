@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.core.task.TaskExecutor;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,10 +25,27 @@ import static model.util.Constants.CARPND_PASSWORD;
 
 public class AppMail {
 
+/*
+    private TaskExecutor taskExecutor;
 
 
+    public AppMail(TaskExecutor taskExecutor) {
+        this.taskExecutor = taskExecutor;
+    }
 
-    public static void sendMail(String mailTo, String subject, String body){
+
+    public void bla(){
+
+//        this.taskExecutor.execute();
+
+    }
+
+*/
+
+    public AppMail(){}
+
+
+    public void sendMail(String mailTo, String subject, String body){
 
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         Properties props = System.getProperties();
