@@ -2,6 +2,7 @@ package webservice;
 
 import model.Rental;
 import model.Transaction;
+import model.exceptions.InsufficientBalanceException;
 import org.joda.time.DateTime;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Async;
@@ -29,7 +30,7 @@ public class RentalRest {
 
     private RentalService rentalService;
 
-    private MailSenderService mailSenderService;
+    //private MailSenderService mailSenderService;
 
 
     public RentalService getRentalService() {
@@ -41,13 +42,6 @@ public class RentalRest {
     }
 
 
-    public MailSenderService getMailSenderService() {
-        return mailSenderService;
-    }
-
-    public void setMailSenderService(MailSenderService mailSenderService) {
-        this.mailSenderService = mailSenderService;
-    }
 
 
 
@@ -97,10 +91,6 @@ public class RentalRest {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         Rental newRental = this.rentalService.createRental(rental);
-        String ownerMail = this.rentalService.mailByCuil(newRental.getOwnerCuil());
-        String clientMail = this.rentalService.mailByCuil(newRental.getClientCuil());
-        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
-                BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
         return Response.ok(newRental).build();
     }
 
@@ -114,7 +104,7 @@ public class RentalRest {
         if(rental == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        this.rentalService.payAndAdvance(rental);
+        //this.rentalService.payAndAdvance(rental);
         return Response.ok(rental).build();
     }
 
@@ -124,12 +114,18 @@ public class RentalRest {
     @Path("/rental/pay")
     @Produces("application/json")
     @Consumes("application/json")
-    public Response payRental(Rental rental) {
-        if(rental == null){
+    public Response payRental(Transaction transaction) {
+        if(transaction == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        this.rentalService.collectVehicleAndAdvance(rental);
-        return Response.ok(rental).build();
+        //this.rentalService.collectVehicleAndAdvance(rental);
+        Transaction newTransaction = null;
+        try {
+            newTransaction = this.rentalService.payAndAdvance(transaction);
+        } catch (InsufficientBalanceException e) {
+            e.printStackTrace();
+        }
+        return Response.ok(newTransaction).build();
     }
 
 
@@ -170,11 +166,6 @@ public class RentalRest {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         Transaction newTransaction = this.rentalService.createTransaction(transaction);
-        Rental rental = newTransaction.getRental();
-        String ownerMail = this.rentalService.mailByCuil(rental.getOwnerCuil());
-        String clientMail = this.rentalService.mailByCuil(rental.getClientCuil());
-        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_CONFIRM_RENTAL_OWNER,
-                SUBJECT_CONFIRM_RENTAL_CLIENT, BODY_CONFIRM_RENTAL_OWNER, BODY_CONFIRM_RENTAL_CLIENT);
         return Response.ok(newTransaction).build();
 
     }
@@ -190,11 +181,6 @@ public class RentalRest {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         Transaction newTransaction = this.rentalService.rejectTransaction(transaction);
-        Rental rental = newTransaction.getRental();
-        String ownerMail = this.rentalService.mailByCuil(rental.getOwnerCuil());
-        String clientMail = this.rentalService.mailByCuil(rental.getClientCuil());
-        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_REJECTED_RENTAL_OWNER, SUBJECT_REJECTED_RENTAL_CLIENT,
-                BODY_REJECTED_RENTAL_OWNER, BODY_REJECTED_RENTAL_CLIENT);
         return Response.ok(newTransaction).build();
     }
 

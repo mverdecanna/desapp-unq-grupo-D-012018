@@ -213,13 +213,13 @@ public class User implements Serializable {
 
     /**
      * evalua si tiene saldo suficiente para pagar el costo del vehiculo
-     * @param vehicle
+     * @param mount
      * @return
      *
      *    el metodo va a cambiar si el costo es un valor calculado
      */
-    public Boolean canPayForThis(Vehicle vehicle){
-        return (this.balance() >= vehicle.getCost());
+    public Boolean canPayForThis(Integer mount){
+        return (this.balance() >= mount);
     }
 
 
@@ -233,16 +233,18 @@ public class User implements Serializable {
     }
 
 
-    public Boolean isValidMail(String email){
+    public Boolean isValidMail(){
         Pattern pattern = Pattern
                 .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-        Matcher mather = pattern.matcher(email);
+        Matcher mather = pattern.matcher(this.email);
         return mather.find();
     }
 
 
-
+    public void initializeUser(){
+        this.currentAccount = new CurrentAccount(this.cuil);
+    }
 
 
 

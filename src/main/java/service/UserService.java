@@ -3,8 +3,14 @@ package service;
 import model.CurrentAccount;
 import model.User;
 import model.dto.UserDto;
+import model.exceptions.InvalidRegisterParameterException;
+import model.util.CuilValidator;
 import org.springframework.transaction.annotation.Transactional;
 import persistence.UserRepository;
+
+import static model.util.Constants.EMAIL_ALREADY_EXISTS_MESSAGE;
+import static model.util.Constants.INVALID_CUIL_MESSAGE;
+import static model.util.Constants.INVALID_EMAIL_MESSAGE;
 
 /**
  * Created by mariano on 14/04/18.
@@ -14,11 +20,6 @@ public class UserService extends GenericService<User> {
     private static final long serialVersionUID = 2131359482422367092L;
 
 
-    // no esta bien mapeado en userRepository, por eso rompe...
-
-    private Integer nUsuers() {
-        return getRepository().count();
-    }
 
     @Transactional
     public CurrentAccount findCurrentAccount(String cuil) {
@@ -67,6 +68,39 @@ public class UserService extends GenericService<User> {
     }
 
 
+    @Transactional
+    public void saveTransactionUsers(User owner, User client){
+        this.save(owner);
+        this.save(client);
+    }
+
+
+
+    public void registerNewUser(User user) throws InvalidRegisterParameterException {
+        this.validateNewUser(user);
+        user.initializeUser();
+        this.save(user);
+    }
+
+
+    private void validateNewUser(User user) throws InvalidRegisterParameterException {
+        if(!user.isValidMail()){
+            throw new InvalidRegisterParameterException(INVALID_EMAIL_MESSAGE);
+        }
+        if(this.registeredEmail(user.getEmail())){
+            throw new InvalidRegisterParameterException(EMAIL_ALREADY_EXISTS_MESSAGE);
+        }
+        if(!CuilValidator.isValid(user.getCuil())){
+            throw new InvalidRegisterParameterException(INVALID_CUIL_MESSAGE);
+        }
+    }
+
+
+    public Boolean registeredEmail(String email){
+        UserRepository userRepository = (UserRepository) getRepository();
+        Integer find = userRepository.existMail(email);
+        return find > 0;
+    }
 
 
 

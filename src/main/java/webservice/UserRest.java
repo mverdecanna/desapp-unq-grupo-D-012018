@@ -5,6 +5,7 @@ import model.User;
 import model.Vehicle;
 import model.builder.UserBuilder;
 import model.dto.UserDto;
+import model.exceptions.InvalidRegisterParameterException;
 import org.apache.cxf.jaxrs.ext.PATCH;
 import persistence.UserRepository;
 import service.UserService;
@@ -99,7 +100,11 @@ public class UserRest {
         if(user == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        this.userService.save(user);
+        try {
+            this.userService.registerNewUser(user);
+        } catch (InvalidRegisterParameterException e) {
+            e.printStackTrace();
+        }
         return Response.ok(user).build();
     }
 

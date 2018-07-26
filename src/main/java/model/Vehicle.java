@@ -25,7 +25,7 @@ public class Vehicle implements Serializable {
 
     @Id
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
 
@@ -77,9 +77,9 @@ public class Vehicle implements Serializable {
         this.type = type;
     }
 
-    public Vehicle(VehicleType type, Integer capacity, String location, String retirementAddress,
+    public Vehicle(String id, VehicleType type, Integer capacity, String location, String retirementAddress,
                    String returnAddress, String description, String phone, Integer cost, String ownerCuil, String photo){
-        //this.id = id;
+        this.id = id;
         this.type = type;
         this.capacity = capacity;
         this.location = location;

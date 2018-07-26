@@ -3,6 +3,8 @@ package service;
 import model.AppMail;
 import model.Rental;
 import model.Transaction;
+import model.User;
+import model.exceptions.InsufficientBalanceException;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import persistence.RentalRepository;
 
 import org.springframework.transaction.annotation.Transactional;
+import persistence.UserRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,11 +31,32 @@ public class RentalService extends GenericService<Rental> {
     private static final long serialVersionUID = 2131482422367092L;
 
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private MailSenderService mailSenderService;
+
+/*
+    public MailSenderService getMailSenderService() {
+        return mailSenderService;
+    }
+
+    public void setMailSenderService(MailSenderService mailSenderService) {
+        this.mailSenderService = mailSenderService;
+    }
+*/
+
+
     @Transactional
     public Rental createRental(Rental rental){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         Rental newRental = this.makeNewReantal(rental);
         rentalRepository.save(newRental);
+        String ownerMail = this.mailByCuil(newRental.getOwnerCuil());
+        String clientMail = this.mailByCuil(newRental.getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
+                BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
         return newRental;
     }
 
@@ -40,22 +64,28 @@ public class RentalService extends GenericService<Rental> {
     @Transactional
     public Transaction createTransaction(Transaction transaction){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
-        Rental rental = transaction.getRental();
-        rental.initRental();
-        Transaction newTransaction = new Transaction(transaction.getCost(), rental);
-        rentalRepository.saveTransaction(newTransaction);
-        return newTransaction;
+        transaction.initializeTransaction();
+        rentalRepository.saveTransaction(transaction);
+        User user = this.userService.findById(transaction.getRental().getOwnerCuil());
+        String ownerMail = this.mailByCuil(transaction.getRental().getOwnerCuil());
+        String clientMail = this.mailByCuil(transaction.getRental().getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail,  SUBJECT_CONFIRM_RENTAL_OWNER,
+                SUBJECT_CONFIRM_RENTAL_CLIENT, BODY_CONFIRM_RENTAL_OWNER, BODY_CONFIRM_RENTAL_CLIENT);
+        return transaction;
     }
 
 
     @Transactional
     public Transaction rejectTransaction(Transaction transaction){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
-        Rental rental = transaction.getRental();
-        Transaction newTransaction = new Transaction(transaction.getCost(), rental);
+        Transaction newTransaction = new Transaction(transaction.getCost(), transaction.getRental());
         newTransaction.rejectTransaction();
         rentalRepository.saveTransaction(newTransaction);
-        return transaction;
+        String ownerMail = this.mailByCuil(newTransaction.getRental().getOwnerCuil());
+        String clientMail = this.mailByCuil(newTransaction.getRental().getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_REJECTED_RENTAL_OWNER, SUBJECT_REJECTED_RENTAL_CLIENT,
+                BODY_REJECTED_RENTAL_OWNER, BODY_REJECTED_RENTAL_CLIENT);
+        return newTransaction;
     }
 
 
@@ -78,12 +108,24 @@ public class RentalService extends GenericService<Rental> {
 
 
     @Transactional
-    public void payAndAdvance(Rental rental){
+    public Transaction payAndAdvance(Transaction transaction) throws InsufficientBalanceException {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
-        Transaction transaction = rentalRepository.findTransactionById(rental.getId());
-        transaction.setRental(rental);
+        User owner = this.userService.findById(transaction.getRental().getOwnerCuil());
+        User client = this.userService.findById(transaction.getRental().getClientCuil());
+        if(!owner.canPayForThis(transaction.getCost())){
+            throw new InsufficientBalanceException(INSUFFICIENT_BALANCE_MESSAGE);
+        }
+        owner.payCredit(transaction.getCost());
+        client.receiveCredit(transaction.getCost());
+        this.userService.saveTransactionUsers(owner, client);
         transaction.payTransaction();
         rentalRepository.updateTransaction(transaction);
+        String ownerMail = this.mailByCuil(transaction.getRental().getOwnerCuil());
+        String clientMail = this.mailByCuil(transaction.getRental().getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_PAID_RENTAL_OWNER, SUBJECT_PAID_RENTAL_CLIENT,
+                BODY_PAID_RENTAL_OWNER_START + transaction.getCost().toString() + BODY_PAID_RENTAL_OWNER_END,
+                BODY_PAID_RENTAL_CLIENT_START + transaction.getCost().toString() + BODY_PAID_RENTAL_CLIENT_END);
+        return transaction;
     }
 
 
@@ -147,6 +189,7 @@ public class RentalService extends GenericService<Rental> {
         String mail = rentalRepository.findMailByCuil(cuil);
         return mail;
     }
+
 
 
 }

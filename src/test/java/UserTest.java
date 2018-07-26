@@ -1,11 +1,10 @@
 import model.CurrentAccount;
-import model.Score;
 import model.User;
 import model.Vehicle;
 import model.builder.CurrentAccountBuilder;
 import model.builder.UserBuilder;
 import model.builder.VehicleBuilder;
-import model.util.CuitValidator;
+import model.util.CuilValidator;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -95,7 +94,7 @@ public class UserTest {
         CurrentAccount currentAccount = new CurrentAccountBuilder().setId("11").build();
         User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").setCurrentAccount(currentAccount).build();
         user.addCreditInMyAccount(50);
-        Assert.assertFalse(user.canPayForThis(vehicle));
+        Assert.assertFalse(user.canPayForThis(vehicle.getCost()));
     }
 
 
@@ -117,30 +116,28 @@ public class UserTest {
     @Test
     public void userCuilIsValidWithACorrectLength(){
         String cuil = "20320231680";
-        Assert.assertTrue(CuitValidator.isValid(cuil));
+        Assert.assertTrue(CuilValidator.isValid(cuil));
     }
 
 
     @Test
     public void userCuilIsNotValidWithAIncorrectLength(){
         String cuil = "123456780";
-        Assert.assertFalse(CuitValidator.isValid(cuil));
+        Assert.assertFalse(CuilValidator.isValid(cuil));
     }
 
 
     @Test
     public void userMailIsValidWithACorrectFormat(){
-        String mail = "lalala@carpnd.com.ar";
-        User user = new UserBuilder().build();
-        Assert.assertTrue(user.isValidMail(mail));
+        User user = new UserBuilder().setEmail("lalala@carpnd.com.ar").build();
+        Assert.assertTrue(user.isValidMail());
     }
 
 
     @Test
     public void userMailIsNotValidWithAIncorrectFormat(){
-        String mail = "la!&@carpnd.com.ar";
-        User user = new UserBuilder().build();
-        Assert.assertFalse(user.isValidMail(mail));
+        User user = new UserBuilder().setEmail("la!&@carpnd.com.ar").build();
+        Assert.assertFalse(user.isValidMail());
     }
 
 

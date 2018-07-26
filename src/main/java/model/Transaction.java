@@ -171,6 +171,7 @@ public class Transaction {
     public void initializeTransaction(){
         this.setState(StateTransaction.RESERVATION);
         this.rental.initRental();
+        this.create = new Date();
         this.lastUpdate = new Date();
     }
 

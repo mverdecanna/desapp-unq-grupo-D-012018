@@ -21,7 +21,7 @@ public class CurrentAccount implements Serializable {
     private String cuil;
 
     @Column(name="credits")
-    private Integer credits = 0;
+    private Integer credits;
 
 
     public CurrentAccount(){}
@@ -29,6 +29,7 @@ public class CurrentAccount implements Serializable {
 
     public CurrentAccount(String id){
         this.cuil = id;
+        this.credits = 0;
     }
 
 

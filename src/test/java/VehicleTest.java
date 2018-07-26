@@ -10,7 +10,7 @@ public class VehicleTest {
 
     @Test
     public void vehicleBuilderTest(){
-      Vehicle vehicle=  new VehicleBuilder(Vehicle.VehicleType.VAN,4,"Bernal","Av San Martin 3","Av San Martin 212",
+      Vehicle vehicle=  new VehicleBuilder("777",Vehicle.VehicleType.VAN,4,"Bernal","Av San Martin 3","Av San Martin 212",
                 "Lula Livre","4444444",1, "20320231680", "http://www.hupmobile.com.ar/Siam%20verde%20445%20ch2.jpg").build();
 
       Assert.assertEquals(vehicle.getClass(),Vehicle.class);

@@ -4,6 +4,8 @@ import model.AppMail;
 import model.Rental;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -20,14 +22,14 @@ import static model.util.Constants.CARPND_PASSWORD;
 /**
  * Created by mariano on 15/07/18.
  */
-@EnableAsync
+
 public class MailSenderService extends GenericService<Rental> {
 
 
     private static final long serialVersionUID = 123L;
 
 
-
+    @Transactional
     public void sendMail(String mailTo, String subject, String body){
 
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
@@ -58,8 +60,7 @@ public class MailSenderService extends GenericService<Rental> {
 
             // -- Set the FROM and TO fields --
             msg.setFrom(new InternetAddress("carpnd.2018.grupo.d@gmail.com"));
-            msg.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(mailTo,false));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailTo,false));
             msg.setSubject(subject);
             msg.setText(body);
             msg.setSentDate(new Date());
@@ -69,20 +70,8 @@ public class MailSenderService extends GenericService<Rental> {
     }
 
 
-
+    @Transactional
     public void notificateUsers(String ownerMail, String clientMail, String ownerSubject, String clientSubject, String ownerBody, String clientBody){
-/*
-        new Thread(new Runnable(this) {
-            @Override
-            public void run() {
-                this.sendMail(ownerMail, ownerSubject, ownerBody);
-                this.sendMail(clientMail, clientSubject, clientBody);
-            }
-        }).start();
-
-    new Thread(this).start();
-
-*/
         this.sendMail(ownerMail, ownerSubject, ownerBody);
         this.sendMail(clientMail, clientSubject, clientBody);
     }

@@ -26,8 +26,9 @@ public VehicleBuilder(){}
         this.type = type;
     }
 
-    public VehicleBuilder(Vehicle.VehicleType type, Integer capacity, String location, String retirementAddress,
+    public VehicleBuilder(String id, Vehicle.VehicleType type, Integer capacity, String location, String retirementAddress,
                    String returnAddress, String description, String phone, Integer cost, String ownerCuil, String photo){
+        this.id = id;
         this.type = type;
         this.capacity = capacity;
         this.location = location;
@@ -106,7 +107,7 @@ public VehicleBuilder(){}
 
 
     public Vehicle build(){
-        return new Vehicle(this.type, this.capacity, this.location, this.retirementAddress, this.returnAddress, this.description, this.phone, this.cost, this.ownerCuil, this.photo);
+        return new Vehicle(this.id, this.type, this.capacity, this.location, this.retirementAddress, this.returnAddress, this.description, this.phone, this.cost, this.ownerCuil, this.photo);
     }
 
 

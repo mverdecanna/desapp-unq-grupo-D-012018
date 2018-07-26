@@ -21,7 +21,7 @@ before_install:
         returnAddress VARCHAR(50), description VARCHAR(50), phone VARCHAR(50), cost INTEGER(4), ownerCuil VARCHAR(11), photo VARCHAR(255), PRIMARY KEY (id) );'
   - mysql -e 'CREATE TABLE carpnd.rental(
         id INTEGER(8) NOT NULL AUTO_INCREMENT, state VARCHAR(12) NOT NULL, startDate DATETIME, endDate DATETIME,
-        ownerCuil VARCHAR(11), clientCuil VARCHAR(11), vehicle_id INTEGER(8),
+        ownerCuil VARCHAR(11), clientCuil VARCHAR(11), vehicle_id VARCHAR(8),
         PRIMARY KEY (id) );'
   - mysql -e 'CREATE TABLE carpnd.transactions(
 	id INTEGER(8) NOT NULL AUTO_INCREMENT, state VARCHAR(12) NOT NULL, cost INTEGER, created DATETIME, lastUpdated DATETIME,

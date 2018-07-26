@@ -3,7 +3,7 @@ package model.util;
 /**
  * Created by mariano on 09/04/18.
  */
-public class CuitValidator {
+public class CuilValidator {
 
 
     public static Boolean isValid(String cuit){
