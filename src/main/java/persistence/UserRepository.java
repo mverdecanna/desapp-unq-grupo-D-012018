@@ -76,8 +76,8 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
 
 
     public Integer existMail(String email){
-        Integer count = DataAccessUtils.intResult(this.getHibernateTemplate().find("select count(*) from " + this.persistentClass.getName() + " u"
-        + " where u.email = " + email));
+        String query = "SELECT count(*) FROM User as u WHERE u.email = :email";
+        Integer count = DataAccessUtils.intResult(this.getHibernateTemplate().findByNamedParam(query, "email", email));
         return count;
     }
 
