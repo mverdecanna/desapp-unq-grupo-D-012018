@@ -130,14 +130,14 @@ public class UserTest {
     @Test
     public void userMailIsValidWithACorrectFormat(){
         User user = new UserBuilder().setEmail("lalala@carpnd.com.ar").build();
-        Assert.assertTrue(user.isValidMail());
+        Assert.assertTrue(user.validMail());
     }
 
 
     @Test
     public void userMailIsNotValidWithAIncorrectFormat(){
         User user = new UserBuilder().setEmail("la!&@carpnd.com.ar").build();
-        Assert.assertFalse(user.isValidMail());
+        Assert.assertFalse(user.validMail());
     }
 
 

@@ -75,7 +75,7 @@ public class UserService extends GenericService<User> {
     }
 
 
-
+    @Transactional
     public void registerNewUser(User user) throws InvalidRegisterParameterException {
         this.validateNewUser(user);
         user.initializeUser();
@@ -84,7 +84,7 @@ public class UserService extends GenericService<User> {
 
 
     private void validateNewUser(User user) throws InvalidRegisterParameterException {
-        if(!user.isValidMail()){
+        if(!user.validMail()){
             throw new InvalidRegisterParameterException(INVALID_EMAIL_MESSAGE);
         }
         if(this.registeredEmail(user.getEmail())){
@@ -96,6 +96,7 @@ public class UserService extends GenericService<User> {
     }
 
 
+    @Transactional
     public Boolean registeredEmail(String email){
         UserRepository userRepository = (UserRepository) getRepository();
         Integer find = userRepository.existMail(email);
