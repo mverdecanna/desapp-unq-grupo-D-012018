@@ -3,12 +3,14 @@ package service;
 import model.Vehicle;
 import model.builder.VehicleBuilder;
 import model.exceptions.InvalidRegisterParameterException;
+import model.exceptions.VehicleAssociatedToActiveRentalException;
 import org.springframework.transaction.annotation.Transactional;
 import persistence.VehicleRepository;
 
 import java.util.List;
 
 import static model.util.Constants.PATENT_ALREADY_EXISTS_MESSAGE;
+import static model.util.Constants.VEHICLE_INAVALID_DELETED_MESSAGE;
 
 /**
  * Created by mariano on 13/05/18.
@@ -70,7 +72,7 @@ public class VehicleService extends GenericService<Vehicle> {
 
 
     private void validateNewVehicle(Vehicle vehicle) throws InvalidRegisterParameterException {
-        if(this.registeredPatent(vehicle.getId())){
+        if(vehicle.getId().isEmpty() || this.registeredPatent(vehicle.getId())){
             throw new InvalidRegisterParameterException(PATENT_ALREADY_EXISTS_MESSAGE);
         }
     }
@@ -83,6 +85,36 @@ public class VehicleService extends GenericService<Vehicle> {
         return find > 0;
     }
 
+
+
+    @Transactional
+    public void updateVehicle(Vehicle vehicle) throws InvalidRegisterParameterException {
+        this.validateNewVehicle(vehicle);
+        this.update(vehicle);
+    }
+
+
+
+    @Transactional
+    public void deleteVehicle(Vehicle vehicle) throws VehicleAssociatedToActiveRentalException {
+        this.validateDeleteVehicle(vehicle);
+        this.delete(vehicle);
+    }
+
+
+    private void validateDeleteVehicle(Vehicle vehicle) throws VehicleAssociatedToActiveRentalException {
+        if(this.existActiveRentalAssociated(vehicle.getId())){
+            throw new VehicleAssociatedToActiveRentalException(VEHICLE_INAVALID_DELETED_MESSAGE);
+        }
+    }
+
+
+    @Transactional
+    public Boolean existActiveRentalAssociated(String cuil){
+        VehicleRepository vehicleRepository = (VehicleRepository) getRepository();
+        Integer find = vehicleRepository.existInActiveRental(cuil);
+        return find > 0;
+    }
 
 
 

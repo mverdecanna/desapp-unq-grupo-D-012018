@@ -60,6 +60,13 @@ public class VehicleRepository extends HibernateGenericDAO<Vehicle> implements G
     }
 
 
+    public Integer existInActiveRental(String vehicleID ){
+        String query = "SELECT count(*) FROM Rental as r WHERE r.state in ('WAIT_CONFIRM', 'CONFIRM', 'DONE', 'IN_USE') AND r.vehicleID = :vehicleID";
+        Integer count = DataAccessUtils.intResult(this.getHibernateTemplate().findByNamedParam(query, "vehicleID", vehicleID));
+        return count;
+
+    }
+
 
 
 

@@ -3,6 +3,7 @@ package webservice;
 import model.User;
 import model.Vehicle;
 import model.exceptions.InvalidRegisterParameterException;
+import model.exceptions.VehicleAssociatedToActiveRentalException;
 import org.apache.cxf.jaxrs.ext.PATCH;
 import service.VehicleService;
 
@@ -96,12 +97,19 @@ public class VehicleRest {
     @Path("/delete/{id}")
     @Produces("application/json")
     public Response deleteVehicles(@PathParam("id") final String idVehicle){
+        Response response = null;
         Vehicle vehicle = vehicleService.findById(idVehicle);
         if(vehicle == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
-        this.vehicleService.delete(vehicle);
-        return Response.ok().build();
+        try {
+            this.vehicleService.deleteVehicle(vehicle);
+            response = Response.ok().build();
+        } catch (VehicleAssociatedToActiveRentalException e) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            e.printStackTrace();
+        }
+        return response;
     }
 
 
@@ -109,8 +117,18 @@ public class VehicleRest {
     @Path("/update")
     @Produces("application/json")
     public Response updateVehicles(Vehicle vehicle){
-        this.vehicleService.update(vehicle);
-        return Response.ok().build();
+        Response response = null;
+        if(vehicle == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        try {
+            this.vehicleService.updateVehicle(vehicle);
+            response = Response.ok(vehicle).build();
+        } catch (InvalidRegisterParameterException e) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            e.printStackTrace();
+        }
+        return response;
     }
 
 
@@ -137,6 +155,7 @@ public class VehicleRest {
         }
         return Response.ok(vehicles).build();
     }
+
 
 
 
