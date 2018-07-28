@@ -50,6 +50,7 @@ public class Constants {
     public final static String INSUFFICIENT_BALANCE_MESSAGE = "El saldo es insuficiente para realizar la operación";
     public final static String INVALID_EMAIL_MESSAGE = "El EMAIL ingresado es incorrecto";
     public final static String EMAIL_ALREADY_EXISTS_MESSAGE = "El EMAIL ingresado ya está registrado";
+    public final static String CUIL_ALREADY_EXISTS_MESSAGE = "El CUIL ingresado ya está registrado";
     public final static String INVALID_CUIL_MESSAGE = "El CUIL ingresado es incorrecto";
 
 

@@ -8,9 +8,7 @@ import model.util.CuilValidator;
 import org.springframework.transaction.annotation.Transactional;
 import persistence.UserRepository;
 
-import static model.util.Constants.EMAIL_ALREADY_EXISTS_MESSAGE;
-import static model.util.Constants.INVALID_CUIL_MESSAGE;
-import static model.util.Constants.INVALID_EMAIL_MESSAGE;
+import static model.util.Constants.*;
 
 /**
  * Created by mariano on 14/04/18.
@@ -90,6 +88,9 @@ public class UserService extends GenericService<User> {
         if(this.registeredEmail(user.getEmail())){
             throw new InvalidRegisterParameterException(EMAIL_ALREADY_EXISTS_MESSAGE);
         }
+        if(this.registeredCuil(user.getCuil())){
+            throw new InvalidRegisterParameterException(CUIL_ALREADY_EXISTS_MESSAGE);
+        }
         if(!CuilValidator.isValid(user.getCuil())){
             throw new InvalidRegisterParameterException(INVALID_CUIL_MESSAGE);
         }
@@ -100,6 +101,15 @@ public class UserService extends GenericService<User> {
     public Boolean registeredEmail(String email){
         UserRepository userRepository = (UserRepository) getRepository();
         Integer find = userRepository.existMail(email);
+        return find > 0;
+    }
+
+
+
+    @Transactional
+    public Boolean registeredCuil(String cuil){
+        UserRepository userRepository = (UserRepository) getRepository();
+        Integer find = userRepository.existCuil(cuil);
         return find > 0;
     }
 
