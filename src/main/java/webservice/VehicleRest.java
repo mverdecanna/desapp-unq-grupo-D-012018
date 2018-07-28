@@ -2,6 +2,7 @@ package webservice;
 
 import model.User;
 import model.Vehicle;
+import model.exceptions.InvalidRegisterParameterException;
 import org.apache.cxf.jaxrs.ext.PATCH;
 import service.VehicleService;
 
@@ -76,11 +77,18 @@ public class VehicleRest {
     @Produces("application/json")
     @Consumes("application/json")
     public Response saveVehicles(Vehicle vehicle) {
+        Response response = null;
         if(vehicle == null){
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        Vehicle newVehicle = this.vehicleService.saveVehicle(vehicle);
-        return Response.ok(newVehicle).build();
+        try {
+            Vehicle newVehicle = this.vehicleService.saveVehicle(vehicle);
+            response = Response.ok(newVehicle).build();
+        } catch (InvalidRegisterParameterException e) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            e.printStackTrace();
+        }
+        return response;
     }
 
 

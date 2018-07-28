@@ -73,7 +73,7 @@ public class UserRest {
     public Response findUser(@PathParam("id") final String idUser) {
         User user = userService.findById(idUser);
         if (user == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         return Response.ok(user).build();
     }
@@ -116,8 +116,18 @@ public class UserRest {
     @Path("/update")
     @Produces("application/json")
     public Response updateUser(User user){
-        this.userService.update(user);
-        return Response.ok(user).build();
+        Response response = null;
+        if(user == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        try {
+            this.userService.updateUser(user);
+            response = Response.ok(user).build();
+        } catch (InvalidRegisterParameterException e) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            e.printStackTrace();
+        }
+        return response;
     }
 
 

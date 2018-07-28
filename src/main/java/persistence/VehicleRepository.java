@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Vehicle;
+import org.springframework.dao.support.DataAccessUtils;
 
 import java.util.List;
 
@@ -50,6 +51,15 @@ public class VehicleRepository extends HibernateGenericDAO<Vehicle> implements G
                         + " where v.ownerCuil <> " + userId);
         return vehicles;
     }
+
+
+    public Integer existPatent(String id){
+        String query = "SELECT count(*) FROM Vehicle as v WHERE v.id = :id";
+        Integer count = DataAccessUtils.intResult(this.getHibernateTemplate().findByNamedParam(query, "id", id));
+        return count;
+    }
+
+
 
 
 

@@ -82,12 +82,7 @@ public class UserService extends GenericService<User> {
 
 
     private void validateNewUser(User user) throws InvalidRegisterParameterException {
-        if(!user.validMail()){
-            throw new InvalidRegisterParameterException(INVALID_EMAIL_MESSAGE);
-        }
-        if(this.registeredEmail(user.getEmail())){
-            throw new InvalidRegisterParameterException(EMAIL_ALREADY_EXISTS_MESSAGE);
-        }
+        this.validateUserMail(user);
         if(this.registeredCuil(user.getCuil())){
             throw new InvalidRegisterParameterException(CUIL_ALREADY_EXISTS_MESSAGE);
         }
@@ -112,6 +107,24 @@ public class UserService extends GenericService<User> {
         Integer find = userRepository.existCuil(cuil);
         return find > 0;
     }
+
+
+    @Transactional
+    public void updateUser(User user) throws InvalidRegisterParameterException {
+        this.validateUserMail(user);
+        this.update(user);
+    }
+
+
+    private void validateUserMail(User user) throws InvalidRegisterParameterException {
+        if (!user.validMail()) {
+            throw new InvalidRegisterParameterException(INVALID_EMAIL_MESSAGE);
+        }
+        if (this.registeredEmail(user.getEmail())) {
+            throw new InvalidRegisterParameterException(EMAIL_ALREADY_EXISTS_MESSAGE);
+        }
+    }
+
 
 
 

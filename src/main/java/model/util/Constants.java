@@ -52,6 +52,6 @@ public class Constants {
     public final static String EMAIL_ALREADY_EXISTS_MESSAGE = "El EMAIL ingresado ya está registrado";
     public final static String CUIL_ALREADY_EXISTS_MESSAGE = "El CUIL ingresado ya está registrado";
     public final static String INVALID_CUIL_MESSAGE = "El CUIL ingresado es incorrecto";
-
+    public final static String PATENT_ALREADY_EXISTS_MESSAGE = "La patente ingresada ya está registrada";
 
 }

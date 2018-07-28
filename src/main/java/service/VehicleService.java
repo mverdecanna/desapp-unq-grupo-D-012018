@@ -2,10 +2,13 @@ package service;
 
 import model.Vehicle;
 import model.builder.VehicleBuilder;
+import model.exceptions.InvalidRegisterParameterException;
 import org.springframework.transaction.annotation.Transactional;
 import persistence.VehicleRepository;
 
 import java.util.List;
+
+import static model.util.Constants.PATENT_ALREADY_EXISTS_MESSAGE;
 
 /**
  * Created by mariano on 13/05/18.
@@ -41,16 +44,17 @@ public class VehicleService extends GenericService<Vehicle> {
 
 
     @Transactional
-    public Vehicle saveVehicle(Vehicle vehicle){
+    public Vehicle saveVehicle(Vehicle vehicle) throws InvalidRegisterParameterException {
         VehicleRepository vehicleRepository = (VehicleRepository) getRepository();
-        Vehicle newVehicle = this.makeNewVehicle(vehicle);
-        vehicleRepository.save(newVehicle);
-        return newVehicle;
+        this.validateNewVehicle(vehicle);
+        //Vehicle newVehicle = this.makeNewVehicle(vehicle);
+        vehicleRepository.save(vehicle);
+        return vehicle;
     }
 
 
     private Vehicle makeNewVehicle(Vehicle vehicle){
-        Vehicle newVehicle = new VehicleBuilder().setVehicleType(vehicle.getType()).setCapacity(vehicle.getCapacity()).setLocation(vehicle.getLocation())
+        Vehicle newVehicle = new VehicleBuilder().setId(vehicle.getId()).setVehicleType(vehicle.getType()).setCapacity(vehicle.getCapacity()).setLocation(vehicle.getLocation())
                 .setRetirementAddress(vehicle.getRetirementAddress()).setReturnAddress(vehicle.getReturnAddress()).setDescription(vehicle.getDescription()).
                         setPhone(vehicle.getPhone()).setCost(vehicle.getCost()).setOwnerCuil(vehicle.getOwnerCuil()).setPhoto(vehicle.getPhoto()).build();
         return newVehicle;
@@ -62,6 +66,23 @@ public class VehicleService extends GenericService<Vehicle> {
         VehicleRepository vehicleRepository = (VehicleRepository) getRepository();
         return vehicleRepository.notUserVehicles(userId);
     }
+
+
+
+    private void validateNewVehicle(Vehicle vehicle) throws InvalidRegisterParameterException {
+        if(this.registeredPatent(vehicle.getId())){
+            throw new InvalidRegisterParameterException(PATENT_ALREADY_EXISTS_MESSAGE);
+        }
+    }
+
+
+    @Transactional
+    public Boolean registeredPatent(String patent){
+        VehicleRepository vehicleRepository = (VehicleRepository) getRepository();
+        Integer find = vehicleRepository.existPatent(patent);
+        return find > 0;
+    }
+
 
 
 
