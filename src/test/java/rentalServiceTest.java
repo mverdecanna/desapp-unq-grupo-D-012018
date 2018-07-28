@@ -32,75 +32,28 @@ import static org.mockito.Mockito.mock;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "/META-INF/spring-persistence-context.xml", "/META-INF/spring-services-context.xml"})
-//@ContextConfiguration(classes = { RentalRest.class, rentalServiceTest.class, RentalService.class })
-//@WebAppConfiguration
-//@WebAppConfiguration
+@ContextConfiguration({ "/META-INF/spring-persistence-context.xml", "/META-INF/spring-test-context.xml"})
 public class rentalServiceTest {
 
-
-//    @Autowired
-//    private WebApplicationContext context;
-
-//    @Autowired
-//    private RentalRest rentalRest;
 
     @Autowired
     private RentalService rentalService;
 
 
-//   @Autowired
-//    private MailSenderService mailSenderService;
-
-
-    /*
-        MailSenderService mock = mock(MailSenderService.class);
-        doNothing().when(mock).notificateUsers("ownerMail@test.com", "clientMail@test.com", SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
-                BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
-        this.rentalRest.setMailSenderService(mock);
-        this.rentalRest.setRentalService(this.rentalService);
-        Rental rental = new RentalBuilder().setOwner("20320231680").setClient("20320231680").setVehicle("55").build();
-        Assert.assertEquals(rental.getState(), Rental.RentalState.WAIT_CONFIRM);
-        Response response = this.rentalRest.createRental(rental);
-*/
-
-
-
     @Test
     @Transactional
     public void testCreateTransactionSetRentalStatusConfirm(){
-/*
-        this.mailSenderService.sendMail("mverdecanna@gmail.com","dddddddddddddd","sssssssssssss");
-
-        MailSenderService mock = mock(MailSenderService.class);
-        doNothing().when(mock).notificateUsers("ownerMail@test.com", "clientMail@test.com", SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
-                BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
-*/
-
-        //RentalService mock = mock(RentalService.class);
-
         User userOwner = new UserBuilder().setName("Pepe").setCuil("20320231680").build();
         User userClient = new UserBuilder().setName("Lolo").setCuil("20320231680").build();
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.VAN).setId("111").build();
         Rental rental = new Rental(userOwner.getCuil(), userClient.getCuil(), vehicle.getId());
         Transaction transaction = new TransactionBuilder().setRental(rental).setCost(100).build();
         Assert.assertEquals(rental.getState(), Rental.RentalState.WAIT_CONFIRM);
-        //transaction = this.rentalService.createTransaction(transaction);
-        //Assert.assertEquals(transaction.getRental().getState(), Rental.RentalState.CONFIRM);
+        transaction = this.rentalService.createTransaction(transaction);
+        Assert.assertEquals(transaction.getRental().getState(), Rental.RentalState.CONFIRM);
         Assert.assertEquals(transaction.getState(), Transaction.StateTransaction.RESERVATION);
     }
 
- /*
-    @Test
-    public void test1(){
-        MailSenderService mock = mock(MailSenderService.class);
-        doNothing().when(mock).notificateUsers("ownerMail@test.com", "clientMail@test.com", SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
-                BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
-        Rental rental = new RentalBuilder().setOwner("20320231680").setClient("20320231680").setVehicle("55").build();
-
-        Assert.assertEquals(rental.getState(), Rental.RentalState.WAIT_CONFIRM);
-    }
-*/
 
 
 }

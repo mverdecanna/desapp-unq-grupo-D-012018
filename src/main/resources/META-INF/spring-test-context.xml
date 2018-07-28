@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:cxf="http://cxf.apache.org/core"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+    http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
+
+
+    <!-- beans de spring -->
+    <bean id="service.general" class="service.GeneralService">
+        <property name="userService" ref="service.user" />
+        <property name="vehicleService" ref="service.vehicle" />
+        <property name="rentalService" ref="service.rental" />
+        <property name="mailSenderService" ref="service.mail" />
+    </bean>
+
+    <bean id="service.user" class="service.UserService">
+        <property name="repository" ref="persistence.userrepository" />
+    </bean>
+
+    <bean id="service.vehicle" class="service.VehicleService">
+        <property name="repository" ref="persistence.vehiclerepository" />
+    </bean>
+
+
+    <bean id="service.mail" class="service.MailSenderServiceTest">
+        <property name="repository" ref="persistence.rentalrepository" />
+    </bean>
+
+
+    <bean id="service.rental" class="service.RentalService">
+        <property name="repository" ref="persistence.rentalrepository" />
+    </bean>
+
+
+
+</beans>

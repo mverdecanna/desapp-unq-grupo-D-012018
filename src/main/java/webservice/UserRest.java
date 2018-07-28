@@ -97,15 +97,18 @@ public class UserRest {
     @Produces("application/json")
     @Consumes("application/json")
     public Response saveUser(User user) {
+        Response response = null;
         if(user == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         try {
             this.userService.registerNewUser(user);
+            response = Response.ok(user).build();
         } catch (InvalidRegisterParameterException e) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
             e.printStackTrace();
         }
-        return Response.ok(user).build();
+        return response;
     }
 
 
