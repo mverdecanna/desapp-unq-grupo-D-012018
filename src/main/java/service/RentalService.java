@@ -98,12 +98,16 @@ public class RentalService extends GenericService<Rental> {
 
 
     @Transactional
-    public void collectVehicleAndAdvance(Rental rental){
+    public Transaction collectVehicleAndAdvance(Transaction transaction){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
-        Transaction transaction = rentalRepository.findTransactionById(rental.getId());
-        transaction.setRental(rental);
-        transaction.markCollectVehicle();
-        rentalRepository.updateTransaction(transaction);
+        Transaction newTransaction = transaction;
+        newTransaction.markCollectVehicle();
+        rentalRepository.updateTransaction(newTransaction);
+        String ownerMail = this.mailByCuil(newTransaction.getRental().getOwnerCuil());
+        String clientMail = this.mailByCuil(newTransaction.getRental().getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail,  SUBJECT_COLLECT_RENTAL_OWNER,
+                SUBJECT_COLLECT_RENTAL_CLIENT, BODY_COLLECT_RENTAL_OWNER, BODY_COLLECT_RENTAL_CLIENT);
+        return newTransaction;
     }
 
 
@@ -131,12 +135,16 @@ public class RentalService extends GenericService<Rental> {
 
 
     @Transactional
-    public void returnedVehicleAndAdvance(Rental rental){
+    public Transaction returnedVehicleAndAdvance(Transaction transaction){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
-        Transaction transaction = rentalRepository.findTransactionById(rental.getId());
-        transaction.setRental(rental);
-        transaction.completeTransaction();
-        rentalRepository.updateTransaction(transaction);
+        Transaction newTransaction = transaction;
+        newTransaction.completeTransaction();
+        rentalRepository.updateTransaction(newTransaction);
+        String ownerMail = this.mailByCuil(newTransaction.getRental().getOwnerCuil());
+        String clientMail = this.mailByCuil(newTransaction.getRental().getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail,  SUBJECT_RETURNED_RENTAL_OWNER,
+                SUBJECT_RETURNED_RENTAL_CLIENT, BODY_RETURNED_RENTAL_OWNER, BODY_RETURNED_RENTAL_CLIENT);
+        return newTransaction;
     }
 
 

@@ -25,6 +25,10 @@ public class Constants {
     public final static String SUBJECT_REJECTED_RENTAL_CLIENT = "CARPND - Rechazaron tu solicitud";
     public final static String SUBJECT_PAID_RENTAL_OWNER = "CARPND - Realizaste un pago";
     public final static String SUBJECT_PAID_RENTAL_CLIENT = "CARPND - Recibiste un pago";
+    public final static String SUBJECT_COLLECT_RENTAL_OWNER = "CARPND - Retiraron el vehiculo";
+    public final static String SUBJECT_COLLECT_RENTAL_CLIENT = "CARPND - Has retirado el vehiculo";
+    public final static String SUBJECT_RETURNED_RENTAL_OWNER = "CARPND - Devolvieron tu vehiculo";
+    public final static String SUBJECT_RETURNED_RENTAL_CLIENT = "CARPND - Has devuelto el vehiculo";
 
 
     //  BODYS
@@ -34,6 +38,10 @@ public class Constants {
     public final static String BODY_CONFIRM_RENTAL_CLIENT = "Han CONFIRMADO tu alquiler.  Ingresa a la app para avanzar con el proceso.";
     public final static String BODY_IN_USE_RENTAL_OWNER = "";
     public final static String BODY_IN_USE_RENTAL_CLIENT = "";
+    public final static String BODY_RETURNED_RENTAL_OWNER = "Han devuelto tú vehiculo.  Ingresa a la app para ver el proceso.";
+    public final static String BODY_RETURNED_RENTAL_CLIENT = "Has devuelto el vehiculo.  Ojalá que lo hayas disfrutado, ingresa a la app y planifica tu próximo alquiler.";
+    public final static String BODY_COLLECT_RENTAL_OWNER = "Han pasado a retirar tú vehiculo.  Ingresa a la app para ver el proceso.";
+    public final static String BODY_COLLECT_RENTAL_CLIENT = "Has retirado el vehiculo.  Que lo disfrutes!";
     public final static String BODY_REJECTED_RENTAL_OWNER = "Rechazaste una solicitud de alquiler.  El cliente ha sido debidamente notificado.";
     public final static String BODY_REJECTED_RENTAL_CLIENT = "Han rechazado tu solicitud de alquiler.  Ingresa a la app para buscar un nuevo vehiculo.";
     public final static String BODY_PAID_RENTAL_OWNER_START = "Te pagaron por alquilar uno de tus vehiculos. Se acredito en tu cuenta: ";

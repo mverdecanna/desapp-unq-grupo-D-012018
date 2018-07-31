@@ -100,12 +100,12 @@ public class RentalRest {
     @Path("/rental/collect")
     @Produces("application/json")
     @Consumes("application/json")
-    public Response collectVehicle(Rental rental) {
-        if(rental == null){
+    public Response collectVehicle(Transaction transaction) {
+        if(transaction == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        //this.rentalService.payAndAdvance(rental);
-        return Response.ok(rental).build();
+        Transaction newTransaction = this.rentalService.collectVehicleAndAdvance(transaction);
+        return Response.ok(newTransaction).build();
     }
 
 
@@ -115,17 +115,19 @@ public class RentalRest {
     @Produces("application/json")
     @Consumes("application/json")
     public Response payRental(Transaction transaction) {
+        Response response = null;
         if(transaction == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        //this.rentalService.collectVehicleAndAdvance(rental);
         Transaction newTransaction = null;
         try {
             newTransaction = this.rentalService.payAndAdvance(transaction);
+            response = Response.ok(newTransaction).build();
         } catch (InsufficientBalanceException e) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
             e.printStackTrace();
         }
-        return Response.ok(newTransaction).build();
+        return response;
     }
 
 
@@ -134,12 +136,12 @@ public class RentalRest {
     @Path("/rental/returned")
     @Produces("application/json")
     @Consumes("application/json")
-    public Response returnedVehicle(Rental rental) {
-        if(rental == null){
+    public Response returnedVehicle(Transaction transaction) {
+        if(transaction == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        this.rentalService.returnedVehicleAndAdvance(rental);
-        return Response.ok(rental).build();
+        Transaction newTransaction = this.rentalService.returnedVehicleAndAdvance(transaction);
+        return Response.ok(newTransaction).build();
     }
 
 
