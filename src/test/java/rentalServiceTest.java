@@ -47,7 +47,7 @@ public class rentalServiceTest {
         User userClient = new UserBuilder().setName("Lolo").setCuil("20320231680").build();
         Vehicle vehicle = new VehicleBuilder().setVehicleType(Vehicle.VehicleType.VAN).setId("111").build();
         Rental rental = new Rental(userOwner.getCuil(), userClient.getCuil(), vehicle.getId());
-        Transaction transaction = new TransactionBuilder().setRental(rental).setCost(100).build();
+        Transaction transaction = new TransactionBuilder().setId("111").setRental(rental).setCost(100).build();
         Assert.assertEquals(rental.getState(), Rental.RentalState.WAIT_CONFIRM);
         transaction = this.rentalService.createTransaction(transaction);
         Assert.assertEquals(transaction.getRental().getState(), Rental.RentalState.CONFIRM);

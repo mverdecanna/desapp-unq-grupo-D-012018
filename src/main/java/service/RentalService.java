@@ -37,15 +37,6 @@ public class RentalService extends GenericService<Rental> {
     @Autowired
     private MailSenderService mailSenderService;
 
-/*
-    public MailSenderService getMailSenderService() {
-        return mailSenderService;
-    }
-
-    public void setMailSenderService(MailSenderService mailSenderService) {
-        this.mailSenderService = mailSenderService;
-    }
-*/
 
 
     @Transactional
@@ -66,7 +57,6 @@ public class RentalService extends GenericService<Rental> {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         transaction.initializeTransaction();
         rentalRepository.saveTransaction(transaction);
-        User user = this.userService.findById(transaction.getRental().getOwnerCuil());
         String ownerMail = this.mailByCuil(transaction.getRental().getOwnerCuil());
         String clientMail = this.mailByCuil(transaction.getRental().getClientCuil());
         this.mailSenderService.notificateUsers(ownerMail, clientMail,  SUBJECT_CONFIRM_RENTAL_OWNER,
@@ -154,6 +144,7 @@ public class RentalService extends GenericService<Rental> {
         List<Rental> rentals = rentalRepository.rentalsByCuil(cuil);
         return rentals;
     }
+
 
     @Transactional
     public List<Rental> findRentalsByClientCuil(String cuil){

@@ -61,6 +61,7 @@
                 <value>model.Vehicle</value>
                 <value>model.Rental</value>
                 <value>model.Transaction</value>
+                <value>model.Score</value>
             </list>
         </property>
 

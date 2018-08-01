@@ -24,7 +24,10 @@ before_install:
         ownerCuil VARCHAR(11), clientCuil VARCHAR(11), vehicle_id VARCHAR(8),
         PRIMARY KEY (id) );'
   - mysql -e 'CREATE TABLE carpnd.transactions(
-	id INTEGER(8) NOT NULL AUTO_INCREMENT, state VARCHAR(12) NOT NULL, cost INTEGER, created DATETIME, lastUpdated DATETIME,
+	    id INTEGER(8) NOT NULL UNIQUE, state VARCHAR(12) NOT NULL, cost INTEGER, created DATETIME, lastUpdated DATETIME,
+        PRIMARY KEY (id) );'
+  - mysql -e 'CREATE TABLE carpnd.scores(
+      	id INTEGER(8) NOT NULL UNIQUE, value INTEGER, comment VARCHAR(255), transactionID INTEGER(8), userCuil VARCHAR(11),
       PRIMARY KEY (id) );'
 
 

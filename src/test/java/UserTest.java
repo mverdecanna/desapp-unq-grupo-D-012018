@@ -1,4 +1,5 @@
 import model.CurrentAccount;
+import model.Score;
 import model.User;
 import model.Vehicle;
 import model.builder.CurrentAccountBuilder;
@@ -59,11 +60,12 @@ public class UserTest {
     @Test
     public void userReputationIsGoodTest(){
         User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").build();
-        //Score score3 = new Score(3, "3 puntos");
-        //Score score5 = new Score(5, "5 puntos");
-        user.scoreUser(3, "3 puntos");
-        user.scoreUser(5, "5 puntos");
+        Score score3 = new Score("1", 3, "3 puntos", "22", "2032023168");
+        Score score5 = new Score("2", 5, "5 puntos", "23", "2032023168");
+        user.scoreUser(score3);
+        user.scoreUser(score5);
         Assert.assertTrue(user.evalReputation() > 3);
+        Assert.assertTrue(user.evalReputation() == 4);
     }
 
 

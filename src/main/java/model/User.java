@@ -46,13 +46,10 @@ public class User implements Serializable {
     private CurrentAccount currentAccount;
 
 
-    @Transient
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "userCuil", cascade = CascadeType.ALL)
     private List<Score> puntuations = new ArrayList<Score>();
 
 
-
-//    @JoinTable(name = "vehicles", joinColumns = {
-//            @JoinColumn(name = "cuil") }, inverseJoinColumns = { @JoinColumn(name = "ownerCuil") })
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "ownerCuil", cascade = CascadeType.ALL)
     public List<Vehicle> vehicles = new ArrayList<Vehicle>();
 
@@ -151,18 +148,14 @@ public class User implements Serializable {
      * recorre las puntuaciones del usuario y retorna el promedio
      * @return
      */
-    public Integer evalReputation(){
-        /*
+    public Double evalReputation(){
         Double result = 0d;
+        Integer sum = 0;
         if(this.puntuations.size() > 0){
-            result = this.puntuations.stream().mapToDouble(f -> f.doubleValue()).sum();
+            sum = this.puntuations.stream().filter(o -> o.getValue() != null).mapToInt(Score::getValue).sum();
+            result = (1.0 * sum / this.puntuations.size());
         }
-        */
-        Integer result = 0;
-        if(this.puntuations.size() > 0){
-            result = this.puntuations.stream().filter(o -> o.getValue() != null).mapToInt(Score::getValue).sum();
-        }
-        return (result / this.puntuations.size());
+        return result;
     }
 
 
@@ -201,12 +194,10 @@ public class User implements Serializable {
     }
 
     /**
-     * agrega un Score al usuario, con un valor y un comentario
-     * @param value
-     * @param comment
+     * agrega un Score al usuario
+     * @param score
      */
-    public void scoreUser(Integer value, String comment){
-        Score score = new Score(value, comment);
+    public void scoreUser(Score score){
         this.puntuations.add(score);
     }
 
