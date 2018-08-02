@@ -1,6 +1,7 @@
 package webservice;
 
 import model.Rental;
+import model.Score;
 import model.Transaction;
 import model.exceptions.InsufficientBalanceException;
 import org.joda.time.DateTime;
@@ -188,34 +189,17 @@ public class RentalRest {
 
 
 
-
-/*
-    @GET
-    @Async
-    @Path("/send")
+    @POST
+    @Path("/score")
     @Produces("application/json")
-    public void sendMail() throws Exception {
-        Thread t = new Thread(){
-
-            public void run(MailSenderService mailSenderService){
-                try{
-                    //Response jaxrs = Response.ok("basic").type(MediaType.TEXT_PLAIN).build();
-                    //asyncResponse.setResponse(jaxrs);
-                    //asyncResponse.resume(jaxrs);
-                    mailSenderService.sendMail("mverdecanna@gmail.com", SUBJECT_CONFIRM_RENTAL_OWNER, BODY_CONFIRM_RENTAL_OWNER);
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        };
-        t.start();
-
-        this.mailSenderService.sendMail("mverdecanna@gmail.com", SUBJECT_CONFIRM_RENTAL_OWNER, BODY_CONFIRM_RENTAL_OWNER);
+    @Consumes("application/json")
+    public Response createScore(Score score) {
+        if (score == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        Score newScore = this.rentalService.createScore(score);
+        return Response.ok(newScore).build();
     }
-*/
-
-
 
 
 

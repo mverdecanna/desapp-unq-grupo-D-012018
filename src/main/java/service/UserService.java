@@ -1,6 +1,7 @@
 package service;
 
 import model.CurrentAccount;
+import model.Score;
 import model.User;
 import model.dto.UserDto;
 import model.exceptions.InvalidRegisterParameterException;

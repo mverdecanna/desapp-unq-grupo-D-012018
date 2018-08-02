@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Rental;
+import model.Score;
 import model.Transaction;
 import org.apache.log4j.Logger;
 import org.springframework.dao.support.DataAccessUtils;
@@ -76,5 +77,14 @@ public class RentalRepository extends HibernateGenericDAO<Rental> implements Gen
                 " where u.cuil =" +cuil)));
         return mail;
     }
+
+
+    public void saveScore(Score score){
+        this.getHibernateTemplate().save(score);
+        this.getHibernateTemplate().flush();
+    }
+
+
+
 
 }

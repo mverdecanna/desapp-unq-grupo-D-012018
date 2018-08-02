@@ -126,8 +126,9 @@ public class User implements Serializable {
         return vehicles;
     }
 
-
-
+    public List<Score> getPuntuations() {
+        return puntuations;
+    }
 
     public CurrentAccount getCurrentAccount() {
         return currentAccount;

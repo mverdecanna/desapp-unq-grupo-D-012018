@@ -1,9 +1,6 @@
 package service;
 
-import model.AppMail;
-import model.Rental;
-import model.Transaction;
-import model.User;
+import model.*;
 import model.exceptions.InsufficientBalanceException;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -188,6 +185,16 @@ public class RentalService extends GenericService<Rental> {
         String mail = rentalRepository.findMailByCuil(cuil);
         return mail;
     }
+
+
+
+    @Transactional
+    public Score createScore(Score score){
+        RentalRepository rentalRepository = (RentalRepository) getRepository();
+        rentalRepository.saveScore(score);
+        return score;
+    }
+
 
 
 

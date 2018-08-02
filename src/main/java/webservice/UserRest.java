@@ -1,6 +1,7 @@
 package webservice;
 
 import model.CurrentAccount;
+import model.Score;
 import model.User;
 import model.Vehicle;
 import model.builder.UserBuilder;
@@ -160,6 +161,9 @@ public class UserRest {
         this.userService.subtractCreditToCurrentAccount(currentAccount, credit);
         return Response.ok(currentAccount).build();
     }
+
+
+
 
 
 

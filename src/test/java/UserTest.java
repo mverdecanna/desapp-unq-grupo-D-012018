@@ -60,8 +60,8 @@ public class UserTest {
     @Test
     public void userReputationIsGoodTest(){
         User user = new UserBuilder().setCuil("20320231680").setName("Lalo").setSurname("Landa").build();
-        Score score3 = new Score("1", 3, "3 puntos", "22", "2032023168");
-        Score score5 = new Score("2", 5, "5 puntos", "23", "2032023168");
+        Score score3 = new Score("1", 3, "3 puntos", "22", "20320231680", "20320231999");
+        Score score5 = new Score("2", 5, "5 puntos", "23", "20320231680", "20320231999");
         user.scoreUser(score3);
         user.scoreUser(score5);
         Assert.assertTrue(user.evalReputation() > 3);

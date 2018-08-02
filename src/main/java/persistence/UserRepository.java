@@ -1,6 +1,7 @@
 package persistence;
 
 import model.CurrentAccount;
+import model.Score;
 import model.User;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
@@ -88,6 +89,7 @@ public class UserRepository extends HibernateGenericDAO<User> implements Generic
         Integer count = DataAccessUtils.intResult(this.getHibernateTemplate().findByNamedParam(query, "cuil", cuil));
         return count;
     }
+
 
 
 /*
