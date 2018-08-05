@@ -1,50 +1,29 @@
-package model;
+package service;
 
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.core.task.TaskExecutor;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
 import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
+import java.util.Date;
+import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 
 import static model.util.Constants.CARPND_MAIL;
 import static model.util.Constants.CARPND_PASSWORD;
 
 
+
 /**
- * Created by mariano on 27/03/18.
+ * Created by mariano on 05/08/18.
  */
-
-public class AppMail {
-
-/*
-    private TaskExecutor taskExecutor;
+public class MailSenderServiceImpl extends MailSenderService {
 
 
-    public AppMail(TaskExecutor taskExecutor) {
-        this.taskExecutor = taskExecutor;
-    }
-
-
-    public void bla(){
-
-//        this.taskExecutor.execute();
-
-    }
-
-*/
-
-    public AppMail(){}
-
-
+    @Transactional
     public void sendMail(String mailTo, String subject, String body){
 
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
@@ -75,8 +54,7 @@ public class AppMail {
 
             // -- Set the FROM and TO fields --
             msg.setFrom(new InternetAddress("carpnd.2018.grupo.d@gmail.com"));
-            msg.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(mailTo,false));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailTo,false));
             msg.setSubject(subject);
             msg.setText(body);
             msg.setSentDate(new Date());
@@ -86,32 +64,11 @@ public class AppMail {
     }
 
 
-
-
-
-
-    public static void main(String [] args) {
-
-        Integer x = 15;
-        Integer y = x / 2;
-        Double z = (1.0 * x / 2);
-        Double a = (1.0 * 0 / 0);
-
-
-        Date date = new Date();
-        Date date2 = new Date();
-
-
-        System.out.println("y........." + y);
-        System.out.println("z........." + z);
-        System.out.println("a........." + a);
+    @Transactional
+    public void notificateUsers(String ownerMail, String clientMail, String ownerSubject, String clientSubject, String ownerBody, String clientBody){
+        this.sendMail(ownerMail, ownerSubject, ownerBody);
+        this.sendMail(clientMail, clientSubject, clientBody);
     }
 
 
-
-
 }
-
-
-
-

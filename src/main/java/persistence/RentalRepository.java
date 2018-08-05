@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.dao.support.DataAccessUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,6 +83,18 @@ public class RentalRepository extends HibernateGenericDAO<Rental> implements Gen
     public void saveScore(Score score){
         this.getHibernateTemplate().save(score);
         this.getHibernateTemplate().flush();
+    }
+
+
+
+    public List<Rental> activeRentals(String vehicleId){
+        String query = "FROM Rental as r WHERE r.state IN ('CONFIRM', 'DONE', 'IN_USE') AND r.vehicleID = :vehicleID";
+        List<Rental> rentals = new ArrayList<Rental>();
+        rentals = (List<Rental>) this.getHibernateTemplate().findByNamedParam(query, "vehicleID", vehicleId);
+//                (List<Rental>) this.getHibernateTemplate().
+//                find("select r from " + this.persistentClass.getName() + " r"
+//                        + " where r.state in ('CONFIRM', 'DONE', 'IN_USE') and r.vehicleID = " + "+'vehicleID'+");
+        return rentals;
     }
 
 

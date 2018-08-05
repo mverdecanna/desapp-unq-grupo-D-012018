@@ -3,6 +3,7 @@ package webservice;
 import model.Rental;
 import model.Score;
 import model.Transaction;
+import model.User;
 import model.exceptions.InsufficientBalanceException;
 import org.joda.time.DateTime;
 import org.springframework.core.task.TaskExecutor;
@@ -10,6 +11,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import service.MailSenderService;
 import service.RentalService;
+import service.UserService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
@@ -31,7 +33,9 @@ public class RentalRest {
 
     private RentalService rentalService;
 
-    //private MailSenderService mailSenderService;
+    private MailSenderService mailSenderService;
+
+    private UserService userService;
 
 
     public RentalService getRentalService() {
@@ -42,10 +46,22 @@ public class RentalRest {
         this.rentalService = rentalService;
     }
 
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
 
+    public MailSenderService getMailSenderService() {
+        return mailSenderService;
+    }
 
-
+    public void setMailSenderService(MailSenderService mailSenderService) {
+        this.mailSenderService = mailSenderService;
+    }
 
     @GET
     @Path("/all/{cuil}")
@@ -83,6 +99,31 @@ public class RentalRest {
 
 
 
+/*
+        @POST
+    @Path("/create")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response createRental(Rental rental) {
+        Response response = null;
+        if(rental == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        Rental newRental = null;
+        try {
+            newRental = this.rentalService.createRental(rental);
+            response = Response.ok(newRental).build();
+        } catch (VehicleAssociatedToActiveRentalException e) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+     */
+
+
+
     @POST
     @Path("/create")
     @Produces("application/json")
@@ -91,7 +132,12 @@ public class RentalRest {
         if(rental == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+        //User user = this.userService.findById(rental.getOwnerCuil());
         Rental newRental = this.rentalService.createRental(rental);
+        String ownerMail = this.rentalService.mailByCuil(newRental.getOwnerCuil());
+        String clientMail = this.rentalService.mailByCuil(newRental.getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
+                BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
         return Response.ok(newRental).build();
     }
 

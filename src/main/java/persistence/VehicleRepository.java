@@ -70,4 +70,5 @@ public class VehicleRepository extends HibernateGenericDAO<Vehicle> implements G
 
 
 
+
 }

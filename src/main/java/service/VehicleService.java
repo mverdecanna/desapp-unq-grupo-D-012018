@@ -20,18 +20,7 @@ public class VehicleService extends GenericService<Vehicle> {
 
     private static final long serialVersionUID = 1L;
 
-/*
-   private VehicleRepository vehicleRepository;
 
-
-    public VehicleRepository getVehicleRepository() {
-        return vehicleRepository;
-    }
-
-    public void setVehicleRepository(VehicleRepository vehicleRepository) {
-        this.vehicleRepository = vehicleRepository;
-    }
-*/
 
     private Integer nVehicles(){
         return super.count();
@@ -78,8 +67,7 @@ public class VehicleService extends GenericService<Vehicle> {
     }
 
 
-    @Transactional
-    public Boolean registeredPatent(String patent){
+    private Boolean registeredPatent(String patent){
         VehicleRepository vehicleRepository = (VehicleRepository) getRepository();
         Integer find = vehicleRepository.existPatent(patent);
         return find > 0;

@@ -32,7 +32,8 @@ import static org.mockito.Mockito.mock;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "/META-INF/spring-persistence-context.xml", "/META-INF/spring-test-context.xml"})
+@ContextConfiguration({ "/META-INF/spring-persistence-context.xml", "/test/spring-test-context.xml"})
+//@ContextConfiguration({ "/META-INF/spring-persistence-context.xml", "/META-INF/spring-services-context.xml"})
 public class rentalServiceTest {
 
 

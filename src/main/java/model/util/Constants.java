@@ -62,6 +62,6 @@ public class Constants {
     public final static String INVALID_CUIL_MESSAGE = "El CUIL ingresado es incorrecto";
     public final static String PATENT_ALREADY_EXISTS_MESSAGE = "La patente ingresada ya está registrada";
     public final static String VEHICLE_INAVALID_DELETED_MESSAGE = "El vehiculo se encuentra alquilado, NO puede eliminarse";
-
+    public final static String VEHICLE_INAVALID_RENTAL_MESSAGE = "El vehiculo se encuentra alquilado en esa fecha!";
 
 }

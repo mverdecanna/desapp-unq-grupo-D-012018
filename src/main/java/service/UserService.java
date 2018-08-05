@@ -6,6 +6,8 @@ import model.User;
 import model.dto.UserDto;
 import model.exceptions.InvalidRegisterParameterException;
 import model.util.CuilValidator;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import persistence.UserRepository;
 
@@ -14,6 +16,8 @@ import static model.util.Constants.*;
 /**
  * Created by mariano on 14/04/18.
  */
+//@Service
+//@Component
 public class UserService extends GenericService<User> {
 
     private static final long serialVersionUID = 2131359482422367092L;

@@ -24,16 +24,14 @@
     </bean>
 
 
-    <bean id="service.mail" class="service.MailSenderService">
-        <property name="repository" ref="persistence.rentalrepository" />
-    </bean>
-
-
     <bean id="service.rental" class="service.RentalService">
         <property name="repository" ref="persistence.rentalrepository" />
     </bean>
 
 
+    <bean id="service.mail" class="service.MailSenderServiceImpl">
+        <property name="repository" ref="persistence.rentalrepository" />
+    </bean>
 
 
 
