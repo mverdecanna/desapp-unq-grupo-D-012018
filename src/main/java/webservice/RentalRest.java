@@ -5,6 +5,7 @@ import model.Score;
 import model.Transaction;
 import model.User;
 import model.exceptions.InsufficientBalanceException;
+import model.exceptions.VehicleAssociatedToActiveRentalException;
 import org.joda.time.DateTime;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Async;
@@ -99,8 +100,8 @@ public class RentalRest {
 
 
 
-/*
-        @POST
+
+    @POST
     @Path("/create")
     @Produces("application/json")
     @Consumes("application/json")
@@ -113,32 +114,15 @@ public class RentalRest {
         try {
             newRental = this.rentalService.createRental(rental);
             response = Response.ok(newRental).build();
+            String ownerMail = this.rentalService.mailByCuil(newRental.getOwnerCuil());
+            String clientMail = this.rentalService.mailByCuil(newRental.getClientCuil());
+            this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
+                    BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
         } catch (VehicleAssociatedToActiveRentalException e) {
             response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
             e.printStackTrace();
         }
         return response;
-    }
-
-     */
-
-
-
-    @POST
-    @Path("/create")
-    @Produces("application/json")
-    @Consumes("application/json")
-    public Response createRental(Rental rental) {
-        if(rental == null){
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-        //User user = this.userService.findById(rental.getOwnerCuil());
-        Rental newRental = this.rentalService.createRental(rental);
-        String ownerMail = this.rentalService.mailByCuil(newRental.getOwnerCuil());
-        String clientMail = this.rentalService.mailByCuil(newRental.getClientCuil());
-        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
-                BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
-        return Response.ok(newRental).build();
     }
 
 
@@ -152,6 +136,10 @@ public class RentalRest {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         Transaction newTransaction = this.rentalService.collectVehicleAndAdvance(transaction);
+        String ownerMail = this.rentalService.mailByCuil(newTransaction.getRental().getOwnerCuil());
+        String clientMail = this.rentalService.mailByCuil(newTransaction.getRental().getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail,  SUBJECT_COLLECT_RENTAL_OWNER,
+                SUBJECT_COLLECT_RENTAL_CLIENT, BODY_COLLECT_RENTAL_OWNER, BODY_COLLECT_RENTAL_CLIENT);
         return Response.ok(newTransaction).build();
     }
 
@@ -163,12 +151,13 @@ public class RentalRest {
     @Consumes("application/json")
     public Response payRental(Transaction transaction) {
         Response response = null;
+        Transaction newTransaction = null;
         if(transaction == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        Transaction newTransaction = null;
         try {
             newTransaction = this.rentalService.payAndAdvance(transaction);
+            this.administrateCredits(transaction);
             response = Response.ok(newTransaction).build();
         } catch (InsufficientBalanceException e) {
             response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
@@ -177,6 +166,21 @@ public class RentalRest {
         return response;
     }
 
+
+    private void administrateCredits(Transaction transaction) throws InsufficientBalanceException {
+        User owner = this.userService.findById(transaction.getRental().getOwnerCuil());
+        User client = this.userService.findById(transaction.getRental().getClientCuil());
+        if(!owner.canPayForThis(transaction.getCost())){
+            throw new InsufficientBalanceException(INSUFFICIENT_BALANCE_MESSAGE);
+        }
+        owner.payCredit(transaction.getCost());
+        client.receiveCredit(transaction.getCost());
+        this.userService.saveTransactionUsers(owner, client);
+        this.mailSenderService.notificateUsers(owner.getEmail(), client.getEmail(), SUBJECT_PAID_RENTAL_OWNER, SUBJECT_PAID_RENTAL_CLIENT,
+                BODY_PAID_RENTAL_OWNER_START + transaction.getCost().toString() + BODY_PAID_RENTAL_OWNER_END,
+                BODY_PAID_RENTAL_CLIENT_START + transaction.getCost().toString() + BODY_PAID_RENTAL_CLIENT_END);
+
+    }
 
 
     @PUT
@@ -188,6 +192,10 @@ public class RentalRest {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         Transaction newTransaction = this.rentalService.returnedVehicleAndAdvance(transaction);
+        String ownerMail = this.rentalService.mailByCuil(newTransaction.getRental().getOwnerCuil());
+        String clientMail = this.rentalService.mailByCuil(newTransaction.getRental().getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail,  SUBJECT_RETURNED_RENTAL_OWNER,
+                SUBJECT_RETURNED_RENTAL_CLIENT, BODY_RETURNED_RENTAL_OWNER, BODY_RETURNED_RENTAL_CLIENT);
         return Response.ok(newTransaction).build();
     }
 
@@ -215,8 +223,11 @@ public class RentalRest {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         Transaction newTransaction = this.rentalService.createTransaction(transaction);
+        String ownerMail = this.rentalService.mailByCuil(transaction.getRental().getOwnerCuil());
+        String clientMail = this.rentalService.mailByCuil(transaction.getRental().getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail,  SUBJECT_CONFIRM_RENTAL_OWNER,
+                SUBJECT_CONFIRM_RENTAL_CLIENT, BODY_CONFIRM_RENTAL_OWNER, BODY_CONFIRM_RENTAL_CLIENT);
         return Response.ok(newTransaction).build();
-
     }
 
 
@@ -230,6 +241,10 @@ public class RentalRest {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         Transaction newTransaction = this.rentalService.rejectTransaction(transaction);
+        String ownerMail = this.rentalService.mailByCuil(newTransaction.getRental().getOwnerCuil());
+        String clientMail = this.rentalService.mailByCuil(newTransaction.getRental().getClientCuil());
+        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_REJECTED_RENTAL_OWNER, SUBJECT_REJECTED_RENTAL_CLIENT,
+                BODY_REJECTED_RENTAL_OWNER, BODY_REJECTED_RENTAL_CLIENT);
         return Response.ok(newTransaction).build();
     }
 
@@ -246,6 +261,7 @@ public class RentalRest {
         Score newScore = this.rentalService.createScore(score);
         return Response.ok(newScore).build();
     }
+
 
 
 

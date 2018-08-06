@@ -116,7 +116,7 @@ public class UserService extends GenericService<User> {
 
     @Transactional
     public void updateUser(User user) throws InvalidRegisterParameterException {
-        this.validateUserMail(user);
+        //this.validateUserMail(user);
         this.update(user);
     }
 

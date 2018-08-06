@@ -27,7 +27,7 @@ before_install:
 	    id INTEGER(8) NOT NULL UNIQUE, state VARCHAR(12) NOT NULL, cost INTEGER, created DATETIME, lastUpdated DATETIME,
         PRIMARY KEY (id) );'
   - mysql -e 'CREATE TABLE carpnd.scores(
-      	id INTEGER(8) NOT NULL UNIQUE, value INTEGER, comment VARCHAR(255), transactionID INTEGER(8), userCuil VARCHAR(11), creator VARCHAR(11),
+      	id INTEGER(8) NOT NULL AUTO_INCREMENT, value INTEGER, comment VARCHAR(255), transactionID INTEGER(8), userCuil VARCHAR(11), creator VARCHAR(11),
       PRIMARY KEY (id) );'
 
 

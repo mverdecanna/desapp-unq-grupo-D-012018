@@ -132,6 +132,7 @@ public class VehicleRest {
     }
 
 
+
     @GET
     @Path("/user/{id}")
     @Produces("application/json")

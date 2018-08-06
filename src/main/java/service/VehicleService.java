@@ -77,7 +77,7 @@ public class VehicleService extends GenericService<Vehicle> {
 
     @Transactional
     public void updateVehicle(Vehicle vehicle) throws InvalidRegisterParameterException {
-        this.validateNewVehicle(vehicle);
+        //this.validateNewVehicle(vehicle);
         this.update(vehicle);
     }
 
