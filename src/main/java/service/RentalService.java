@@ -4,13 +4,11 @@ import model.Rental;
 import model.Score;
 import model.Transaction;
 import model.User;
-import model.exceptions.InsufficientBalanceException;
-import model.exceptions.InvalidStatusToCancelOperationException;
-import model.exceptions.InvalidStatusToScoredException;
-import model.exceptions.VehicleAssociatedToActiveRentalException;
+import model.exceptions.*;
 import org.springframework.transaction.annotation.Transactional;
 import persistence.RentalRepository;
 
+import java.util.Date;
 import java.util.List;
 
 import static model.util.Constants.*;
@@ -36,7 +34,7 @@ public class RentalService extends GenericService<Rental> {
 
 
     @Transactional
-    public Rental createRental(Rental rental) throws VehicleAssociatedToActiveRentalException {
+    public Rental createRental(Rental rental) throws VehicleAssociatedToActiveRentalException, BadReputationException {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         this.validateCreationRental(rental);
         Rental newRental = this.makeNewReantal(rental);
@@ -78,8 +76,9 @@ public class RentalService extends GenericService<Rental> {
 
 
     @Transactional
-    public Transaction collectVehicleAndAdvance(Transaction transaction){
+    public Transaction collectVehicleAndAdvance(Transaction transaction) throws CollectOutOfTermException {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
+        this.validateCollectInTerm(transaction.getRental());
         Transaction newTransaction = transaction;
         newTransaction.markCollectVehicle();
         rentalRepository.updateTransaction(newTransaction);
@@ -98,8 +97,9 @@ public class RentalService extends GenericService<Rental> {
 
 
     @Transactional
-    public Transaction returnedVehicleAndAdvance(Transaction transaction){
+    public Transaction returnedVehicleAndAdvance(Transaction transaction) throws ReturnedOutOfTermException {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
+        this.validateReturnedInTerm(transaction.getRental());
         Transaction newTransaction = transaction;
         newTransaction.completeTransaction();
         rentalRepository.updateTransaction(newTransaction);
@@ -174,16 +174,16 @@ public class RentalService extends GenericService<Rental> {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         Transaction transaction = rentalRepository.findTransactionById(score.getTransactionID());
         if(transaction.getRental().getState().equals(Rental.RentalState.RETURNED)){
-            this.scoreOwner(transaction);
+            this.scoredOwner(transaction);
         }else if(transaction.getRental().getState().equals(Rental.RentalState.SCORED)){
-            this.scoreClient(transaction);
+            this.scoredClient(transaction);
         }else{
             throw new InvalidStatusToScoredException(SCORED_INAVALID_STATUS_MESSAGE);
         }
     }
 
 
-    private void scoreOwner(Transaction transaction){
+    private void scoredOwner(Transaction transaction){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         Transaction newTransaction = transaction;
         newTransaction.scoreRental();
@@ -191,7 +191,7 @@ public class RentalService extends GenericService<Rental> {
     }
 
 
-    private void scoreClient(Transaction transaction){
+    private void scoredClient(Transaction transaction){
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         Transaction newTransaction = transaction;
         newTransaction.finalizeTransaction();
@@ -199,8 +199,9 @@ public class RentalService extends GenericService<Rental> {
     }
 
 
-    private void validateCreationRental(Rental newRental) throws VehicleAssociatedToActiveRentalException {
+    private void validateCreationRental(Rental newRental) throws VehicleAssociatedToActiveRentalException, BadReputationException {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
+        this.validatePuntuation(newRental.getClientCuil());
         List<Rental> rentals = rentalRepository.activeRentals(newRental.getVehicleID());
         for(Rental rental: rentals){
             if(newRental.getStartDate().equals(rental.getEndDate()) || newRental.getStartDate().before(rental.getEndDate())){
@@ -210,10 +211,36 @@ public class RentalService extends GenericService<Rental> {
     }
 
 
+    private void validatePuntuation(String clientCuil) throws BadReputationException {
+        RentalRepository rentalRepository = (RentalRepository) getRepository();
+        User client = rentalRepository.findClienteByCuil(clientCuil);
+        if(!client.getPuntuations().isEmpty() && client.hasNecessaryReputation()){
+            throw new BadReputationException(BAD_REPUTATION_MESSAGE);
+        }
+    }
+
+
 
     private void validateRejectTransaction(Rental rental) throws InvalidStatusToCancelOperationException {
         if( !rental.getState().equals(Rental.RentalState.WAIT_CONFIRM) || !rental.getState().equals(Rental.RentalState.CONFIRM) ){
             throw new InvalidStatusToCancelOperationException(RENTAL_REJECT_INAVALID_STATUS_MESSAGE);
+        }
+    }
+
+
+    private void validateCollectInTerm(Rental rental) throws CollectOutOfTermException {
+        Date today = new Date();
+        if(rental.getStartDate().compareTo(today) != 0){
+            throw new CollectOutOfTermException(COLLECT_OUT_OF_TERM_MESSAGE);
+        }
+    }
+
+
+
+    private void validateReturnedInTerm(Rental rental) throws ReturnedOutOfTermException {
+        Date today = new Date();
+        if(rental.getEndDate().after(today)){
+            throw new ReturnedOutOfTermException(RETURNED_OUT_OF_TERM_MESSAGE);
         }
     }
 

@@ -23,8 +23,8 @@ public class Constants {
     public final static String SUBJECT_IN_USE_RENTAL_CLIENT = "CARPND - ";
     public final static String SUBJECT_REJECTED_RENTAL_OWNER = "CARPND - Rechazaste una peticion";
     public final static String SUBJECT_REJECTED_RENTAL_CLIENT = "CARPND - Rechazaron tu solicitud";
-    public final static String SUBJECT_PAID_RENTAL_OWNER = "CARPND - Realizaste un pago";
-    public final static String SUBJECT_PAID_RENTAL_CLIENT = "CARPND - Recibiste un pago";
+    public final static String SUBJECT_PAID_RENTAL_CLIENT = "CARPND - Realizaste un pago";
+    public final static String SUBJECT_PAID_RENTAL_OWNER = "CARPND - Recibiste un pago";
     public final static String SUBJECT_COLLECT_RENTAL_OWNER = "CARPND - Retiraron el vehiculo";
     public final static String SUBJECT_COLLECT_RENTAL_CLIENT = "CARPND - Has retirado el vehiculo";
     public final static String SUBJECT_RETURNED_RENTAL_OWNER = "CARPND - Devolvieron tu vehiculo";
@@ -69,5 +69,8 @@ public class Constants {
     public final static String VEHICLE_INAVALID_RENTAL_MESSAGE = "El vehiculo se encuentra alquilado en esa fecha!";
     public final static String RENTAL_REJECT_INAVALID_STATUS_MESSAGE = "La operación en curso ya no puede ser Cancelada";
     public final static String SCORED_INAVALID_STATUS_MESSAGE = "Todavía no se puede puntuar al usuario";
+    public final static String BAD_REPUTATION_MESSAGE = "Tus puntuciones actuales NO te permiten rentar";
+    public final static String COLLECT_OUT_OF_TERM_MESSAGE = "No podes retirar un vehiculo un día distinto al que te habías comprometido";
+    public final static String RETURNED_OUT_OF_TERM_MESSAGE = "No podes devolver un vehiculo fuera de termino";
 
 }

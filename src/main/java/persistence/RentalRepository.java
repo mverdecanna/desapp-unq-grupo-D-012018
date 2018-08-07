@@ -3,6 +3,7 @@ package persistence;
 import model.Rental;
 import model.Score;
 import model.Transaction;
+import model.User;
 import org.apache.log4j.Logger;
 import org.springframework.dao.support.DataAccessUtils;
 
@@ -98,6 +99,16 @@ public class RentalRepository extends HibernateGenericDAO<Rental> implements Gen
     }
 
 
+
+    public User findClienteByCuil(String cuil){
+        User user = null;
+        String query = "FROM User as u WHERE u.cuil = :cuil";
+        List<User> users = (List<User>) this.getHibernateTemplate().findByNamedParam(query, "cuil", cuil);
+        if(users != null && !users.isEmpty()){
+            user = users.get(0);
+        }
+        return user;
+    }
 
 
 }

@@ -145,6 +145,18 @@ public class User implements Serializable {
     }
 
 
+
+    public Boolean hasNecessaryReputation(){
+        Boolean ret = Boolean.TRUE;
+        if( !this.getPuntuations().isEmpty() && (this.evalReputation() < 3) ){
+            ret = Boolean.FALSE;
+        }
+        return ret;
+    }
+
+
+
+
     /**
      * recorre las puntuaciones del usuario y retorna el promedio
      * @return

@@ -4,10 +4,7 @@ import model.Rental;
 import model.Score;
 import model.Transaction;
 import model.User;
-import model.exceptions.InsufficientBalanceException;
-import model.exceptions.InvalidStatusToCancelOperationException;
-import model.exceptions.InvalidStatusToScoredException;
-import model.exceptions.VehicleAssociatedToActiveRentalException;
+import model.exceptions.*;
 import org.joda.time.DateTime;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Async;
@@ -120,7 +117,7 @@ public class RentalRest {
             String clientMail = this.rentalService.mailByCuil(newRental.getClientCuil());
             this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
                     BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
-        } catch (VehicleAssociatedToActiveRentalException e) {
+        } catch (VehicleAssociatedToActiveRentalException | BadReputationException e) {
             response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
             e.printStackTrace();
         }
@@ -134,15 +131,23 @@ public class RentalRest {
     @Produces("application/json")
     @Consumes("application/json")
     public Response collectVehicle(Transaction transaction) {
+        Response response = null;
+        Transaction newTransaction = null;
         if(transaction == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        Transaction newTransaction = this.rentalService.collectVehicleAndAdvance(transaction);
-        String ownerMail = this.rentalService.mailByCuil(newTransaction.getRental().getOwnerCuil());
-        String clientMail = this.rentalService.mailByCuil(newTransaction.getRental().getClientCuil());
-        this.mailSenderService.notificateUsers(ownerMail, clientMail,  SUBJECT_COLLECT_RENTAL_OWNER,
-                SUBJECT_COLLECT_RENTAL_CLIENT, BODY_COLLECT_RENTAL_OWNER, BODY_COLLECT_RENTAL_CLIENT);
-        return Response.ok(newTransaction).build();
+        try {
+            newTransaction = this.rentalService.collectVehicleAndAdvance(transaction);
+            String ownerMail = this.rentalService.mailByCuil(newTransaction.getRental().getOwnerCuil());
+            String clientMail = this.rentalService.mailByCuil(newTransaction.getRental().getClientCuil());
+            this.mailSenderService.notificateUsers(ownerMail, clientMail,  SUBJECT_COLLECT_RENTAL_OWNER,
+                    SUBJECT_COLLECT_RENTAL_CLIENT, BODY_COLLECT_RENTAL_OWNER, BODY_COLLECT_RENTAL_CLIENT);
+            response = Response.ok(newTransaction).build();
+        } catch (CollectOutOfTermException e) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            e.printStackTrace();
+        }
+        return response;
     }
 
 
@@ -172,11 +177,11 @@ public class RentalRest {
     private void administrateCredits(Transaction transaction) throws InsufficientBalanceException {
         User owner = this.userService.findById(transaction.getRental().getOwnerCuil());
         User client = this.userService.findById(transaction.getRental().getClientCuil());
-        if(!owner.canPayForThis(transaction.getCost())){
+        if(!client.canPayForThis(transaction.getCost())){
             throw new InsufficientBalanceException(INSUFFICIENT_BALANCE_MESSAGE);
         }
-        owner.payCredit(transaction.getCost());
-        client.receiveCredit(transaction.getCost());
+        client.payCredit(transaction.getCost());
+        owner.receiveCredit(transaction.getCost());
         this.userService.saveTransactionUsers(owner, client);
         this.mailSenderService.notificateUsers(owner.getEmail(), client.getEmail(), SUBJECT_PAID_RENTAL_OWNER, SUBJECT_PAID_RENTAL_CLIENT,
                 BODY_PAID_RENTAL_OWNER_START + transaction.getCost().toString() + BODY_PAID_RENTAL_OWNER_END,
@@ -190,15 +195,23 @@ public class RentalRest {
     @Produces("application/json")
     @Consumes("application/json")
     public Response returnedVehicle(Transaction transaction) {
+        Response response = null;
+        Transaction newTransaction = null;
         if(transaction == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        Transaction newTransaction = this.rentalService.returnedVehicleAndAdvance(transaction);
-        String ownerMail = this.rentalService.mailByCuil(newTransaction.getRental().getOwnerCuil());
-        String clientMail = this.rentalService.mailByCuil(newTransaction.getRental().getClientCuil());
-        this.mailSenderService.notificateUsers(ownerMail, clientMail,  SUBJECT_RETURNED_RENTAL_OWNER,
-                SUBJECT_RETURNED_RENTAL_CLIENT, BODY_RETURNED_RENTAL_OWNER, BODY_RETURNED_RENTAL_CLIENT);
-        return Response.ok(newTransaction).build();
+        try {
+            newTransaction = this.rentalService.returnedVehicleAndAdvance(transaction);
+            String ownerMail = this.rentalService.mailByCuil(newTransaction.getRental().getOwnerCuil());
+            String clientMail = this.rentalService.mailByCuil(newTransaction.getRental().getClientCuil());
+            this.mailSenderService.notificateUsers(ownerMail, clientMail,  SUBJECT_RETURNED_RENTAL_OWNER,
+                    SUBJECT_RETURNED_RENTAL_CLIENT, BODY_RETURNED_RENTAL_OWNER, BODY_RETURNED_RENTAL_CLIENT);
+            response = Response.ok(newTransaction).build();
+        } catch (ReturnedOutOfTermException e) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            e.printStackTrace();
+        }
+        return response;
     }
 
 
