@@ -112,11 +112,11 @@ public class RentalRest {
         Rental newRental = null;
         try {
             newRental = this.rentalService.createRental(rental);
-            response = Response.ok(newRental).build();
             String ownerMail = this.rentalService.mailByCuil(newRental.getOwnerCuil());
             String clientMail = this.rentalService.mailByCuil(newRental.getClientCuil());
             this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_CREATE_RENTAL_OWNER, SUBJECT_CREATE_RENTAL_CLIENT,
                     BODY_CREATE_RENTAL_OWNER, BODY_CREATE_RENTAL_CLIENT);
+            response = Response.ok(newRental).build();
         } catch (VehicleAssociatedToActiveRentalException | BadReputationException e) {
             response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
             e.printStackTrace();
@@ -163,8 +163,13 @@ public class RentalRest {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         try {
-            newTransaction = this.rentalService.payAndAdvance(transaction);
             this.administrateCredits(transaction);
+            newTransaction = this.rentalService.payAndAdvance(transaction);
+            String ownerMail = this.rentalService.mailByCuil(newTransaction.getRental().getOwnerCuil());
+            String clientMail = this.rentalService.mailByCuil(newTransaction.getRental().getClientCuil());
+            this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_PAID_RENTAL_OWNER, SUBJECT_PAID_RENTAL_CLIENT,
+                    BODY_PAID_RENTAL_OWNER_START + transaction.getCost().toString() + BODY_PAID_RENTAL_OWNER_END,
+                    BODY_PAID_RENTAL_CLIENT_START + transaction.getCost().toString() + BODY_PAID_RENTAL_CLIENT_END);
             response = Response.ok(newTransaction).build();
         } catch (InsufficientBalanceException e) {
             response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
@@ -183,10 +188,6 @@ public class RentalRest {
         client.payCredit(transaction.getCost());
         owner.receiveCredit(transaction.getCost());
         this.userService.saveTransactionUsers(owner, client);
-        this.mailSenderService.notificateUsers(owner.getEmail(), client.getEmail(), SUBJECT_PAID_RENTAL_OWNER, SUBJECT_PAID_RENTAL_CLIENT,
-                BODY_PAID_RENTAL_OWNER_START + transaction.getCost().toString() + BODY_PAID_RENTAL_OWNER_END,
-                BODY_PAID_RENTAL_CLIENT_START + transaction.getCost().toString() + BODY_PAID_RENTAL_CLIENT_END);
-
     }
 
 
@@ -213,6 +214,7 @@ public class RentalRest {
         }
         return response;
     }
+
 
 
 
