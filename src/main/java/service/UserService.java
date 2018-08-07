@@ -73,8 +73,8 @@ public class UserService extends GenericService<User> {
 
     @Transactional
     public void saveTransactionUsers(User owner, User client){
-        this.save(owner);
-        this.save(client);
+        this.update(owner);
+        this.update(client);
     }
 
 
