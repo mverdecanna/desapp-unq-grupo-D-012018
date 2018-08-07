@@ -164,6 +164,7 @@ public class Transaction {
 
     public void finalizeTransaction(){
         this.setState(StateTransaction.FINALIZED);
+        this.rental.closedRental();
         this.lastUpdate = new Date();
     }
 
@@ -181,6 +182,11 @@ public class Transaction {
         this.lastUpdate = new Date();
     }
 
+
+    public void scoreRental(){
+        this.rental.setScored();
+        this.lastUpdate = new Date();
+    }
 
 
 

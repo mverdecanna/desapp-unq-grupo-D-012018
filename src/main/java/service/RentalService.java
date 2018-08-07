@@ -5,14 +5,15 @@ import model.Score;
 import model.Transaction;
 import model.User;
 import model.exceptions.InsufficientBalanceException;
+import model.exceptions.InvalidStatusToCancelOperationException;
+import model.exceptions.InvalidStatusToScoredException;
 import model.exceptions.VehicleAssociatedToActiveRentalException;
 import org.springframework.transaction.annotation.Transactional;
 import persistence.RentalRepository;
 
 import java.util.List;
 
-import static model.util.Constants.INSUFFICIENT_BALANCE_MESSAGE;
-import static model.util.Constants.VEHICLE_INAVALID_RENTAL_MESSAGE;
+import static model.util.Constants.*;
 
 
 /**
@@ -58,8 +59,9 @@ public class RentalService extends GenericService<Rental> {
 
 
     @Transactional
-    public Transaction rejectTransaction(Transaction transaction){
+    public Transaction rejectTransaction(Transaction transaction) throws InvalidStatusToCancelOperationException {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
+        this.validateRejectTransaction(transaction.getRental());
         Transaction newTransaction = new Transaction(transaction.getCost(), transaction.getRental());
         newTransaction.rejectTransaction();
         rentalRepository.saveTransaction(newTransaction);
@@ -159,12 +161,42 @@ public class RentalService extends GenericService<Rental> {
 
 
     @Transactional
-    public Score createScore(Score score){
+    public Score createScore(Score score) throws InvalidStatusToScoredException {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         rentalRepository.saveScore(score);
+        this.registerScoreInTransaction(score);
         return score;
     }
 
+
+
+    private void registerScoreInTransaction(Score score) throws InvalidStatusToScoredException {
+        RentalRepository rentalRepository = (RentalRepository) getRepository();
+        Transaction transaction = rentalRepository.findTransactionById(score.getTransactionID());
+        if(transaction.getRental().getState().equals(Rental.RentalState.RETURNED)){
+            this.scoreOwner(transaction);
+        }else if(transaction.getRental().getState().equals(Rental.RentalState.SCORED)){
+            this.scoreClient(transaction);
+        }else{
+            throw new InvalidStatusToScoredException(SCORED_INAVALID_STATUS_MESSAGE);
+        }
+    }
+
+
+    private void scoreOwner(Transaction transaction){
+        RentalRepository rentalRepository = (RentalRepository) getRepository();
+        Transaction newTransaction = transaction;
+        newTransaction.scoreRental();
+        rentalRepository.updateTransaction(newTransaction);
+    }
+
+
+    private void scoreClient(Transaction transaction){
+        RentalRepository rentalRepository = (RentalRepository) getRepository();
+        Transaction newTransaction = transaction;
+        newTransaction.finalizeTransaction();
+        rentalRepository.updateTransaction(newTransaction);
+    }
 
 
     private void validateCreationRental(Rental newRental) throws VehicleAssociatedToActiveRentalException {
@@ -179,8 +211,10 @@ public class RentalService extends GenericService<Rental> {
 
 
 
-    private void validateRejectTreansaction(){
-
+    private void validateRejectTransaction(Rental rental) throws InvalidStatusToCancelOperationException {
+        if( !rental.getState().equals(Rental.RentalState.WAIT_CONFIRM) || !rental.getState().equals(Rental.RentalState.CONFIRM) ){
+            throw new InvalidStatusToCancelOperationException(RENTAL_REJECT_INAVALID_STATUS_MESSAGE);
+        }
     }
 
 

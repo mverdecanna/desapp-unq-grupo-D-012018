@@ -19,7 +19,7 @@ import java.util.Date;
 public class Rental implements Serializable {
 
     public enum RentalState{
-        WAIT_CONFIRM, CONFIRM, DONE, IN_USE, REJECTED, CANCEL, RETURNED, SCORED
+        WAIT_CONFIRM, CONFIRM, DONE, IN_USE, REJECTED, CANCEL, RETURNED, SCORED, CLOSED
         // cuando el cliente solicita el alquiler, se crea (y mientras espera que lo confirmen)  -->  WAIT_CONFIRM
         // si rechazan la solicitud de alquiler  -->  REJECTED
         // cuando lo confirman y se crea la Transaction  -->  CONFIRM
@@ -183,8 +183,17 @@ public class Rental implements Serializable {
 
 
     public void returnedVehicle(){
-        this.setState(RentalState.DONE);
+        this.setState(RentalState.RETURNED);
     }
+
+    public void setScored(){
+        this.setState(RentalState.SCORED);
+    }
+
+    public void closedRental(){
+        this.setState(RentalState.CLOSED);
+    }
+
 
 
 }

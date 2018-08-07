@@ -29,6 +29,8 @@ public class Constants {
     public final static String SUBJECT_COLLECT_RENTAL_CLIENT = "CARPND - Has retirado el vehiculo";
     public final static String SUBJECT_RETURNED_RENTAL_OWNER = "CARPND - Devolvieron tu vehiculo";
     public final static String SUBJECT_RETURNED_RENTAL_CLIENT = "CARPND - Has devuelto el vehiculo";
+    public final static String SUBJECT_SCORED_RENTAL_CREATOR = "CARPND - Puntuaste a un usuario";
+    public final static String SUBJECT_SCORED_RENTAL_USER = "CARPND - Recibiste una puntuación";
 
 
     //  BODYS
@@ -48,6 +50,8 @@ public class Constants {
     public final static String BODY_PAID_RENTAL_OWNER_END = " creditos.  Ingresa a la app para chequearlo.";
     public final static String BODY_PAID_RENTAL_CLIENT_START = "Hiciste un pago por el alquiler de un vehiculo.  Abonaste: ";
     public final static String BODY_PAID_RENTAL_CLIENT_END = " creditos.  Ingresa a la app para poder seguir el proceso.";
+    public final static String BODY_SCORED_RENTAL_CREATOR = "CARPND - Has puntuado al usuario con: ";
+    public final static String BODY_SCORED_RENTAL_USER = "CARPND - Te han puntuado con: ";
 
 //WAIT_CONFIRM, CONFIRM, IN_USE, DONE, REJECTED, CANCEL, RETURNED, SCORED
 
@@ -63,5 +67,7 @@ public class Constants {
     public final static String PATENT_ALREADY_EXISTS_MESSAGE = "La patente ingresada ya está registrada";
     public final static String VEHICLE_INAVALID_DELETED_MESSAGE = "El vehiculo se encuentra alquilado, NO puede eliminarse";
     public final static String VEHICLE_INAVALID_RENTAL_MESSAGE = "El vehiculo se encuentra alquilado en esa fecha!";
+    public final static String RENTAL_REJECT_INAVALID_STATUS_MESSAGE = "La operación en curso ya no puede ser Cancelada";
+    public final static String SCORED_INAVALID_STATUS_MESSAGE = "Todavía no se puede puntuar al usuario";
 
 }

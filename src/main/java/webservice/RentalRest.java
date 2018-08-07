@@ -5,6 +5,8 @@ import model.Score;
 import model.Transaction;
 import model.User;
 import model.exceptions.InsufficientBalanceException;
+import model.exceptions.InvalidStatusToCancelOperationException;
+import model.exceptions.InvalidStatusToScoredException;
 import model.exceptions.VehicleAssociatedToActiveRentalException;
 import org.joda.time.DateTime;
 import org.springframework.core.task.TaskExecutor;
@@ -237,15 +239,23 @@ public class RentalRest {
     @Produces("application/json")
     @Consumes("application/json")
     public Response rejectTransaction(Transaction transaction) {
+        Response response = null;
+        Transaction newTransaction = null;
         if(transaction == null){
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        Transaction newTransaction = this.rentalService.rejectTransaction(transaction);
-        String ownerMail = this.rentalService.mailByCuil(newTransaction.getRental().getOwnerCuil());
-        String clientMail = this.rentalService.mailByCuil(newTransaction.getRental().getClientCuil());
-        this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_REJECTED_RENTAL_OWNER, SUBJECT_REJECTED_RENTAL_CLIENT,
-                BODY_REJECTED_RENTAL_OWNER, BODY_REJECTED_RENTAL_CLIENT);
-        return Response.ok(newTransaction).build();
+        try {
+            newTransaction = this.rentalService.rejectTransaction(transaction);
+            String ownerMail = this.rentalService.mailByCuil(newTransaction.getRental().getOwnerCuil());
+            String clientMail = this.rentalService.mailByCuil(newTransaction.getRental().getClientCuil());
+            this.mailSenderService.notificateUsers(ownerMail, clientMail, SUBJECT_REJECTED_RENTAL_OWNER, SUBJECT_REJECTED_RENTAL_CLIENT,
+                    BODY_REJECTED_RENTAL_OWNER, BODY_REJECTED_RENTAL_CLIENT);
+            response = Response.ok(newTransaction).build();
+        } catch (InvalidStatusToCancelOperationException e) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            e.printStackTrace();
+        }
+        return response;
     }
 
 
@@ -255,11 +265,23 @@ public class RentalRest {
     @Produces("application/json")
     @Consumes("application/json")
     public Response createScore(Score score) {
+        Response response = null;
+        Score newScore = null;
         if (score == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        Score newScore = this.rentalService.createScore(score);
-        return Response.ok(newScore).build();
+        try {
+            newScore = this.rentalService.createScore(score);
+            String creatorMail = this.rentalService.mailByCuil(newScore.getCreator());
+            String userMail = this.rentalService.mailByCuil(newScore.getUserCuil());
+            this.mailSenderService.notificateUsers(creatorMail, userMail, SUBJECT_SCORED_RENTAL_CREATOR, SUBJECT_SCORED_RENTAL_USER,
+                    BODY_SCORED_RENTAL_CREATOR + newScore.getValue().toString(), BODY_SCORED_RENTAL_USER + newScore.getValue().toString());
+            response = Response.ok(newScore).build();
+        } catch (InvalidStatusToScoredException e) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            e.printStackTrace();
+        }
+        return response;
     }
 
 

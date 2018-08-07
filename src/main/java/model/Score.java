@@ -16,6 +16,13 @@ import java.io.Serializable;
 public class Score implements Serializable{
 
 
+/*
+    public enum RolScorer{
+        OWNER, CLIENT
+    }
+*/
+
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +43,10 @@ public class Score implements Serializable{
     @Column(name = "creator")
     private String creator;
 
+//    @Column(name="rol", length = 6)
+//    @Enumerated(EnumType.STRING)
+//    private RolScorer rol;
+
 
     public Score(){}
 
@@ -48,6 +59,27 @@ public class Score implements Serializable{
         this.userCuil = userCuil;
         this.creator = creator;
     }
+
+
+
+/*
+    public String obteinOwnerCuil(){
+        String cuil = this.getUserCuil();
+        if(this.rol.equals(RolScorer.OWNER)){
+            cuil = this.getCreator();
+        }
+        return cuil;
+    }
+
+    public String obteinClientCuil(){
+        String cuil = this.getCreator();
+        if(this.rol.equals(RolScorer.CLIENT)){
+            cuil = this.getUserCuil();
+        }
+        return cuil;
+    }
+*/
+
 
 
 
@@ -103,4 +135,20 @@ public class Score implements Serializable{
     public void setCreator(String creator) {
         this.creator = creator;
     }
+
+/*
+    public RolScorer getRol() {
+        return rol;
+    }
+
+    public String rolName() {
+        return rol.name();
+    }
+
+    public void setRol(RolScorer rol) {
+        this.rol = rol;
+    }
+*/
+
+
 }
