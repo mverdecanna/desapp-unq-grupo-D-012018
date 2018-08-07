@@ -54,6 +54,12 @@ public class RentalRepository extends HibernateGenericDAO<Rental> implements Gen
     }
 
 
+    public void saveOrUpdateTransaction(Transaction transaction){
+        this.getHibernateTemplate().saveOrUpdate(transaction);
+        this.getHibernateTemplate().flush();
+    }
+
+
     public void updateTransaction(Transaction transaction){
         this.getHibernateTemplate().update(transaction);
         this.getHibernateTemplate().flush();

@@ -59,10 +59,10 @@ public class RentalService extends GenericService<Rental> {
     @Transactional
     public Transaction rejectTransaction(Transaction transaction) throws InvalidStatusToCancelOperationException {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
-        this.validateRejectTransaction(transaction.getRental());
-        Transaction newTransaction = new Transaction(transaction.getCost(), transaction.getRental());
+        Transaction newTransaction = rentalRepository.findTransactionById(transaction.getRental().getId());
+        this.validateRejectTransaction(newTransaction.getRental());
         newTransaction.rejectTransaction();
-        rentalRepository.saveTransaction(newTransaction);
+        rentalRepository.saveOrUpdateTransaction(newTransaction);
         return newTransaction;
     }
 
@@ -78,8 +78,8 @@ public class RentalService extends GenericService<Rental> {
     @Transactional
     public Transaction collectVehicleAndAdvance(Transaction transaction) throws CollectOutOfTermException {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
-        this.validateCollectInTerm(transaction.getRental());
-        Transaction newTransaction = transaction;
+        Transaction newTransaction = rentalRepository.findTransactionById(transaction.getRental().getId());
+        this.validateCollectInTerm(newTransaction.getRental());
         newTransaction.markCollectVehicle();
         rentalRepository.updateTransaction(newTransaction);
         return newTransaction;
@@ -89,9 +89,10 @@ public class RentalService extends GenericService<Rental> {
     @Transactional
     public Transaction payAndAdvance(Transaction transaction) throws InsufficientBalanceException {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
-        transaction.payTransaction();
-        rentalRepository.updateTransaction(transaction);
-        return transaction;
+        Transaction newTransaction = rentalRepository.findTransactionById(transaction.getRental().getId());
+        newTransaction.payTransaction();
+        rentalRepository.updateTransaction(newTransaction);
+        return newTransaction;
     }
 
 
@@ -99,8 +100,8 @@ public class RentalService extends GenericService<Rental> {
     @Transactional
     public Transaction returnedVehicleAndAdvance(Transaction transaction) throws ReturnedOutOfTermException {
         RentalRepository rentalRepository = (RentalRepository) getRepository();
-        this.validateReturnedInTerm(transaction.getRental());
-        Transaction newTransaction = transaction;
+        Transaction newTransaction = rentalRepository.findTransactionById(transaction.getRental().getId());
+        this.validateReturnedInTerm(newTransaction.getRental());
         newTransaction.completeTransaction();
         rentalRepository.updateTransaction(newTransaction);
         return newTransaction;
