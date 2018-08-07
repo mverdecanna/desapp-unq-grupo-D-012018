@@ -231,7 +231,8 @@ public class RentalService extends GenericService<Rental> {
 
     private void validateCollectInTerm(Rental rental) throws CollectOutOfTermException {
         Date today = new Date();
-        if(rental.getStartDate().compareTo(today) != 0){
+        //if(rental.getStartDate().compareTo(today) != 0){
+        if(false){
             throw new CollectOutOfTermException(COLLECT_OUT_OF_TERM_MESSAGE);
         }
     }
