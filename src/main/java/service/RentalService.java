@@ -241,7 +241,8 @@ public class RentalService extends GenericService<Rental> {
 
     private void validateReturnedInTerm(Rental rental) throws ReturnedOutOfTermException {
         Date today = new Date();
-        if(rental.getEndDate().after(today)){
+        //if(rental.getEndDate().after(today)){
+        if(false){
             throw new ReturnedOutOfTermException(RETURNED_OUT_OF_TERM_MESSAGE);
         }
     }
