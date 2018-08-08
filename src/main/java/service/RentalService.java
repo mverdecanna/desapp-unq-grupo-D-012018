@@ -231,11 +231,19 @@ public class RentalService extends GenericService<Rental> {
 
 
     private void validateRejectTransaction(Rental rental) throws InvalidStatusToCancelOperationException {
-        if( !rental.getState().equals(Rental.RentalState.WAIT_CONFIRM) || !rental.getState().equals(Rental.RentalState.CONFIRM) ){
+        if( this.invalidStatus(rental) ){
             throw new InvalidStatusToCancelOperationException(RENTAL_REJECT_INAVALID_STATUS_MESSAGE);
         }
     }
 
+
+    private Boolean invalidStatus(Rental rental){
+        Boolean ret = Boolean.TRUE;
+        if(rental.getState().equals(Rental.RentalState.WAIT_CONFIRM) || rental.getState().equals(Rental.RentalState.CONFIRM)){
+            ret = Boolean.FALSE;
+        }
+        return ret;
+    }
 
     private void validateCollectInTerm(Rental rental) throws CollectOutOfTermException {
         Date today = new Date();
