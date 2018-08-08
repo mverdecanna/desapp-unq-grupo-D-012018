@@ -58,9 +58,17 @@ public class RentalService extends GenericService<Rental> {
 
     @Transactional
     public Transaction rejectTransaction(Transaction transaction) throws InvalidStatusToCancelOperationException {
+/*
         RentalRepository rentalRepository = (RentalRepository) getRepository();
         Transaction newTransaction = rentalRepository.findTransactionById(transaction.getRental().getId());
         this.validateRejectTransaction(newTransaction.getRental());
+        newTransaction.rejectTransaction();
+        rentalRepository.saveOrUpdateTransaction(newTransaction);
+        return newTransaction;
+*/
+        RentalRepository rentalRepository = (RentalRepository) getRepository();
+        this.validateRejectTransaction(transaction.getRental());
+        Transaction newTransaction = new Transaction(transaction.getCost(), transaction.getRental());
         newTransaction.rejectTransaction();
         rentalRepository.saveOrUpdateTransaction(newTransaction);
         return newTransaction;

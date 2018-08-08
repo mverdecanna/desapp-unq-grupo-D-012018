@@ -152,6 +152,7 @@ public class Transaction {
         this.setState(StateTransaction.REJECTED);
         this.rental.rejectRental();
         this.lastUpdate = new Date();
+        this.setId(this.getRental().getId());
     }
 
 
